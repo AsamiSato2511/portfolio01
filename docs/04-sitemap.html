@@ -20,8 +20,8 @@
         <div class="doc-category">DOCUMENT 04</div>
         <h1 class="doc-title">サイトマップ</h1>
         <div class="doc-meta">
-          <span><span class="material-symbols-outlined icon-sm">calendar_today</span> 作成日：2026-XX-XX</span>
-          <span><span class="material-symbols-outlined icon-sm">person</span> 作成者：（氏名を入力）</span>
+          <span><span class="material-symbols-outlined icon-sm">calendar_today</span> 作成日：2026-03-16</span>
+          <span><span class="material-symbols-outlined icon-sm">person</span> 作成者：佐藤 亜砂美</span>
           <span><span class="material-symbols-outlined icon-sm">push_pin</span> Ver 1.0</span>
         </div>
       </header>
@@ -62,14 +62,78 @@
           <div class="fill-label">Webサイト構造図 <span class="required">必須</span></div>
           <div class="fill-hint">トップページから下層ページまでの階層構造をツリー形式で記載</div>
           <div class="fill-content">
-            <p>（ツリー形式のサイト構造図を記載）</p>
+            <p><strong>サイトの概要</strong><br>Bloom Letter は、誕生日や記念日、感謝の気持ちなど「贈るシーン」から花を選べるフラワーギフトECサイトです。</p>
+            <p><strong>ページ数</strong><br>6ページ以上</p>
+            <div class="ascii-diagram">
+<pre>トップページ
+├── Shop
+│   ├── シーン別カテゴリ一覧
+│   ├── 誕生日向け商品一覧
+│   ├── 記念日向け商品一覧
+│   └── 感謝を伝える商品一覧
+├── Product Detail
+│   ├── 商品画像
+│   ├── 花の説明
+│   ├── 価格・購入ボタン
+│   └── おすすめの利用シーン
+├── About
+│   ├── ブランドストーリー
+│   └── サービスの特徴
+├── Guide
+│   ├── 注文方法
+│   ├── 配送情報
+│   └── FAQ
+└── Contact
+    ├── 問い合わせフォーム
+    └── 連絡先情報</pre>
+            </div>
           </div>
         </div>
         <div class="fill-block">
           <div class="fill-label">Webアプリケーション構造図 <span class="required">必須</span></div>
           <div class="fill-hint">Spring Bootアプリケーションの画面構造をツリー形式で記載</div>
           <div class="fill-content">
-            <p>（ツリー形式のアプリ構造図を記載）</p>
+            <p><strong>システムの概要</strong><br>Bloom Letter の管理システムは、Spring Boot を用いて商品情報の登録・編集・削除・一覧表示を行う管理者向けWebアプリケーションです。</p>
+            <p><strong>主な機能</strong><br>CRUD、ログイン、検索、カテゴリ分類、商品詳細確認</p>
+            <div class="ascii-diagram">
+<pre>ログイン前
+├── ログイン画面
+│   ├── メールアドレス入力
+│   ├── パスワード入力
+│   └── ログイン実行
+└── パスワード再設定案内（追加機能）
+
+ログイン後
+├── ダッシュボード
+│   ├── お知らせ表示
+│   ├── 商品管理への導線
+│   └── ログアウト
+├── 商品一覧画面
+│   ├── 商品検索
+│   ├── カテゴリ絞り込み
+│   ├── 商品詳細画面へ遷移
+│   ├── 新規登録画面へ遷移
+│   └── 編集画面へ遷移
+├── 商品詳細画面
+│   ├── 商品画像
+│   ├── 商品名・価格・カテゴリ
+│   ├── 花の説明
+│   └── 編集・削除
+├── 商品新規登録画面
+│   ├── 商品名入力
+│   ├── 価格入力
+│   ├── カテゴリ選択
+│   ├── 商品説明入力
+│   ├── 画像登録
+│   └── 保存
+├── 商品編集画面
+│   ├── 商品情報更新
+│   ├── 画像差し替え
+│   └── 更新保存
+└── 削除確認画面
+    ├── 商品情報確認
+    └── 削除実行</pre>
+            </div>
           </div>
         </div>
 
@@ -83,10 +147,12 @@
         <table class="doc-table">
           <thead><tr><th>No.</th><th>ページ名</th><th>ページの目的</th><th>主要コンテンツ</th></tr></thead>
           <tbody>
-          <tr class="template-row"><td>1</td><td>（トップページ）</td><td>（サービスの魅力を伝え、各ページへ誘導）</td><td>（ヒーロー、サービス紹介、CTA等）</td></tr>
-          <tr class="template-row"><td>2</td><td>（ページ名）</td><td>（目的を記載）</td><td>（コンテンツを記載）</td></tr>
-          <tr class="template-row"><td>3</td><td>（ページ名）</td><td>（目的を記載）</td><td>（コンテンツを記載）</td></tr>
-          <tr class="template-row"><td>…</td><td>…</td><td>…</td><td>…</td></tr>
+          <tr><td>1</td><td>トップページ</td><td>サービスの魅力を伝え、各ページや商品一覧へ誘導する</td><td>ヒーロービジュアル、シーン別カテゴリ、おすすめ商品、人気商品、ブランドストーリー</td></tr>
+          <tr><td>2</td><td>Shop</td><td>商品を一覧で見せ、シーンやカテゴリから商品を探しやすくする</td><td>商品一覧、カテゴリフィルタ、シーン別導線、商品カード</td></tr>
+          <tr><td>3</td><td>Product Detail</td><td>商品の詳細情報を伝え、購入判断を後押しする</td><td>商品画像、花の説明、価格、購入ボタン、利用シーン</td></tr>
+          <tr><td>4</td><td>About</td><td>ブランドの想いやサービスの価値を伝える</td><td>ブランドストーリー、コンセプト、サービスの特徴</td></tr>
+          <tr><td>5</td><td>Guide</td><td>購入方法や配送情報を案内し、不安を解消する</td><td>注文方法、配送情報、FAQ、利用ガイド</td></tr>
+          <tr><td>6</td><td>Contact</td><td>問い合わせ窓口としてユーザーの疑問や相談を受け付ける</td><td>問い合わせフォーム、連絡先情報、案内文</td></tr>
           </tbody>
         </table>
 
@@ -97,10 +163,15 @@
         <table class="doc-table">
           <thead><tr><th>No.</th><th>画面名</th><th>画面の目的</th><th>主要機能</th></tr></thead>
           <tbody>
-          <tr class="template-row"><td>1</td><td>（ログイン画面）</td><td>（ユーザー認証）</td><td>（メールアドレス/パスワード入力）</td></tr>
-          <tr class="template-row"><td>2</td><td>（一覧画面）</td><td>（データの一覧表示）</td><td>（検索・ソート・ページネーション）</td></tr>
-          <tr class="template-row"><td>3</td><td>（登録画面）</td><td>（新規データ登録）</td><td>（入力フォーム・バリデーション）</td></tr>
-          <tr class="template-row"><td>…</td><td>…</td><td>…</td><td>…</td></tr>
+          <tr><td>1</td><td>ログイン画面</td><td>管理者認証を行い、管理画面へ入る</td><td>メールアドレス入力、パスワード入力、ログイン実行</td></tr>
+          <tr><td>2</td><td>ダッシュボード</td><td>管理画面トップとして主要機能への導線を提供する</td><td>お知らせ表示、商品管理リンク、ログアウト</td></tr>
+          <tr><td>3</td><td>商品一覧管理画面</td><td>登録済み商品の一覧を確認し、検索や絞り込みを行う</td><td>商品一覧表示、検索、カテゴリ絞り込み、詳細遷移、新規登録遷移</td></tr>
+          <tr><td>4</td><td>商品詳細管理画面</td><td>指定商品の詳細を確認し、編集や削除へつなげる</td><td>商品画像表示、商品情報表示、編集ボタン、削除ボタン</td></tr>
+          <tr><td>5</td><td>商品登録画面</td><td>新規商品の情報を入力して登録する</td><td>入力フォーム、カテゴリ選択、画像登録、バリデーション、保存</td></tr>
+          <tr><td>6</td><td>商品編集画面</td><td>既存商品の情報を更新する</td><td>商品情報編集、画像差し替え、更新保存</td></tr>
+          <tr><td>7</td><td>削除確認画面</td><td>削除対象の商品を確認して誤操作を防ぐ</td><td>商品情報確認、削除実行、キャンセル</td></tr>
+          <tr><td>8</td><td>カテゴリ一覧管理画面</td><td>シーン別カテゴリを確認し、商品分類を把握する</td><td>カテゴリ一覧表示、カテゴリ詳細遷移</td></tr>
+          <tr><td>9</td><td>カテゴリ詳細管理画面</td><td>指定カテゴリに属する商品や分類内容を確認する</td><td>カテゴリ情報表示、該当商品一覧表示</td></tr>
           </tbody>
         </table>
 
@@ -114,14 +185,28 @@
           <div class="fill-label">メインシナリオ <span class="required">必須</span></div>
           <div class="fill-hint">ペルソナがサイトに訪問してから目的を達成するまでの動線（メインの行動パターン）</div>
           <div class="fill-content">
-            <p>（メインのユーザーフローを記載）</p>
+            <p><strong>ペルソナ</strong><br>中村 美咲</p>
+            <p><strong>目的</strong><br>友人の誕生日に贈る、見た目が良くて気持ちの伝わる花ギフトをオンラインで失敗なく選びたい。</p>
+            <p><strong>ステップ1</strong><br>行動: Instagram や Google 検索で「誕生日 花 ギフト」「おしゃれ 花 プレゼント」を調べ、Bloom Letter を見つける。<br>表示ページ: トップページ<br>次のアクション: サイトの雰囲気やシーン別カテゴリを見て、自分の目的に合いそうか確認する。</p>
+            <p><strong>ステップ2</strong><br>行動: トップページで誕生日向けカテゴリやおすすめ商品をチェックする。<br>表示ページ: トップページ<br>次のアクション: 誕生日向け商品一覧へ進む。</p>
+            <p><strong>ステップ3</strong><br>行動: 誕生日向けの商品一覧を見ながら、価格帯や見た目、雰囲気を比較する。<br>表示ページ: Shop<br>次のアクション: 気になった商品を選び、詳細ページへ移動する。</p>
+            <p><strong>ステップ4</strong><br>行動: 商品詳細ページで写真、花の説明、価格、利用シーン、購入ボタンを確認する。<br>表示ページ: Product Detail<br>次のアクション: 他の商品と比較するか、そのまま購入を決める。</p>
+            <p><strong>ステップ5</strong><br>行動: 配送や注文方法に不安があれば Guide を確認し、安心できるかを判断する。<br>表示ページ: Guide<br>次のアクション: 不安が解消されたら商品詳細ページへ戻って購入を進める。</p>
+            <p><strong>ステップ6</strong><br>行動: 納得した商品を選び、購入ボタンから注文手続きへ進む。<br>表示ページ: Product Detail<br>次のアクション: 購入完了後、必要に応じて問い合わせや再訪を行う。</p>
           </div>
         </div>
         <div class="fill-block">
           <div class="fill-label">サブシナリオ <span class="optional">任意</span></div>
           <div class="fill-hint">その他の行動パターン（1〜2パターン）</div>
           <div class="fill-content">
-            <p>（サブシナリオを記載）</p>
+            <p><strong>ペルソナ</strong><br>中村 美咲</p>
+            <p><strong>目的</strong><br>母の日に、感謝の気持ちが伝わる上品な花ギフトを安心して選びたい。</p>
+            <p><strong>ステップ1</strong><br>行動: Instagram や Google 検索で「母の日 花 おしゃれ」「感謝 花 ギフト」を調べ、Bloom Letter を見つける。<br>表示ページ: トップページ<br>次のアクション: 母の日や感謝向けの導線があるか確認する。</p>
+            <p><strong>ステップ2</strong><br>行動: シーン別カテゴリから「感謝を伝える商品」や季節特集を確認する。<br>表示ページ: トップページ / Shop<br>次のアクション: 気になる商品を絞り込み、詳細ページへ進む。</p>
+            <p><strong>ステップ3</strong><br>行動: 商品詳細で花の印象、価格、ラッピングイメージを確認し、母親向けにふさわしいかを判断する。<br>表示ページ: Product Detail<br>次のアクション: 配送や注文方法に不安があれば Guide を確認する。</p>
+            <p><strong>ステップ4</strong><br>行動: Guide で配送日、注文方法、FAQ を見て、希望日に届くかどうかを確認する。<br>表示ページ: Guide<br>次のアクション: 問題なければ商品詳細へ戻って購入を決める。</p>
+            <p><strong>ステップ5</strong><br>行動: 購入前に気になる点があれば Contact から問い合わせを行う。<br>表示ページ: Contact<br>次のアクション: 不安が解消されたら購入手続きへ進む。</p>
+            <p><strong>ステップ6</strong><br>行動: 商品を注文し、今後の記念日やイベントでも使えるサイトかどうかを判断する。<br>表示ページ: Product Detail / 購入導線<br>次のアクション: 満足度が高ければ再訪やリピート利用につなげる。</p>
           </div>
         </div>
 
@@ -132,17 +217,33 @@
 
           <div class="fill-block">
             <div class="fill-label">URL一覧 <span class="required">必須</span></div>
+            <div class="fill-content" style="margin-bottom: 16px;">
+              <p><strong>機能一覧</strong><br>Webサイト：トップページ表示、商品一覧表示、商品詳細表示、About、Guide、Contact<br>Spring Bootアプリ：ログイン、商品一覧表示、商品詳細表示、商品登録、商品編集、商品削除、カテゴリ分類、検索</p>
+            </div>
         <table class="doc-table">
           <thead><tr><th>URL</th><th>HTTPメソッド</th><th>画面/機能</th><th>説明</th></tr></thead>
           <tbody>
-          <tr class="template-row"><td>/</td><td>GET</td><td>トップページ</td><td>Webサイトのトップ</td></tr>
-          <tr class="template-row"><td>/about</td><td>GET</td><td>概要ページ</td><td>サービスの概要</td></tr>
-          <tr class="template-row"><td>/app/login</td><td>GET</td><td>ログイン画面</td><td>ログインフォーム表示</td></tr>
-          <tr class="template-row"><td>/app/login</td><td>POST</td><td>ログイン処理</td><td>認証処理</td></tr>
-          <tr class="template-row"><td>/app/items</td><td>GET</td><td>一覧画面</td><td>データ一覧表示</td></tr>
-          <tr class="template-row"><td>/app/items/new</td><td>GET</td><td>新規登録画面</td><td>登録フォーム表示</td></tr>
-          <tr class="template-row"><td>/app/items</td><td>POST</td><td>新規登録処理</td><td>データ保存</td></tr>
-          <tr class="template-row"><td>…</td><td>…</td><td>…</td><td>…</td></tr>
+          <tr><td>/</td><td>GET</td><td>トップページ</td><td>Bloom Letter のトップページを表示する</td></tr>
+          <tr><td>/products</td><td>GET</td><td>商品一覧ページ</td><td>商品一覧を表示し、シーン別に商品を探せる</td></tr>
+          <tr><td>/products/{productId}</td><td>GET</td><td>商品詳細ページ</td><td>指定した商品の詳細情報を表示する</td></tr>
+          <tr><td>/scenes/{sceneSlug}/products</td><td>GET</td><td>シーン別商品一覧</td><td>誕生日、記念日、感謝などシーン別の商品一覧を表示する</td></tr>
+          <tr><td>/about</td><td>GET</td><td>Aboutページ</td><td>ブランドストーリーやサービスの特徴を表示する</td></tr>
+          <tr><td>/guide</td><td>GET</td><td>Guideページ</td><td>注文方法、配送情報、FAQ を表示する</td></tr>
+          <tr><td>/contact</td><td>GET</td><td>Contactページ</td><td>問い合わせフォームを表示する</td></tr>
+          <tr><td>/contact</td><td>POST</td><td>問い合わせ送信</td><td>問い合わせ内容を送信する</td></tr>
+          <tr><td>/admin/login</td><td>GET</td><td>ログイン画面</td><td>管理画面用のログインフォームを表示する</td></tr>
+          <tr><td>/admin/login</td><td>POST</td><td>ログイン処理</td><td>管理者認証を実行する</td></tr>
+          <tr><td>/admin/logout</td><td>POST</td><td>ログアウト処理</td><td>管理画面からログアウトする</td></tr>
+          <tr><td>/admin</td><td>GET</td><td>ダッシュボード</td><td>管理画面トップを表示する</td></tr>
+          <tr><td>/admin/products</td><td>GET</td><td>商品一覧管理</td><td>管理者向けの商品一覧、検索、カテゴリ絞り込みを表示する</td></tr>
+          <tr><td>/admin/products/new</td><td>GET</td><td>商品登録画面</td><td>新規商品の登録フォームを表示する</td></tr>
+          <tr><td>/admin/products</td><td>POST</td><td>商品登録処理</td><td>新規商品を登録する</td></tr>
+          <tr><td>/admin/products/{productId}</td><td>GET</td><td>商品詳細管理</td><td>管理者向けに指定商品の詳細を表示する</td></tr>
+          <tr><td>/admin/products/{productId}/edit</td><td>GET</td><td>商品編集画面</td><td>指定商品の編集フォームを表示する</td></tr>
+          <tr><td>/admin/products/{productId}</td><td>PATCH</td><td>商品更新処理</td><td>指定商品の情報を更新する</td></tr>
+          <tr><td>/admin/products/{productId}</td><td>DELETE</td><td>商品削除処理</td><td>指定商品を削除する</td></tr>
+          <tr><td>/admin/scenes</td><td>GET</td><td>カテゴリ一覧管理</td><td>シーン別カテゴリの一覧を表示する</td></tr>
+          <tr><td>/admin/scenes/{sceneId}</td><td>GET</td><td>カテゴリ詳細管理</td><td>指定カテゴリに属する商品や情報を確認する</td></tr>
           </tbody>
         </table>
 
