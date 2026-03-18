@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bloom Letter Wireframe Proposal</title>
+  <style>
+    :root {
+      --bg: #f3efe8;
+      --paper: #fffdf8;
+      --ink: #1f1f1f;
+      --muted: #6d675f;
+      --line: #7d7468;
+      --soft: #ded6ca;
+      --accent: #b5815a;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Yu Gothic UI", "Hiragino Sans", sans-serif;
+      background:
+        radial-gradient(circle at top left, #fff7ec 0, rgba(255, 247, 236, 0) 32%),
+        linear-gradient(180deg, #f7f2ea 0%, #efe7db 100%);
+      color: var(--ink);
+    }
+
+    .page {
+      width: 1440px;
+      margin: 0 auto;
+      padding: 48px;
+    }
+
+    .frame {
+      background: var(--paper);
+      border: 2px solid var(--line);
+      border-radius: 28px;
+      padding: 36px;
+      box-shadow: 0 20px 60px rgba(60, 44, 24, 0.08);
+    }
+
+    .header {
+      height: 90px;
+      border: 2px dashed var(--line);
+      border-radius: 18px;
+      display: grid;
+      grid-template-columns: 1.2fr 2fr 1fr;
+      gap: 18px;
+      padding: 16px;
+      align-items: center;
+      background: #fffaf2;
+    }
+
+    .hero {
+      margin-top: 24px;
+      height: 540px;
+      border: 2px dashed var(--line);
+      border-radius: 24px;
+      padding: 22px;
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 22px;
+      background: linear-gradient(135deg, #fffaf2 0%, #f8efe4 100%);
+    }
+
+    .services,
+    .works,
+    .cta,
+    .footer {
+      margin-top: 24px;
+      border: 2px dashed var(--line);
+      border-radius: 24px;
+      padding: 22px;
+      background: #fffdfa;
+    }
+
+    .services {
+      height: 410px;
+    }
+
+    .works {
+      height: 430px;
+    }
+
+    .cta {
+      height: 220px;
+      background: linear-gradient(135deg, #f0dfd1 0%, #f8efe7 100%);
+    }
+
+    .footer {
+      height: 120px;
+      background: #faf5ee;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 18px;
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    .ratio {
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+
+    .block {
+      border: 2px solid var(--soft);
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.88);
+      min-height: 100%;
+      position: relative;
+      padding: 14px;
+    }
+
+    .label {
+      position: absolute;
+      top: 10px;
+      left: 12px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: var(--ink);
+      color: white;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+    }
+
+    .hint {
+      position: absolute;
+      right: 12px;
+      bottom: 10px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .header-nav {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .pill {
+      height: 32px;
+      border-radius: 999px;
+      border: 2px solid var(--soft);
+      background: white;
+    }
+
+    .hero-copy {
+      display: grid;
+      grid-template-rows: auto auto auto 1fr;
+      gap: 14px;
+      padding-top: 32px;
+    }
+
+    .line-lg,
+    .line-md,
+    .line-sm,
+    .button,
+    .thumb,
+    .meta-row {
+      border-radius: 12px;
+      background: white;
+      border: 2px solid var(--soft);
+    }
+
+    .line-lg { height: 52px; width: 86%; }
+    .line-md { height: 22px; width: 74%; }
+    .line-sm { height: 18px; width: 62%; }
+    .button { height: 54px; width: 220px; background: #f3e0d1; border-color: #d4b49b; }
+
+    .hero-visual {
+      display: grid;
+      grid-template-rows: 1fr 160px;
+      gap: 18px;
+    }
+
+    .visual-main {
+      border-radius: 24px;
+      border: 2px solid #d8c6b8;
+      background:
+        radial-gradient(circle at 30% 32%, #f6d9cf 0 14%, transparent 14.5%),
+        radial-gradient(circle at 52% 42%, #efd4c9 0 13%, transparent 13.5%),
+        radial-gradient(circle at 67% 28%, #f7dfd4 0 15%, transparent 15.5%),
+        linear-gradient(135deg, #f7ecdf 0%, #efe1d2 100%);
+      position: relative;
+    }
+
+    .visual-main::after {
+      content: "";
+      position: absolute;
+      inset: 18px;
+      border: 2px dashed rgba(117, 101, 83, 0.45);
+      border-radius: 18px;
+    }
+
+    .visual-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 14px;
+    }
+
+    .card {
+      border-radius: 18px;
+      border: 2px solid var(--soft);
+      background: #fff;
+      position: relative;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: 14px 14px auto 14px;
+      height: 72px;
+      border-radius: 14px;
+      background: #f5ece3;
+      border: 2px solid var(--soft);
+    }
+
+    .card::after {
+      content: "";
+      position: absolute;
+      left: 14px;
+      right: 14px;
+      bottom: 16px;
+      height: 28px;
+      border-radius: 10px;
+      background: #faf6f1;
+      border: 2px solid var(--soft);
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 18px;
+      height: calc(100% - 52px);
+    }
+
+    .service-card {
+      border: 2px solid var(--soft);
+      border-radius: 18px;
+      background: #fff;
+      padding: 16px;
+      display: grid;
+      grid-template-rows: 68px 28px 18px 18px 1fr 42px;
+      gap: 12px;
+    }
+
+    .works-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 20px;
+      height: calc(100% - 52px);
+    }
+
+    .featured-work,
+    .metrics {
+      border: 2px solid var(--soft);
+      border-radius: 18px;
+      background: #fff;
+      padding: 16px;
+    }
+
+    .featured-work {
+      display: grid;
+      grid-template-rows: 1fr 42px;
+      gap: 14px;
+    }
+
+    .metrics {
+      display: grid;
+      grid-template-rows: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .metric-box {
+      border: 2px solid var(--soft);
+      border-radius: 16px;
+      background: #faf6f1;
+      position: relative;
+      padding: 12px;
+    }
+
+    .metric-box::after {
+      content: "";
+      position: absolute;
+      left: 12px;
+      right: 40%;
+      bottom: 12px;
+      height: 16px;
+      border-radius: 8px;
+      background: white;
+      border: 2px solid var(--soft);
+    }
+
+    .cta-grid {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr;
+      gap: 18px;
+      height: calc(100% - 52px);
+    }
+
+    .cta-copy,
+    .cta-action {
+      border: 2px solid rgba(125, 116, 104, 0.3);
+      border-radius: 18px;
+      background: rgba(255, 253, 248, 0.65);
+      padding: 16px;
+    }
+
+    .cta-action {
+      display: grid;
+      place-items: center;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr 1fr;
+      gap: 18px;
+      height: calc(100% - 52px);
+    }
+
+    .footer-box {
+      border: 2px solid var(--soft);
+      border-radius: 16px;
+      background: #fff;
+    }
+
+    .notes {
+      margin-top: 28px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .note {
+      background: rgba(255, 253, 248, 0.96);
+      border: 2px solid var(--line);
+      border-radius: 20px;
+      padding: 18px 20px;
+    }
+
+    .note h2 {
+      margin: 0 0 10px;
+      font-size: 18px;
+    }
+
+    .note p,
+    .note li {
+      font-size: 14px;
+      line-height: 1.7;
+      color: #403930;
+    }
+
+    .note ul {
+      margin: 0;
+      padding-left: 18px;
+    }
+
+    .kicker {
+      display: inline-block;
+      margin-bottom: 10px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: #f5e7da;
+      color: #7c5436;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="frame">
+      <div class="header">
+        <div class="block"><div class="label">LOGO</div><div class="hint">15%</div></div>
+        <div class="block"><div class="label">NAVIGATION</div><div class="hint">55%</div><div class="header-nav"><div class="pill"></div><div class="pill"></div><div class="pill"></div><div class="pill"></div></div></div>
+        <div class="block"><div class="label">HEADER CTA</div><div class="hint">30%</div></div>
+      </div>
+
+      <section class="hero">
+        <div class="block">
+          <div class="label">HERO COPY</div>
+          <div class="hero-copy">
+            <div class="line-lg"></div>
+            <div class="line-lg" style="width:72%;"></div>
+            <div class="line-md"></div>
+            <div>
+              <div class="line-sm"></div>
+              <div class="line-sm" style="margin-top:10px;width:58%;"></div>
+              <div class="button" style="margin-top:24px;"></div>
+            </div>
+          </div>
+          <div class="hint">viewport 40%</div>
+        </div>
+        <div class="block">
+          <div class="label">HERO VISUAL</div>
+          <div class="hero-visual">
+            <div class="visual-main"></div>
+            <div class="visual-cards">
+              <div class="card"></div>
+              <div class="card"></div>
+              <div class="card"></div>
+            </div>
+          </div>
+          <div class="hint">viewport 60%</div>
+        </div>
+      </section>
+
+      <section class="services">
+        <div class="section-title">
+          <span>Service Introduction</span>
+          <span class="ratio">about 18% of page height</span>
+        </div>
+        <div class="services-grid">
+          <div class="service-card">
+            <div class="thumb"></div>
+            <div class="line-md" style="width:84%;"></div>
+            <div class="line-sm" style="width:72%;"></div>
+            <div class="line-sm" style="width:64%;"></div>
+            <div></div>
+            <div class="meta-row"></div>
+          </div>
+          <div class="service-card">
+            <div class="thumb"></div>
+            <div class="line-md" style="width:76%;"></div>
+            <div class="line-sm" style="width:70%;"></div>
+            <div class="line-sm" style="width:60%;"></div>
+            <div></div>
+            <div class="meta-row"></div>
+          </div>
+          <div class="service-card">
+            <div class="thumb"></div>
+            <div class="line-md" style="width:80%;"></div>
+            <div class="line-sm" style="width:68%;"></div>
+            <div class="line-sm" style="width:56%;"></div>
+            <div></div>
+            <div class="meta-row"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="works">
+        <div class="section-title">
+          <span>Works / Results</span>
+          <span class="ratio">about 19% of page height</span>
+        </div>
+        <div class="works-grid">
+          <div class="featured-work">
+            <div class="thumb" style="height:100%;"></div>
+            <div class="meta-row"></div>
+          </div>
+          <div class="metrics">
+            <div class="metric-box"><div class="label">CASE 01</div></div>
+            <div class="metric-box"><div class="label">CASE 02</div></div>
+            <div class="metric-box"><div class="label">REVIEW</div></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="cta">
+        <div class="section-title">
+          <span>CTA Section</span>
+          <span class="ratio">about 10% of page height</span>
+        </div>
+        <div class="cta-grid">
+          <div class="cta-copy">
+            <div class="line-lg" style="width:72%;"></div>
+            <div class="line-md" style="margin-top:14px;width:80%;"></div>
+            <div class="line-sm" style="margin-top:12px;width:66%;"></div>
+          </div>
+          <div class="cta-action">
+            <div class="button" style="width:250px;"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="footer">
+        <div class="section-title">
+          <span>Footer</span>
+          <span class="ratio">about 6% of page height</span>
+        </div>
+        <div class="footer-grid">
+          <div class="footer-box"></div>
+          <div class="footer-box"></div>
+          <div class="footer-box"></div>
+        </div>
+      </section>
+    </div>
+
+    <section class="notes">
+      <article class="note">
+        <span class="kicker">Page Goal</span>
+        <h2>想いを伝えたい人が、迷わず相談または購入に進める導線を作る</h2>
+        <p>ファーストビューで価値を伝え、サービス紹介で理解を深め、実績で不安を下げ、最後にCTAで行動を後押しする構成です。</p>
+      </article>
+      <article class="note">
+        <span class="kicker">Target Persona</span>
+        <h2>20代後半から30代前半の女性</h2>
+        <ul>
+          <li>スマホ中心で情報収集する</li>
+          <li>贈り物や記念日の失敗を避けたい</li>
+          <li>写真、口コミ、実績で安心感を得たい</li>
+        </ul>
+      </article>
+    </section>
+  </div>
+</body>
+</html>
