@@ -1,0 +1,97 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>商品一覧 | Bloom Letter</title>
+  <meta name="description" content="Bloom Letterの商品一覧ページ。贈るシーンやカテゴリから花を探せます。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,300..700,0..1,-50..200&family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="site-body">
+  <a class="skip-link" href="#main-content">コンテンツへスキップ</a>
+  <header class="site-header" data-site-header>
+    <div class="site-shell site-header__inner">
+      <a class="site-logo" href="index.html" aria-label="Bloom Letter ホーム"><span class="site-logo__mark" aria-hidden="true">✿</span><span>Bloom Letter</span></a>
+      <button class="site-nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav"><span class="material-symbols-outlined" aria-hidden="true">menu</span><span class="site-nav-toggle__label">メニュー</span></button>
+      <nav class="site-nav" id="site-nav" aria-label="グローバルナビゲーション">
+        <ul class="site-nav__list">
+          <li><a class="site-nav__link" href="index.html">Home</a></li>
+          <li><a class="site-nav__link is-current" href="products.html">Shop</a></li>
+          <li><a class="site-nav__link" href="about.html">About</a></li>
+          <li><a class="site-nav__link" href="guide.html">Guide</a></li>
+          <li><a class="site-nav__link" href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content" class="page-main">
+    <div class="site-shell">
+      <nav class="breadcrumb" aria-label="パンくずリスト"><ol><li><a href="index.html">Home</a></li><li aria-current="page">Shop</li></ol></nav>
+      <section class="page-hero">
+        <p class="eyebrow">Shop</p>
+        <h1>想いに寄り添う花を、シーンから選ぶ</h1>
+        <p>誕生日、記念日、感謝、お祝い。贈る目的から探せるように、わかりやすくカテゴリを整理しています。</p>
+      </section>
+      <section class="shop-layout">
+        <aside class="filter-panel" aria-labelledby="filter-title">
+          <div class="filter-panel__section"><h2 id="filter-title">絞り込み</h2><p>気になるシーンや価格帯で商品を探せます。</p></div>
+          <div class="filter-panel__section">
+            <h3>シーン</h3>
+            <div class="chip-list" role="group" aria-label="シーンフィルター">
+              <button class="chip is-active" type="button" data-filter="all">すべて</button>
+              <button class="chip" type="button" data-filter="birthday">誕生日</button>
+              <button class="chip" type="button" data-filter="anniversary">記念日</button>
+              <button class="chip" type="button" data-filter="thanks">感謝</button>
+              <button class="chip" type="button" data-filter="celebration">お祝い</button>
+            </div>
+          </div>
+          <div class="filter-panel__section">
+            <h3>価格帯</h3>
+            <label class="filter-option"><input type="checkbox"> 〜 ¥5,000</label>
+            <label class="filter-option"><input type="checkbox"> ¥5,001 〜 ¥8,000</label>
+            <label class="filter-option"><input type="checkbox"> ¥8,001 〜</label>
+          </div>
+          <div class="filter-panel__section">
+            <h3>並び替え</h3>
+            <label class="sr-only" for="sort-products">並び替え</label>
+            <select id="sort-products" class="form-select">
+              <option>おすすめ順</option>
+              <option>価格が低い順</option>
+              <option>価格が高い順</option>
+            </select>
+          </div>
+        </aside>
+        <div class="product-listing">
+          <section class="scene-shortcuts" aria-labelledby="scene-shortcuts-title">
+            <div class="section-heading section-heading--compact"><p class="eyebrow">Scene</p><h2 id="scene-shortcuts-title">人気のシーン別カテゴリ</h2></div>
+            <div class="scene-grid scene-grid--compact">
+              <a class="scene-card scene-card--compact" href="#product-grid"><span class="scene-card__image scene-card__image--birthday"></span><span class="scene-card__body"><strong>誕生日</strong><small>人気No.1</small></span></a>
+              <a class="scene-card scene-card--compact" href="#product-grid"><span class="scene-card__image scene-card__image--anniversary"></span><span class="scene-card__body"><strong>記念日</strong><small>上品な花束</small></span></a>
+              <a class="scene-card scene-card--compact" href="#product-grid"><span class="scene-card__image scene-card__image--thanks"></span><span class="scene-card__body"><strong>感謝</strong><small>想いを伝える</small></span></a>
+            </div>
+          </section>
+          <section aria-labelledby="product-grid-title">
+            <div class="section-heading section-heading--compact"><p class="eyebrow">Products</p><h2 id="product-grid-title">商品一覧</h2></div>
+            <div class="product-grid" id="product-grid">
+              <article class="product-card" data-scene="birthday"><span class="product-card__badge">誕生日</span><div class="product-card__image product-card__image--spring"></div><div class="product-card__content"><h3>Spring Bouquet</h3><p>明るく軽やかなトーンで、誕生日を華やかに彩ります。</p><div class="product-card__footer"><strong>¥5,800</strong><a href="product-detail.html">詳細を見る</a></div></div></article>
+              <article class="product-card" data-scene="anniversary"><span class="product-card__badge">記念日</span><div class="product-card__image product-card__image--rose"></div><div class="product-card__content"><h3>Elegant Rose</h3><p>ローズを中心にまとめた、上質で静かな存在感のある花束。</p><div class="product-card__footer"><strong>¥7,200</strong><a href="product-detail.html">詳細を見る</a></div></div></article>
+              <article class="product-card" data-scene="thanks"><span class="product-card__badge">感謝</span><div class="product-card__image product-card__image--garden"></div><div class="product-card__content"><h3>Fresh Garden</h3><p>自然なやさしさが伝わる、グリーンとホワイトの組み合わせ。</p><div class="product-card__footer"><strong>¥4,500</strong><a href="product-detail.html">詳細を見る</a></div></div></article>
+              <article class="product-card" data-scene="celebration"><span class="product-card__badge">お祝い</span><div class="product-card__image product-card__image--premium"></div><div class="product-card__content"><h3>Premium Mix</h3><p>門出や成功を祝う、華やかなボリュームのアレンジメント。</p><div class="product-card__footer"><strong>¥8,900</strong><a href="product-detail.html">詳細を見る</a></div></div></article>
+              <article class="product-card" data-scene="birthday"><span class="product-card__badge">誕生日</span><div class="product-card__image product-card__image--birthday-alt"></div><div class="product-card__content"><h3>Bloom Letter Pink</h3><p>明るくかわいらしい印象で、友人へのギフトにも選びやすい一束。</p><div class="product-card__footer"><strong>¥6,300</strong><a href="product-detail.html">詳細を見る</a></div></div></article>
+              <article class="product-card" data-scene="anniversary"><span class="product-card__badge">記念日</span><div class="product-card__image product-card__image--anniversary-alt"></div><div class="product-card__content"><h3>Quiet Ivory</h3><p>落ち着いたアイボリーで、静かな特別感を演出するブーケ。</p><div class="product-card__footer"><strong>¥6,900</strong><a href="product-detail.html">詳細を見る</a></div></div></article>
+            </div>
+            <nav class="pagination" aria-label="ページネーション"><a class="pagination__link is-current" href="#">1</a><a class="pagination__link" href="#">2</a><a class="pagination__link" href="#">3</a><a class="pagination__link" href="#">次へ</a></nav>
+          </section>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer"><div class="site-shell site-footer__grid"><div><a class="site-logo site-logo--footer" href="index.html"><span class="site-logo__mark" aria-hidden="true">✿</span><span>Bloom Letter</span></a><p class="site-footer__text">花で想いを届ける、シーン提案型のフラワーギフトサイト。</p></div><div><h2 class="site-footer__title">Service</h2><ul class="site-footer__list"><li><a href="products.html">商品一覧</a></li><li><a href="about.html">About</a></li><li><a href="guide.html">Guide</a></li></ul></div><div><h2 class="site-footer__title">Support</h2><ul class="site-footer__list"><li><a href="guide.html#faq">FAQ</a></li><li><a href="contact.html">お問い合わせ</a></li></ul></div><div><h2 class="site-footer__title">Contact</h2><p class="site-footer__text">ご相談はContactページから受け付けています。</p></div></div></footer>
+  <script src="js/main.js"></script>
+</body>
+</html>

@@ -3,126 +3,201 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bloom Letter - Project Archive</title>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
+  <title>Bloom Letter | 花で想いを届ける</title>
+  <meta name="description" content="Bloom Letterは、誕生日や記念日などのシーンから花を選べるフラワーギフトサイトです。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,300..700,0..1,-50..200&family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
-  <button class="hamburger" aria-label="メニュー">
-    <span></span><span></span><span></span>
-  </button>
+<body class="site-body">
+  <a class="skip-link" href="#main-content">コンテンツへスキップ</a>
+  <header class="site-header" data-site-header>
+    <div class="site-shell site-header__inner">
+      <a class="site-logo" href="index.html" aria-label="Bloom Letter ホーム">
+        <span class="site-logo__mark" aria-hidden="true">✿</span>
+        <span>Bloom Letter</span>
+      </a>
+      <button class="site-nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+        <span class="material-symbols-outlined" aria-hidden="true">menu</span>
+        <span class="site-nav-toggle__label">メニュー</span>
+      </button>
+      <nav class="site-nav" id="site-nav" aria-label="グローバルナビゲーション">
+        <ul class="site-nav__list">
+          <li><a class="site-nav__link is-current" href="index.html">Home</a></li>
+          <li><a class="site-nav__link" href="products.html">Shop</a></li>
+          <li><a class="site-nav__link" href="about.html">About</a></li>
+          <li><a class="site-nav__link" href="guide.html">Guide</a></li>
+          <li><a class="site-nav__link" href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
 
-  <div class="page-wrapper">
-    <aside class="sidebar" data-nav-level="root"></aside>
-
-    <main class="main-content">
-      <header class="doc-header">
-        <div class="doc-category">PROJECT ARCHIVE TOP</div>
-        <h1 class="doc-title">Bloom Letter</h1>
-        <div class="doc-meta">
-          <span><span class="material-symbols-outlined icon-sm">calendar_today</span> 作成日：2026-03-16</span>
-          <span><span class="material-symbols-outlined icon-sm">person</span> 作成者：佐藤 亜砂美</span>
-          <span><span class="material-symbols-outlined icon-sm">push_pin</span> Ver 1.0</span>
+  <main id="main-content">
+    <section class="hero">
+      <div class="hero__media">
+        <img class="hero__image" src="images/Top/hero.png" alt="淡い色合いの花束を上品に撮影したBloom Letterのヒーローイメージ">
+        <div class="site-shell hero__content">
+          <div class="hero__copy">
+            <p class="eyebrow">Flower Gift Boutique</p>
+            <h1>想いを花で、<br>もっと自由に。</h1>
+            <p class="hero__lead">シーンから選べる、失敗しないフラワーギフト。大切な人へ、あなたの気持ちに寄り添う花を届けます。</p>
+            <div class="hero__actions">
+              <a class="btn btn-primary" href="products.html">シーンから選ぶ</a>
+              <a class="btn btn-secondary" href="products.html#featured-products">人気のギフトを見る</a>
+            </div>
+          </div>
         </div>
-      </header>
-
-      <div class="doc-body">
-        <section class="section">
-          <h2 class="section-title"><span class="section-icon"><span class="material-symbols-outlined">person</span></span> プロフィール</h2>
-
-          <div class="fill-block">
-            <div class="fill-label">サービス名 <span class="required">必須</span></div>
-            <div class="fill-content">
-              <p>Bloom Letter</p>
-            </div>
-          </div>
-
-          <div class="fill-block">
-            <div class="fill-label">キャッチコピー <span class="required">必須</span></div>
-            <div class="fill-hint">花で想いを届ける</div>
-            <div class="fill-content">
-              <p>大切な人に贈るフラワーギフトを、シーンから選べるECサイトとして企画しました。</p>
-            </div>
-          </div>
-
-          <div class="fill-block">
-            <div class="fill-label">ターゲットユーザー <span class="required">必須</span></div>
-            <div class="fill-content">
-              <p>20-30代を中心に、恋人や家族、友人へオンラインで花を贈りたいユーザーを想定しています。</p>
-            </div>
-          </div>
-        </section>
-
-        <section class="section">
-          <h2 class="section-title"><span class="section-icon"><span class="material-symbols-outlined">work</span></span> 制作物</h2>
-
-          <div class="card-grid">
-            <div class="card">
-              <div class="card-title">Webサイト</div>
-              <div class="card-text">
-                Bloom Letter のコンセプトや各ページ構成をまとめたフロントエンド制作物です。<br>
-                <a href="./docs/01-proposal.html">企画書を見る</a>
-              </div>
-            </div>
-            <div class="card">
-              <div class="card-title">Webアプリケーション</div>
-              <div class="card-text">
-                Spring Boot を用いた商品一覧、詳細、管理機能を想定したバックエンド開発アーカイブです。
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section class="section">
-          <h2 class="section-title"><span class="section-icon"><span class="material-symbols-outlined">description</span></span> 制作ドキュメント</h2>
-          <div class="card-grid">
-            <div class="card"><a href="./docs/01-proposal.html"><div class="card-title">01 企画書</div></a></div>
-            <div class="card"><a href="./docs/02-market-research.html"><div class="card-title">02 マーケットリサーチ</div></a></div>
-            <div class="card"><a href="./docs/03-persona.html"><div class="card-title">03 ペルソナシート</div></a></div>
-            <div class="card"><a href="./docs/04-sitemap.html"><div class="card-title">04 サイトマップ</div></a></div>
-            <div class="card"><a href="./docs/05-wireframe.html"><div class="card-title">05 ワイヤーフレーム</div></a></div>
-            <div class="card"><a href="./docs/06-design-guide.html"><div class="card-title">06 デザインガイドライン</div></a></div>
-            <div class="card"><a href="./docs/10-retrospective.html"><div class="card-title">10 振り返り・改善案</div></a></div>
-          </div>
-        </section>
-
-        <section class="section">
-          <h2 class="section-title"><span class="section-icon"><span class="material-symbols-outlined">engineering</span></span> 設計資料</h2>
-          <div class="card-grid">
-            <div class="card"><a href="./docs/07-specification.html"><div class="card-title">07 仕様書</div></a></div>
-            <div class="card"><a href="./docs/08-db-design.html"><div class="card-title">08 DB設計書</div></a></div>
-            <div class="card"><a href="./docs/09-test-report.html"><div class="card-title">09 テスト結果書</div></a></div>
-          </div>
-        </section>
-
-        <section class="section">
-          <h2 class="section-title"><span class="section-icon"><span class="material-symbols-outlined">bolt</span></span> スキル</h2>
-
-          <div class="fill-block">
-            <div class="fill-label">使用技術 <span class="required">必須</span></div>
-            <div class="fill-content">
-              <p><strong>フロントエンド:</strong> HTML / CSS / JavaScript / Tailwind CSS</p>
-              <p><strong>バックエンド:</strong> Java / Spring Boot / MyBatis</p>
-              <p><strong>データベース:</strong> MySQL / H2</p>
-              <p><strong>デザイン:</strong> Figma</p>
-              <p><strong>その他:</strong> Git / GitHub / VS Code / ChatGPT / Claude</p>
-            </div>
-          </div>
-        </section>
-
-        <section class="section">
-          <h2 class="section-title"><span class="section-icon"><span class="material-symbols-outlined">link</span></span> リンク</h2>
-
-          <div class="fill-block">
-            <div class="fill-label">企画書 <span class="required">必須</span></div>
-            <div class="fill-content">
-              <p><a href="./docs/01-proposal.html">Bloom Letter 企画書を開く</a></p>
-            </div>
-          </div>
-        </section>
       </div>
-    </main>
-  </div>
+    </section>
+
+    <section class="home-section">
+      <div class="site-shell">
+        <div class="section-heading">
+          <p class="eyebrow">Reason</p>
+          <h2>Bloom Letterが選ばれる理由</h2>
+        </div>
+        <div class="feature-grid">
+          <article class="feature-card">
+            <div class="feature-card__icon" aria-hidden="true"><span class="material-symbols-outlined">spa</span></div>
+            <h3>シーンで迷わない</h3>
+            <p>贈る目的から選べるから、花の知識がなくても気持ちに合うギフトを見つけやすくなります。</p>
+          </article>
+          <article class="feature-card">
+            <div class="feature-card__icon" aria-hidden="true"><span class="material-symbols-outlined">local_florist</span></div>
+            <h3>スタイリスト監修</h3>
+            <p>プロ目線で組み合わせた花束だから、特別な日の贈り物にふさわしい上質感を届けられます。</p>
+          </article>
+          <article class="feature-card">
+            <div class="feature-card__icon" aria-hidden="true"><span class="material-symbols-outlined">mail</span></div>
+            <h3>メッセージカード無料</h3>
+            <p>あなたの想いを言葉でも届けられるよう、花と一緒に気持ちを添える仕組みを用意しています。</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="home-section home-section--alt">
+      <div class="site-shell">
+        <div class="section-heading">
+          <p class="eyebrow">Scene</p>
+          <h2>シーンから選ぶ</h2>
+        </div>
+        <div class="scene-grid">
+          <a class="scene-card" href="products.html?scene=birthday"><span class="scene-card__image scene-card__image--birthday"></span><span class="scene-card__body"><strong>誕生日</strong><small>大切な人に</small></span></a>
+          <a class="scene-card" href="products.html?scene=anniversary"><span class="scene-card__image scene-card__image--anniversary"></span><span class="scene-card__body"><strong>記念日</strong><small>二人の思い出に</small></span></a>
+          <a class="scene-card" href="products.html?scene=thanks"><span class="scene-card__image scene-card__image--thanks"></span><span class="scene-card__body"><strong>感謝</strong><small>日頃の想いを込めて</small></span></a>
+          <a class="scene-card" href="products.html?scene=celebration"><span class="scene-card__image scene-card__image--celebration"></span><span class="scene-card__body"><strong>お祝い</strong><small>門出や成功を祝う</small></span></a>
+          <a class="scene-card" href="products.html?scene=sympathy"><span class="scene-card__image scene-card__image--sympathy"></span><span class="scene-card__body"><strong>お見舞い</strong><small>回復を願う贈り物</small></span></a>
+          <a class="scene-card" href="products.html?scene=seasonal"><span class="scene-card__image scene-card__image--seasonal"></span><span class="scene-card__body"><strong>季節のギフト</strong><small>四季をたのしむ</small></span></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="home-section" id="featured-products">
+      <div class="site-shell">
+        <div class="section-heading">
+          <p class="eyebrow">Featured</p>
+          <h2>おすすめ商品</h2>
+          <p class="section-heading__text">人気のギフトを、シーン別に選びやすいラインアップで紹介します。</p>
+        </div>
+        <div class="product-grid">
+          <article class="product-card">
+            <span class="product-card__badge">人気</span>
+            <div class="product-card__image product-card__image--spring"></div>
+            <div class="product-card__content">
+              <h3>Spring Bouquet</h3>
+              <p>やわらかな色彩で、誕生日や季節の贈り物にぴったり。</p>
+              <div class="product-card__footer"><strong>¥5,800</strong><a href="product-detail.html">詳細を見る</a></div>
+            </div>
+          </article>
+          <article class="product-card">
+            <span class="product-card__badge">おすすめ</span>
+            <div class="product-card__image product-card__image--rose"></div>
+            <div class="product-card__content">
+              <h3>Elegant Rose</h3>
+              <p>上品なローズを主役にした、記念日に贈りたい花束。</p>
+              <div class="product-card__footer"><strong>¥7,200</strong><a href="product-detail.html">詳細を見る</a></div>
+            </div>
+          </article>
+          <article class="product-card">
+            <span class="product-card__badge">定番</span>
+            <div class="product-card__image product-card__image--garden"></div>
+            <div class="product-card__content">
+              <h3>Fresh Garden</h3>
+              <p>感謝の気持ちを自然体で届ける、明るいグリーン系ギフト。</p>
+              <div class="product-card__footer"><strong>¥4,500</strong><a href="product-detail.html">詳細を見る</a></div>
+            </div>
+          </article>
+          <article class="product-card">
+            <span class="product-card__badge">季節限定</span>
+            <div class="product-card__image product-card__image--premium"></div>
+            <div class="product-card__content">
+              <h3>Premium Mix</h3>
+              <p>特別な日にふさわしい、華やかで存在感のあるアレンジ。</p>
+              <div class="product-card__footer"><strong>¥8,900</strong><a href="product-detail.html">詳細を見る</a></div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="home-section home-section--story">
+      <div class="site-shell story-grid">
+        <div class="story-visual" aria-hidden="true"></div>
+        <div class="story-copy">
+          <p class="eyebrow">Story</p>
+          <h2>私たちの想い</h2>
+          <p>Bloom Letterは、花を贈る体験をもっと身近に、もっと自由にしたいという想いから生まれました。花の知識がなくても、贈るシーンから選べる設計にすることで、気持ちを自然に届けられるギフト体験を目指しています。</p>
+          <p>静かな余白とやわらかな色合いで、商品そのものと贈る気持ちが主役になるページを大切にしています。</p>
+          <a class="btn btn-secondary" href="about.html">Aboutを読む</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="home-cta">
+      <div class="site-shell home-cta__inner">
+        <p class="home-cta__eyebrow">Gift Consultation</p>
+        <h2>大切な人へ、想いを届けませんか？</h2>
+        <p>あなたにぴったりのフラワーギフトを見つけましょう。</p>
+        <a class="btn btn-primary btn-primary--light" href="products.html">ギフトを選ぶ</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="site-shell site-footer__grid">
+      <div>
+        <a class="site-logo site-logo--footer" href="index.html"><span class="site-logo__mark" aria-hidden="true">✿</span><span>Bloom Letter</span></a>
+        <p class="site-footer__text">花で想いを届ける、シーン提案型のフラワーギフトサイト。</p>
+      </div>
+      <div>
+        <h2 class="site-footer__title">Service</h2>
+        <ul class="site-footer__list">
+          <li><a href="products.html">商品一覧</a></li>
+          <li><a href="products.html?scene=birthday">シーンから選ぶ</a></li>
+          <li><a href="guide.html">ギフトガイド</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2 class="site-footer__title">Support</h2>
+        <ul class="site-footer__list">
+          <li><a href="guide.html#faq">よくある質問</a></li>
+          <li><a href="contact.html">お問い合わせ</a></li>
+          <li><a href="about.html">About</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2 class="site-footer__title">Newsletter</h2>
+        <form class="newsletter-form">
+          <label class="sr-only" for="newsletter-email">メールアドレス</label>
+          <input id="newsletter-email" type="email" placeholder="メールアドレス">
+          <button class="btn btn-secondary" type="button">登録</button>
+        </form>
+      </div>
+    </div>
+  </footer>
 
   <script src="js/main.js"></script>
 </body>

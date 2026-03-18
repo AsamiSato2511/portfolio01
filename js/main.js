@@ -148,3 +148,78 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 });
+
+function initializeSiteNavigation() {
+  const header = document.querySelector('[data-site-header]');
+  if (!header) return;
+
+  const toggle = header.querySelector('.site-nav-toggle');
+  const nav = header.querySelector('.site-nav');
+  if (!toggle || !nav) return;
+
+  toggle.addEventListener('click', () => {
+    const isOpen = nav.classList.toggle('is-open');
+    toggle.setAttribute('aria-expanded', String(isOpen));
+  });
+
+  nav.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      nav.classList.remove('is-open');
+      toggle.setAttribute('aria-expanded', 'false');
+    });
+  });
+}
+
+function initializeProductFilter() {
+  const chips = document.querySelectorAll('[data-filter]');
+  const cards = document.querySelectorAll('.product-card[data-scene]');
+  if (!chips.length || !cards.length) return;
+
+  const applyFilter = filter => {
+    cards.forEach(card => {
+      const matches = filter === 'all' || card.dataset.scene === filter;
+      card.classList.toggle('is-hidden', !matches);
+    });
+    chips.forEach(chip => chip.classList.toggle('is-active', chip.dataset.filter === filter));
+  };
+
+  chips.forEach(chip => {
+    chip.addEventListener('click', () => applyFilter(chip.dataset.filter));
+  });
+
+  const params = new URLSearchParams(window.location.search);
+  const initial = params.get('scene') || 'all';
+  applyFilter(initial);
+}
+
+function initializeContactForm() {
+  const form = document.querySelector('.contact-form');
+  if (!form) return;
+
+  form.addEventListener('submit', event => {
+    if (!form.checkValidity()) {
+      event.preventDefault();
+      form.reportValidity();
+      return;
+    }
+
+    event.preventDefault();
+    const button = form.querySelector('button[type="submit"]');
+    if (button) {
+      const original = button.textContent;
+      button.textContent = '送信ありがとうございました';
+      button.disabled = true;
+      setTimeout(() => {
+        button.textContent = original;
+        button.disabled = false;
+        form.reset();
+      }, 1800);
+    }
+  });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  initializeSiteNavigation();
+  initializeProductFilter();
+  initializeContactForm();
+});
