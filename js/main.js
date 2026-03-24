@@ -218,8 +218,35 @@ function initializeContactForm() {
   });
 }
 
+function initializeHeroSlides() {
+  const slideContainer = document.querySelector('[data-hero-slides]');
+  if (!slideContainer) return;
+
+  const slides = Array.from(slideContainer.querySelectorAll('.hero__image'));
+  const dots = Array.from(document.querySelectorAll('.hero__dot'));
+  if (slides.length < 2) return;
+
+  let currentIndex = 0;
+
+  const showSlide = index => {
+    slides.forEach((slide, slideIndex) => {
+      slide.classList.toggle('is-active', slideIndex === index);
+    });
+    dots.forEach((dot, dotIndex) => {
+      dot.classList.toggle('is-active', dotIndex === index);
+    });
+    currentIndex = index;
+  };
+
+  window.setInterval(() => {
+    const nextIndex = (currentIndex + 1) % slides.length;
+    showSlide(nextIndex);
+  }, 4500);
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   initializeSiteNavigation();
   initializeProductFilter();
   initializeContactForm();
+  initializeHeroSlides();
 });

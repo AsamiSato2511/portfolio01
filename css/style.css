@@ -4,6 +4,7 @@
    ============================================================ */
 
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Inter:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap');
 
 /* --- CSS Variables --- */
 :root {
@@ -791,13 +792,15 @@ a:hover { color: var(--black); }
   --site-shadow: 0 10px 24px rgba(140, 106, 86, 0.08);
   --site-shadow-hover: 0 14px 32px rgba(140, 106, 86, 0.12);
   --site-button-shadow: 0 6px 14px rgba(140, 106, 86, 0.18);
+  --site-font-heading: 'Shippori Mincho', serif;
+  --site-font-body: 'Zen Kaku Gothic New', sans-serif;
 }
 
 .site-body {
   margin: 0;
   color: var(--site-text);
   background: var(--site-bg);
-  font-family: 'Noto Sans JP', sans-serif;
+  font-family: var(--site-font-body);
 }
 
 .site-body *, .site-body *::before, .site-body *::after {
@@ -861,9 +864,10 @@ a:hover { color: var(--black); }
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  font-size: 20px;
+  font-family: var(--site-font-heading);
+  font-size: 21px;
   font-weight: 600;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.03em;
   text-decoration: none;
 }
 
@@ -876,6 +880,13 @@ a:hover { color: var(--black); }
   border-radius: 50%;
   background: rgba(184, 169, 217, 0.18);
   color: var(--site-accent);
+}
+
+.site-logo__mark-image {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+  display: block;
 }
 
 .site-nav-toggle {
@@ -927,6 +938,7 @@ a:hover { color: var(--black); }
   display: block;
   padding: 12px 14px;
   border-radius: 14px;
+  font-family: var(--site-font-body);
   font-size: 14px;
   font-weight: 500;
   letter-spacing: 0.05em;
@@ -944,9 +956,10 @@ a:hover { color: var(--black); }
 .eyebrow {
   margin: 0 0 10px;
   color: var(--site-text-sub);
-  font-size: 13px;
+  font-family: var(--site-font-body);
+  font-size: 12px;
   font-weight: 500;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
 }
 
@@ -974,6 +987,11 @@ a:hover { color: var(--black); }
   overflow: hidden;
 }
 
+.hero__slides {
+  position: absolute;
+  inset: 0;
+}
+
 .hero__media::after {
   content: '';
   position: absolute;
@@ -999,10 +1017,11 @@ a:hover { color: var(--black); }
 .page-hero h1,
 .detail-summary h1 {
   margin: 0 0 16px;
+  font-family: var(--site-font-heading);
   font-size: 40px;
-  line-height: 1.4;
-  font-weight: 700;
-  letter-spacing: 0.02em;
+  line-height: 1.35;
+  font-weight: 600;
+  letter-spacing: 0.03em;
 }
 
 .hero__lead,
@@ -1015,6 +1034,7 @@ a:hover { color: var(--black); }
 .filter-panel p {
   margin: 0;
   color: var(--site-text-sub);
+  font-family: var(--site-font-body);
   font-size: 16px;
   line-height: 1.9;
   letter-spacing: 0.02em;
@@ -1046,6 +1066,33 @@ a:hover { color: var(--black); }
   width: 100%;
   height: 100%;
   object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+}
+
+.hero__image.is-active {
+  opacity: 1;
+}
+
+.hero__pagination {
+  position: absolute;
+  right: 24px;
+  bottom: 24px;
+  z-index: 1;
+  display: flex;
+  gap: 10px;
+}
+
+.hero__dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+}
+
+.hero__dot.is-active {
+  background: #fff;
 }
 
 .hero-card {
@@ -1085,10 +1132,11 @@ a:hover { color: var(--black); }
 .contact-card h2,
 .guide-card-block h2 {
   margin: 0 0 12px;
+  font-family: var(--site-font-heading);
   font-size: 28px;
-  line-height: 1.5;
-  font-weight: 700;
-  letter-spacing: 0.03em;
+  line-height: 1.45;
+  font-weight: 600;
+  letter-spacing: 0.04em;
 }
 
 .feature-grid,
@@ -1135,6 +1183,7 @@ a:hover { color: var(--black); }
 .filter-panel h3,
 .filter-panel h2 {
   margin: 0 0 8px;
+  font-family: var(--site-font-heading);
   font-size: 20px;
   line-height: 1.6;
   font-weight: 600;
@@ -1153,6 +1202,7 @@ a:hover { color: var(--black); }
 .faq-item p,
 .pagination__link {
   color: var(--site-text-sub);
+  font-family: var(--site-font-body);
   font-size: 14px;
   line-height: 1.8;
   letter-spacing: 0.02em;
@@ -1170,15 +1220,25 @@ a:hover { color: var(--black); }
   background: rgba(184, 169, 217, 0.18);
 }
 
+.feature-card__icon-image {
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+  display: block;
+}
+
 .scene-grid {
   display: grid;
   gap: 24px;
 }
 
 .scene-card {
+  position: relative;
   display: block;
   overflow: hidden;
   text-decoration: none;
+  color: var(--site-text);
+  min-height: 320px;
 }
 
 .scene-card:hover,
@@ -1200,9 +1260,30 @@ a:hover { color: var(--black); }
   background: linear-gradient(135deg, #efe6dd, #f8f4ef 40%, #d8bfaf);
 }
 
-.scene-card__body {
+.scene-card__image {
+  overflow: hidden;
+  border-radius: 20px;
+  min-height: 320px;
+}
+
+.scene-card__photo {
   display: block;
-  padding: 20px;
+  width: 100%;
+  height: 100%;
+  min-height: 320px;
+  object-fit: cover;
+}
+
+.scene-card__body {
+  position: absolute;
+  right: 0;
+  bottom: 24px;
+  left: 0;
+  z-index: 2;
+  display: block;
+  padding: 0 20px;
+  background: transparent;
+  text-align: center;
 }
 
 .scene-card__body strong,
@@ -1210,7 +1291,20 @@ a:hover { color: var(--black); }
   display: block;
 }
 
-.scene-card__body small { margin-top: 4px; }
+.scene-card__body strong {
+  margin: 0;
+  color: #ffffff !important;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.45;
+  letter-spacing: 0.01em;
+  opacity: 1;
+  text-shadow: 0 2px 12px rgba(47, 39, 34, 0.45);
+}
+
+.scene-card__body small {
+  display: none;
+}
 
 .product-card { overflow: hidden; }
 .product-card__badge {
@@ -1284,6 +1378,7 @@ a:hover { color: var(--black); }
   border: 1px solid transparent;
   border-radius: 999px;
   background: #fff;
+  font-family: var(--site-font-body);
   font-size: 14px;
   font-weight: 500;
   line-height: 1.4;
@@ -1379,6 +1474,7 @@ a:hover { color: var(--black); }
 .form-label {
   display: inline-block;
   margin-bottom: 8px;
+  font-family: var(--site-font-body);
   font-size: 14px;
   font-weight: 500;
   line-height: 1.6;
@@ -1395,6 +1491,7 @@ a:hover { color: var(--black); }
   border-radius: 14px;
   background: #fff;
   color: var(--site-text);
+  font-family: var(--site-font-body);
   font-size: 16px;
   line-height: 1.8;
 }
@@ -1463,6 +1560,7 @@ a:hover { color: var(--black); }
 }
 .faq-item summary {
   cursor: pointer;
+  font-family: var(--site-font-heading);
   font-size: 18px;
   font-weight: 600;
   line-height: 1.6;
@@ -1484,6 +1582,7 @@ a:hover { color: var(--black); }
 }
 .site-footer__title {
   margin: 0 0 14px;
+  font-family: var(--site-font-body);
   font-size: 16px;
   font-weight: 600;
 }
@@ -1548,7 +1647,7 @@ a:hover { color: var(--black); }
   .home-section { padding: 88px 0; }
   .hero__media,
   .hero__content { min-height: 680px; }
-  .scene-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .scene-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
   .product-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
   .feature-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .site-footer__grid { grid-template-columns: 1.5fr 1fr 1fr 1.2fr; }
