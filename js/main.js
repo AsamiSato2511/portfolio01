@@ -173,19 +173,79 @@ function initializeSiteNavigation() {
 function initializeProductFilter() {
   const chips = document.querySelectorAll('[data-filter]');
   const cards = document.querySelectorAll('.product-card[data-scene]');
-  if (!chips.length || !cards.length) return;
+  const pageLinks = document.querySelectorAll('[data-page-link]');
+  const nextLink = document.querySelector('[data-page-next]');
+  if (!cards.length) return;
+
+  let currentPage = 1;
+  const perPage = 8;
+
+  const updatePagination = visibleCards => {
+    const totalPages = Math.max(1, Math.ceil(visibleCards.length / perPage));
+    if (currentPage > totalPages) currentPage = totalPages;
+
+    cards.forEach(card => {
+      if (card.classList.contains('is-filtered-out')) {
+        card.classList.add('is-page-hidden');
+      }
+    });
+
+    visibleCards.forEach((card, index) => {
+      const page = Math.floor(index / perPage) + 1;
+      card.classList.toggle('is-page-hidden', page !== currentPage);
+    });
+
+    pageLinks.forEach(link => {
+      const page = Number(link.dataset.pageLink);
+      link.classList.toggle('is-current', page === currentPage);
+      link.style.display = page <= totalPages ? 'inline-flex' : 'none';
+    });
+
+    if (nextLink) {
+      const hasNext = currentPage < totalPages;
+      nextLink.style.display = totalPages > 1 ? 'inline-flex' : 'none';
+      nextLink.setAttribute('aria-disabled', String(!hasNext));
+      nextLink.style.opacity = hasNext ? '1' : '0.45';
+      nextLink.style.pointerEvents = hasNext ? 'auto' : 'none';
+    }
+  };
+
+  const getVisibleCards = () => Array.from(cards).filter(card => !card.classList.contains('is-filtered-out'));
 
   const applyFilter = filter => {
     cards.forEach(card => {
-      const matches = filter === 'all' || card.dataset.scene === filter;
-      card.classList.toggle('is-hidden', !matches);
+      const normalizedScene = card.dataset.scene === 'anniversary' ? 'celebration' : card.dataset.scene;
+      const matches = filter === 'all' || normalizedScene === filter;
+      card.classList.toggle('is-filtered-out', !matches);
     });
     chips.forEach(chip => chip.classList.toggle('is-active', chip.dataset.filter === filter));
+    currentPage = 1;
+    updatePagination(getVisibleCards());
   };
 
   chips.forEach(chip => {
     chip.addEventListener('click', () => applyFilter(chip.dataset.filter));
   });
+
+  pageLinks.forEach(link => {
+    link.addEventListener('click', event => {
+      event.preventDefault();
+      currentPage = Number(link.dataset.pageLink);
+      updatePagination(getVisibleCards());
+    });
+  });
+
+  if (nextLink) {
+    nextLink.addEventListener('click', event => {
+      event.preventDefault();
+      const visibleCards = getVisibleCards();
+      const totalPages = Math.max(1, Math.ceil(visibleCards.length / perPage));
+      if (currentPage < totalPages) {
+        currentPage += 1;
+        updatePagination(visibleCards);
+      }
+    });
+  }
 
   const params = new URLSearchParams(window.location.search);
   const initial = params.get('scene') || 'all';

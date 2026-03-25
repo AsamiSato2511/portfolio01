@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bloom Letter | Icon Proposals</title>
+  <style>
+    :root {
+      --bg: #f7f1ea;
+      --panel: rgba(255, 253, 249, 0.92);
+      --line: rgba(122, 91, 86, 0.14);
+      --text: #4e3a36;
+      --subtle: #7d6560;
+      --accent: #b66d76;
+      --accent-soft: #ead2c7;
+      --shadow: 0 24px 50px rgba(98, 72, 65, 0.12);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Yu Gothic UI", "Hiragino Sans", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(231, 193, 193, 0.45), transparent 34%),
+        radial-gradient(circle at bottom right, rgba(187, 208, 179, 0.42), transparent 30%),
+        linear-gradient(180deg, #fcf7f1 0%, var(--bg) 100%);
+    }
+
+    .page {
+      width: min(1120px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 56px 0 72px;
+    }
+
+    .hero {
+      margin-bottom: 36px;
+    }
+
+    .eyebrow {
+      margin: 0 0 10px;
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0 0 14px;
+      font-size: clamp(30px, 4vw, 48px);
+      line-height: 1.15;
+    }
+
+    .lead {
+      max-width: 720px;
+      margin: 0;
+      color: var(--subtle);
+      font-size: 16px;
+      line-height: 1.8;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+    }
+
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      padding: 26px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(8px);
+    }
+
+    .card--recommended {
+      position: relative;
+      outline: 2px solid rgba(182, 109, 118, 0.36);
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 28px;
+      padding: 0 12px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .icon-frame {
+      display: grid;
+      place-items: center;
+      margin: 18px 0 20px;
+      min-height: 220px;
+      border-radius: 24px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.7), rgba(249,241,236,0.9));
+      border: 1px solid rgba(122, 91, 86, 0.08);
+    }
+
+    .icon-frame img {
+      width: 160px;
+      height: 160px;
+      display: block;
+    }
+
+    h2 {
+      margin: 0 0 10px;
+      font-size: 24px;
+    }
+
+    p {
+      margin: 0 0 14px;
+      line-height: 1.75;
+      color: var(--subtle);
+    }
+
+    ul {
+      margin: 0;
+      padding-left: 18px;
+      color: var(--text);
+      line-height: 1.75;
+    }
+
+    .summary {
+      margin-top: 30px;
+      padding: 24px 28px;
+      border-radius: 24px;
+      background: rgba(255, 252, 247, 0.84);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+    }
+
+    .summary strong {
+      color: var(--text);
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="hero">
+      <p class="eyebrow">Bloom Letter</p>
+      <h1>HPアイコン提案</h1>
+      <p class="lead">「花を贈る」と「想いを届ける」が同時に伝わるよう、Bloom Letter 用に3方向のアイコンを用意しました。faviconやヘッダーロゴに縮小しても崩れにくい、単純なシルエットを優先しています。</p>
+    </section>
+
+    <section class="grid">
+      <article class="card card--recommended">
+        <span class="badge">Recommended</span>
+        <div class="icon-frame">
+          <img src="../images/branding/icon-concept-petal-letter.svg" alt="花びらと封筒を組み合わせた Bloom Letter のアイコン案">
+        </div>
+        <h2>1. 花びら + 封筒</h2>
+        <p>Bloom Letter の名前と意味が最も素直に伝わる案です。花のやわらかさと、手紙を届ける行為をひとつの形にまとめています。</p>
+        <ul>
+          <li>サービス名との一致度が高い</li>
+          <li>やさしく上品で、今の写真トーンと相性が良い</li>
+          <li>faviconにしても意味が残りやすい</li>
+        </ul>
+      </article>
+
+      <article class="card">
+        <span class="badge">Elegant</span>
+        <div class="icon-frame">
+          <img src="../images/branding/icon-concept-b-monogram.svg" alt="B を花と茎に見立てた Bloom Letter のモノグラムアイコン案">
+        </div>
+        <h2>2. B モノグラム</h2>
+        <p>ブランドロゴらしい洗練さを重視した案です。`B` をベースにしているので、名刺やSNSアイコンなどにも展開しやすい構成です。</p>
+        <ul>
+          <li>大人っぽく、少し高級感が出る</li>
+          <li>文字ロゴと組み合わせたときにまとまりやすい</li>
+          <li>ただし Bloom Letter の意味は案1より少し抽象的</li>
+        </ul>
+      </article>
+
+      <article class="card">
+        <span class="badge">Gift Feel</span>
+        <div class="icon-frame">
+          <img src="../images/branding/icon-concept-gift-seal.svg" alt="ギフトシールの中に花とカードを入れた Bloom Letter のアイコン案">
+        </div>
+        <h2>3. ギフトシール</h2>
+        <p>ECサイトとしての「贈り物感」を強めた案です。パッケージやラッピングに貼られたシールのような、親しみやすい印象を狙っています。</p>
+        <ul>
+          <li>ギフトECらしさがわかりやすい</li>
+          <li>やわらかく親近感がある</li>
+          <li>かわいさが強く、少しカジュアル寄りになる</li>
+        </ul>
+      </article>
+    </section>
+
+    <section class="summary">
+      <p><strong>いちばんおすすめは 1. 花びら + 封筒 です。</strong></p>
+      <p>理由は、Bloom Letter という名前を最も自然に視覚化できることと、小さな表示でも「花」と「届ける」が両方伝わるからです。迷ったらこの方向を基準に、線の太さや色だけ少し調整して仕上げるのが進めやすいです。</p>
+    </section>
+  </main>
+</body>
+</html>
