@@ -1,0 +1,93 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cart | Bloom Letter</title>
+  <meta name="description" content="Bloom Letterのカート確認ページ。選んだ花束と注文内容を確認できます。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,300..700,0..1,-50..200&family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="images/Top/icon-transparent.png" type="image/png">
+</head>
+<body class="site-body">
+  <a class="skip-link" href="#main-content">コンテンツへスキップ</a>
+  <header class="site-header" data-site-header>
+    <div class="site-shell site-header__inner">
+      <a class="site-logo" href="index.html" aria-label="Bloom Letter ホーム"><span class="site-logo__mark" aria-hidden="true"><img class="site-logo__mark-image" src="images/Top/icon-transparent.png" alt=""></span><span>Bloom Letter</span></a>
+      <button class="site-nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav"><span class="material-symbols-outlined" aria-hidden="true">menu</span><span class="site-nav-toggle__label">メニュー</span></button>
+      <nav class="site-nav" id="site-nav" aria-label="グローバルナビゲーション">
+        <ul class="site-nav__list">
+          <li><a class="site-nav__link" href="index.html">Home</a></li>
+          <li><a class="site-nav__link" href="products.html#product-grid-title">Collection</a></li>
+          <li><a class="site-nav__link" href="about.html">About</a></li>
+          <li><a class="site-nav__link" href="guide.html">Guide</a></li>
+          <li><a class="site-nav__link" href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content" class="page-main" data-cart-page>
+    <div class="site-shell">
+      <nav class="breadcrumb" aria-label="パンくずリスト">
+        <ol>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="products.html#product-grid-title">Collection</a></li>
+          <li aria-current="page">Cart</li>
+        </ol>
+      </nav>
+
+        <section class="page-hero page-hero--plain cart-hero">
+          <h1>カートに追加しました</h1>
+          <p class="cart-hero__lead">
+            <span>商品内容をご確認のうえ、このまま決済へ進むか、</span>
+            <span>ご相談しながら進めるかをお選びいただけます。</span>
+          </p>
+        </section>
+
+      <section class="cart-layout">
+        <article class="cart-card cart-card--item">
+          <div class="cart-item__media">
+            <div class="cart-item__image" aria-hidden="true"></div>
+          </div>
+          <div class="cart-item__content">
+            <p class="cart-item__scene">Collection Item</p>
+            <h2 class="cart-item__title">Spring Bouquet</h2>
+            <p class="cart-item__lead">春の光のようなやさしい色合いでまとめた、誕生日や感謝の気持ちを自然に届ける花束です。明るさがありながらも落ち着いた印象で、初めてのフラワーギフトにも選びやすい一束です。</p>
+              <div class="cart-item__meta">
+                <dl class="cart-item__meta-card cart-item__meta-card--price">
+                  <div><dt>価格</dt><dd class="cart-item__price">¥7,800</dd></div>
+                </dl>
+                <dl class="cart-item__meta-card cart-item__meta-card--message">
+                  <div><dt>メッセージカード</dt><dd class="cart-item__message">希望しない</dd></div>
+                </dl>
+                <dl class="cart-item__meta-card cart-item__meta-card--shipping">
+                  <div><dt>配送目安</dt><dd class="cart-item__shipping">注文から3営業日以内に発送</dd></div>
+                </dl>
+              </div>
+            </div>
+          </article>
+
+        <aside class="cart-card cart-card--summary">
+          <h2>ご注文内容</h2>
+          <div class="cart-summary__row">
+            <span>商品小計</span>
+            <strong class="cart-summary__price">¥7,800</strong>
+          </div>
+          <p class="cart-summary__note">お届け日や贈る相手の雰囲気に迷った場合は、<br>お気軽にご相談ください。</p>
+          <div class="cart-summary__actions">
+              <button class="btn btn-primary cart-summary__checkout" type="button">決済に進む</button>
+            <a class="btn btn-secondary cart-summary__consult" href="contact.html">相談して進める</a>
+            <a class="text-link cart-summary__back" href="products.html#product-grid-title">Collectionに戻る</a>
+          </div>
+        </aside>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer"><div class="site-shell site-footer__grid"><div><a class="site-logo site-logo--footer" href="index.html"><span class="site-logo__mark" aria-hidden="true"><img class="site-logo__mark-image" src="images/Top/icon-transparent.png" alt=""></span><span>Bloom Letter</span></a><p class="site-footer__text">花で想いを届ける<br>フラワーギフトサイト</p></div><div><h2 class="site-footer__title">Service</h2><ul class="site-footer__list"><li><a href="products.html#product-grid-title">商品一覧</a></li><li><a href="guide.html">Guide</a></li></ul></div><div><h2 class="site-footer__title">Support</h2><ul class="site-footer__list"><li><a href="guide.html#faq">FAQ</a></li><li><a href="about.html">About</a></li></ul></div><div><h2 class="site-footer__title">Contact</h2><p class="site-footer__text"><a href="contact.html">迷ったときはこちらから<br>ご相談ください。</a></p></div></div></footer>
+  <script src="js/main.js"></script>
+</body>
+</html>

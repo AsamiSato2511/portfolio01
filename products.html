@@ -20,7 +20,7 @@
       <nav class="site-nav" id="site-nav" aria-label="グローバルナビゲーション">
         <ul class="site-nav__list">
           <li><a class="site-nav__link" href="index.html">Home</a></li>
-          <li><a class="site-nav__link is-current" href="products.html">Shop</a></li>
+          <li><a class="site-nav__link is-current" href="products.html">Collection</a></li>
           <li><a class="site-nav__link" href="about.html">About</a></li>
           <li><a class="site-nav__link" href="guide.html">Guide</a></li>
           <li><a class="site-nav__link" href="contact.html">Contact</a></li>
@@ -49,9 +49,9 @@
           </div>
           <div class="filter-panel__section">
             <h3>価格帯</h3>
-            <label class="filter-option"><input type="checkbox"> 〜 ¥7,000</label>
-            <label class="filter-option"><input type="checkbox"> ¥7,001 〜 ¥10,000</label>
-            <label class="filter-option"><input type="checkbox"> ¥10,001 〜</label>
+            <label class="filter-option"><input type="checkbox" data-price-range="low"> 〜 ¥7,000</label>
+            <label class="filter-option"><input type="checkbox" data-price-range="mid"> ¥7,001 〜 ¥10,000</label>
+            <label class="filter-option"><input type="checkbox" data-price-range="high"> ¥10,001 〜</label>
           </div>
           <div class="filter-panel__section">
             <h3>並び替え</h3>
@@ -73,7 +73,7 @@
               <a class="scene-card scene-card--compact" href="products.html?scene=seasonal#product-grid"><span class="scene-card__image"><img class="scene-card__photo" src="images/Top/scene/scene6.png" alt="季節のギフト向けフラワーギフトのイメージ"></span><span class="scene-card__body"><strong>Seasonal Gift</strong><small>季節を贈る</small></span></a>
             </div>
           </section>
-          <section aria-labelledby="product-grid-title">
+          <section class="product-listing__grid-section" aria-labelledby="product-grid-title">
             <div class="section-heading section-heading--compact"><p class="eyebrow">Products</p><h2 id="product-grid-title">商品一覧</h2></div>
             <div class="product-grid" id="product-grid">
               <article class="product-card" data-scene="celebration" data-page="1"><span class="product-card__badge">Celebration</span><div class="product-card__image product-card__image--page2-8" aria-hidden="true"></div><div class="product-card__content"><h3>Apricot Carnation</h3><p>アプリコット色のカーネーションが映える、温かみのある祝福の花束。</p><div class="product-card__footer"><strong>¥7,400</strong><a href="product-detail.html">詳細を見る</a></div></div></article>

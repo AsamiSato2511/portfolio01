@@ -512,6 +512,8 @@ function initializeProductDetailPage() {
   const detailTitle = detailSummary.querySelector('h1');
   const detailPrice = detailSummary.querySelector('.detail-summary__price');
   const detailLead = detailSummary.querySelector('.detail-summary__lead');
+  const addToCartButton = detailSummary.querySelector('[data-add-to-cart]');
+  const messageCardSelect = detailSummary.querySelector('#message-card');
   const infoItems = detailSummary.querySelectorAll('.detail-info--cards > div dd');
   const galleryMain = document.querySelector('.detail-gallery__main');
   const relatedGrid = document.querySelector('.related-products__grid--wide, .related-products__grid');
@@ -538,6 +540,16 @@ function initializeProductDetailPage() {
     galleryMain.setAttribute('aria-label', `${product.name}のメイン画像`);
   }
 
+  if (addToCartButton) {
+    addToCartButton.addEventListener('click', () => {
+      const params = new URLSearchParams({
+        product: product.id,
+        messageCard: messageCardSelect?.value || '希望しない'
+      });
+      window.location.href = `cart.html?${params.toString()}`;
+    });
+  }
+
   if (relatedGrid) {
     relatedGrid.innerHTML = getRecommendedProducts(product, 4)
       .map(renderRelatedProductCard)
@@ -553,6 +565,113 @@ function initializeProductDetailPage() {
       link.href = href;
       bindClickableCard(card, href, productData.name);
     });
+  }
+}
+
+function initializeCartPage() {
+  const cartPage = document.querySelector('[data-cart-page]');
+  if (!cartPage) return;
+
+  const params = new URLSearchParams(window.location.search);
+  const productId = params.get('product') || 'spring-bouquet';
+  const messageCard = params.get('messageCard') || '希望しない';
+  const product = PRODUCT_BY_ID.get(productId) || PRODUCT_BY_ID.get('spring-bouquet');
+  if (!product) return;
+
+  const heroTitle = cartPage.querySelector('.cart-hero h1');
+  const heroLead = cartPage.querySelector('.cart-hero p');
+  const itemImage = cartPage.querySelector('.cart-item__image');
+  const itemScene = cartPage.querySelector('.cart-item__scene');
+  const itemTitle = cartPage.querySelector('.cart-item__title');
+  const itemLead = cartPage.querySelector('.cart-item__lead');
+  const itemPrice = cartPage.querySelector('.cart-item__price');
+  const itemMessage = cartPage.querySelector('.cart-item__message');
+  const itemShipping = cartPage.querySelector('.cart-item__shipping');
+  const summaryPrice = cartPage.querySelector('.cart-summary__price');
+  const checkoutAction = cartPage.querySelector('.cart-summary__checkout');
+  const consultAction = cartPage.querySelector('.cart-summary__consult');
+  const backAction = cartPage.querySelector('.cart-summary__back');
+  const breadcrumbCurrent = cartPage.querySelector('.breadcrumb li[aria-current="page"]');
+  const metaDescription = document.querySelector('meta[name="description"]');
+
+  document.title = `Cart | ${product.name} | Bloom Letter`;
+  if (metaDescription) {
+    metaDescription.setAttribute('content', `${product.name}をカートに追加した状態を確認できるBloom Letterのページです。`);
+  }
+
+  if (breadcrumbCurrent) breadcrumbCurrent.textContent = 'Cart';
+  if (heroTitle) heroTitle.textContent = 'カートに追加しました';
+  if (heroLead) heroLead.textContent = '商品内容をご確認のうえ、このまま決済へ進むか、ご相談しながら進めるかをお選びいただけます。';
+  if (itemScene) itemScene.textContent = product.sceneLabel || getDetailEyebrow(product.scene);
+  if (itemTitle) itemTitle.textContent = product.name;
+  if (itemLead) itemLead.textContent = product.description;
+  if (itemPrice) itemPrice.textContent = formatYenPrice(product.price);
+  if (itemMessage) itemMessage.textContent = messageCard;
+  if (itemShipping) itemShipping.textContent = product.shipping;
+  if (summaryPrice) summaryPrice.textContent = formatYenPrice(product.price);
+
+  if (itemImage) {
+    itemImage.style.backgroundImage = `url('${product.image}')`;
+    itemImage.style.backgroundPosition = product.imagePosition || 'center 42%';
+  }
+
+  if (consultAction) {
+    consultAction.href = `contact.html?product=${encodeURIComponent(product.id)}`;
+  }
+
+  if (backAction) {
+    backAction.href = `product-detail.html?product=${encodeURIComponent(product.id)}`;
+  }
+}
+
+function initializeCheckoutPage() {
+  const checkoutPage = document.querySelector('[data-checkout-page]');
+  if (!checkoutPage) return;
+
+  const params = new URLSearchParams(window.location.search);
+  const productId = params.get('product') || 'spring-bouquet';
+  const messageCard = params.get('messageCard') || '希望しない';
+  const product = PRODUCT_BY_ID.get(productId) || PRODUCT_BY_ID.get('spring-bouquet');
+  if (!product) return;
+
+  const heroTitle = checkoutPage.querySelector('.cart-hero h1');
+  const itemImage = checkoutPage.querySelector('.cart-item__image');
+  const itemScene = checkoutPage.querySelector('.cart-item__scene');
+  const itemTitle = checkoutPage.querySelector('.cart-item__title');
+  const itemLead = checkoutPage.querySelector('.cart-item__lead');
+  const itemPrice = checkoutPage.querySelector('.cart-item__price');
+  const itemMessage = checkoutPage.querySelector('.cart-item__message');
+  const itemShipping = checkoutPage.querySelector('.cart-item__shipping');
+  const summaryPrice = checkoutPage.querySelector('.cart-summary__price');
+  const backAction = checkoutPage.querySelector('.cart-summary__back');
+  const consultAction = checkoutPage.querySelector('.cart-summary__checkout');
+  const metaDescription = document.querySelector('meta[name="description"]');
+
+  document.title = `Checkout | ${product.name} | Bloom Letter`;
+  if (metaDescription) {
+    metaDescription.setAttribute('content', `${product.name}の決済内容を確認するBloom Letterのページです。`);
+  }
+
+  if (heroTitle) heroTitle.textContent = `${product.name}の決済内容を確認してください`;
+  if (itemScene) itemScene.textContent = product.sceneLabel || getDetailEyebrow(product.scene);
+  if (itemTitle) itemTitle.textContent = product.name;
+  if (itemLead) itemLead.textContent = product.description;
+  if (itemPrice) itemPrice.textContent = formatYenPrice(product.price);
+  if (itemMessage) itemMessage.textContent = messageCard;
+  if (itemShipping) itemShipping.textContent = product.shipping;
+  if (summaryPrice) summaryPrice.textContent = formatYenPrice(product.price);
+
+  if (itemImage) {
+    itemImage.style.backgroundImage = `url('${product.image}')`;
+    itemImage.style.backgroundPosition = product.imagePosition || 'center 42%';
+  }
+
+  if (backAction) {
+    backAction.href = `cart.html?product=${encodeURIComponent(product.id)}&messageCard=${encodeURIComponent(messageCard)}`;
+  }
+
+  if (consultAction) {
+    consultAction.href = `contact.html?product=${encodeURIComponent(product.id)}`;
   }
 }
 
@@ -651,6 +770,7 @@ function initializeSiteNavigation() {
 
 function initializeProductFilter() {
   const chips = document.querySelectorAll('[data-filter]');
+  const priceCheckboxes = document.querySelectorAll('[data-price-range]');
   const productGrid = document.querySelector('#product-grid');
   const productGridTitle = document.querySelector('#product-grid-title');
   const cards = document.querySelectorAll('.product-card[data-scene]');
@@ -660,6 +780,7 @@ function initializeProductFilter() {
   if (!cards.length) return;
 
   let currentPage = 1;
+  let currentSceneFilter = 'all';
   const perPage = 8;
   const originalOrder = Array.from(cards);
 
@@ -722,29 +843,56 @@ function initializeProductFilter() {
   };
 
   const scrollToProductGrid = () => {
-    const target = productGridTitle?.closest('section') || productGridTitle || productGrid;
-    if (!target) return;
+      const target = productGridTitle || productGrid;
+      if (!target) return;
 
-    const targetTop = target.getBoundingClientRect().top + window.scrollY;
-    const headerHeight = document.querySelector('[data-site-header]')?.offsetHeight || 0;
-    const offsetTop = Math.max(0, targetTop - headerHeight - 16);
+      const targetTop = target.getBoundingClientRect().top + window.scrollY;
+      const headerHeight = document.querySelector('[data-site-header]')?.offsetHeight || 0;
+      const viewportWidth = window.innerWidth || document.documentElement.clientWidth || 0;
+      const visualGap = viewportWidth >= 768 ? 20 : 0;
+      const offsetTop = Math.max(0, targetTop - headerHeight - visualGap);
 
-    window.scrollTo({ top: offsetTop, behavior: 'smooth' });
+      window.scrollTo({ top: offsetTop, behavior: 'smooth' });
+    };
+
+  const matchesPriceRange = card => {
+    const selectedRanges = Array.from(priceCheckboxes)
+      .filter(checkbox => checkbox.checked)
+      .map(checkbox => checkbox.dataset.priceRange);
+
+    if (!selectedRanges.length) return true;
+
+    const price = getCardPrice(card);
+
+    return selectedRanges.some(range => {
+      if (range === 'low') return price <= 7000;
+      if (range === 'mid') return price >= 7001 && price <= 10000;
+      if (range === 'high') return price >= 10001;
+      return false;
+    });
   };
 
-  const applyFilter = filter => {
+  const applyFilters = filter => {
+    currentSceneFilter = filter;
+
     cards.forEach(card => {
       const normalizedScene = card.dataset.scene === 'anniversary' ? 'celebration' : card.dataset.scene;
-      const matches = filter === 'all' || normalizedScene === filter;
+      const matchesScene = filter === 'all' || normalizedScene === filter;
+      const matches = matchesScene && matchesPriceRange(card);
       card.classList.toggle('is-filtered-out', !matches);
     });
+
     chips.forEach(chip => chip.classList.toggle('is-active', chip.dataset.filter === filter));
     currentPage = 1;
     updatePagination(getVisibleCards());
   };
 
   chips.forEach(chip => {
-    chip.addEventListener('click', () => applyFilter(chip.dataset.filter));
+    chip.addEventListener('click', () => applyFilters(chip.dataset.filter));
+  });
+
+  priceCheckboxes.forEach(checkbox => {
+    checkbox.addEventListener('change', () => applyFilters(currentSceneFilter));
   });
 
   pageLinks.forEach(link => {
@@ -780,9 +928,28 @@ function initializeProductFilter() {
   const params = new URLSearchParams(window.location.search);
   const initial = params.get('scene') || 'all';
   if (sortSelect) {
-    sortCards(sortSelect.value);
+      sortCards(sortSelect.value);
+    }
+  applyFilters(initial);
+
+  let shouldAdjustOnEntry = window.location.hash === '#product-grid' || window.location.hash === '#product-grid-title';
+  if (!shouldAdjustOnEntry) {
+    try {
+      const referrerUrl = document.referrer ? new URL(document.referrer) : null;
+      const currentPath = window.location.pathname.split('/').pop();
+      const referrerPath = referrerUrl?.pathname?.split('/').pop();
+      shouldAdjustOnEntry = Boolean(referrerPath && referrerPath !== currentPath);
+    } catch (error) {
+      shouldAdjustOnEntry = false;
+    }
   }
-  applyFilter(initial);
+
+  if (shouldAdjustOnEntry) {
+    window.requestAnimationFrame(() => {
+      scrollToProductGrid();
+      window.setTimeout(scrollToProductGrid, 80);
+    });
+  }
 }
 
 function initializeContactForm() {
@@ -868,6 +1035,8 @@ document.addEventListener('DOMContentLoaded', () => {
   initializeSiteNavigation();
   initializeProductLinks();
   initializeProductDetailPage();
+  initializeCartPage();
+  initializeCheckoutPage();
   initializeProductFilter();
   initializeContactForm();
   initializeHeroSlides();
