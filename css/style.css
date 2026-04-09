@@ -1050,10 +1050,10 @@ a:hover { color: var(--black); }
 .detail-summary h1 {
   margin: 0 0 16px;
   font-family: var(--site-font-heading);
-  font-size: clamp(42px, 4.4vw, 50px);
-  line-height: 1.24;
+  font-size: clamp(46px, 4.9vw, 58px);
+  line-height: 1.18;
   font-weight: 700;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.018em;
   color: #4E3B3B;
   text-shadow: 0 10px 28px rgba(255, 248, 244, 0.42);
 }
@@ -1368,12 +1368,13 @@ a:hover { color: var(--black); }
 .product-card__image,
 .detail-gallery__main,
 .story-visual {
-  border-radius: 14px;
+  border-radius: 20px;
   min-height: 180px;
   background: linear-gradient(135deg, #efe6dd, #f8f4ef 40%, #d8bfaf);
 }
 
 .product-card__image {
+  overflow: hidden;
   background-size: cover;
   background-position: center 36%;
   background-repeat: no-repeat;
@@ -1403,6 +1404,7 @@ a:hover { color: var(--black); }
 
 .product-card__image--birthday-bloom {
   background-image: url("../images/Top/scene/Birthday Bloom.png");
+  background-position: center 33%;
 }
 
 .product-card__image--anniversary-alt {
@@ -1459,10 +1461,19 @@ a:hover { color: var(--black); }
 .product-card__image--page2-8 { background-image: url('../images/Top/scene/2-8.png'); }
 .product-card__image--scene-celebration { background-image: url('../images/Top/scene/scene4.png'); }
 .product-card__image--scene-seasonal { background-image: url('../images/Top/scene/scene6.png'); }
-.product-card__image--wisteria { background-image: url("../images/Top/scene/Wisteria Veil.png"); }
-.product-card__image--sunflower { background-image: url("../images/Top/scene/Sunflower Ray.png"); }
+.product-card__image--wisteria {
+  background-image: url("../images/Top/scene/Wisteria Veil.png");
+  background-position: center 35%;
+}
+.product-card__image--sunflower {
+  background-image: url("../images/Top/scene/Sunflower Ray.png");
+  background-position: center 34%;
+}
 .product-card__image--babybreath { background-image: url("../images/Top/scene/Baby's Breath Air.png"); }
-.product-card__image--lilybell { background-image: url("../images/Top/scene/Lily Bell White.png"); }
+.product-card__image--lilybell {
+  background-image: url("../images/Top/scene/Lily Bell White.png");
+  background-position: center 36%;
+}
 
 .story-visual--story-3 {
   background-image: url('../images/Top/About/story-3.png');
@@ -2002,9 +2013,103 @@ a:hover { color: var(--black); }
 }
 
 @media (max-width: 767px) {
+  .product-card__image {
+    min-height: 208px;
+    background-size: 114%;
+    background-position: center 40%;
+  }
+
+  .product-card__image--page2-1 {
+    background-size: 112%;
+    background-position: center 38%;
+  }
+
+  .product-card__image--page2-2 {
+    background-size: 104%;
+    background-position: center 21%;
+  }
+
+  .product-card__image--page2-3 {
+    background-size: 110%;
+    background-position: center 24%;
+  }
+
+  .product-card__image--page2-4 {
+    background-size: 111%;
+    background-position: center 36%;
+  }
+
+  .product-card__image--page2-5 {
+    background-size: 106%;
+    background-position: center 32%;
+  }
+
+  .product-card__image--page2-6 {
+    background-size: 111%;
+    background-position: center 38%;
+  }
+
+  .product-card__image--page2-7 {
+    background-size: 110%;
+    background-position: center 35%;
+  }
+
   .product-card__image--page2-8 {
+    background-size: 101%;
+    background-position: center 16%;
+  }
+
+  .product-card__image--soft-merci {
+    background-size: 110%;
+    background-position: center 28%;
+  }
+
+  .product-card__image--birthday-bloom {
+    background-size: 103%;
+    background-position: center 22%;
+  }
+
+  .product-card__image--babybreath {
+    background-size: 100%;
+    background-position: center 18%;
+  }
+
+  .product-card__image--rose {
+    background-size: 107%;
+    background-position: center 33%;
+  }
+
+  .product-card__image--premium {
     background-size: 108%;
-    background-position: center 56%;
+    background-position: center 36%;
+  }
+
+  .product-card__image--spring,
+  .product-card__image--scene-seasonal,
+  .product-card__image--sunflower {
+    background-size: 103%;
+    background-position: center 20%;
+  }
+
+  .product-card__image--lilybell,
+  .product-card__image--birthday-alt,
+  .product-card__image--anniversary-alt,
+  .product-card__image--thanks-alt,
+  .product-card__image--celebration-alt,
+  .product-card__image--scene-celebration,
+  .product-card__image--garden {
+    background-size: 110%;
+    background-position: center 39%;
+  }
+
+  .product-card__image--lilybell {
+    background-size: 104%;
+    background-position: center 12%;
+  }
+
+  .product-card__image--wisteria {
+    background-size: 102%;
+    background-position: center 18%;
   }
 
   .story-copy {
@@ -2038,8 +2143,9 @@ a:hover { color: var(--black); }
   }
 
   .hero__copy h1 {
-    font-size: clamp(28px, 7vw, 34px);
-    line-height: 1.24;
+    font-size: clamp(36px, 10vw, 48px);
+    line-height: 1.14;
+    letter-spacing: 0.015em;
     text-shadow: 0 4px 18px rgba(255, 252, 248, 0.5);
   }
 
@@ -2258,7 +2364,7 @@ a:hover { color: var(--black); }
 
 .related-product-card__image {
   min-height: 214px;
-  border-radius: 15px;
+  border-radius: 20px;
   background-size: var(--related-size, 122%);
   background-position: var(--related-position, center 42%);
   background-repeat: no-repeat;
@@ -2860,6 +2966,21 @@ a:hover { color: var(--black); }
 }
 
 @media (max-width: 900px) {
+  .product-card__image--babybreath {
+    background-size: 100% !important;
+    background-position: center 18% !important;
+  }
+
+  .product-card__image--page2-8 {
+    background-size: 101% !important;
+    background-position: center 16% !important;
+  }
+
+  .product-card__image--lilybell {
+    background-size: 104% !important;
+    background-position: center 12% !important;
+  }
+
   .shop-layout {
     display: flex;
     flex-direction: column;
