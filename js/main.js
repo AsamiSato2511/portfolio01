@@ -601,7 +601,7 @@ function initializeCartPage() {
 
   if (breadcrumbCurrent) breadcrumbCurrent.textContent = 'Cart';
   if (heroTitle) heroTitle.textContent = 'カートに追加しました';
-  if (heroLead) heroLead.textContent = '商品内容をご確認のうえ、このまま決済へ進むか、ご相談しながら進めるかをお選びいただけます。';
+  if (heroLead) heroLead.innerHTML = '<span>商品内容をご確認のうえ、このまま決済へ進むか、</span><span>ご相談しながら進めるかをお選びいただけます。</span>';
   if (itemScene) itemScene.textContent = product.sceneLabel || getDetailEyebrow(product.scene);
   if (itemTitle) itemTitle.textContent = product.name;
   if (itemLead) itemLead.textContent = product.description;
