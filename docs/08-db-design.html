@@ -18,15 +18,15 @@
         <div class="doc-category">DOCUMENT 08</div>
         <h1 class="doc-title">データベース設計書</h1>
         <div class="doc-meta">
-          <span><span class="material-symbols-outlined icon-sm">calendar_today</span> 作成日：2026-04-09</span>
-          <span><span class="material-symbols-outlined icon-sm">person</span> 作成者：佐藤 亜砂美</span>
-          <span><span class="material-symbols-outlined icon-sm">push_pin</span> Ver 1.1</span>
+          <span><span class="material-symbols-outlined icon-sm">calendar_today</span> 作成日: 2026-04-16</span>
+          <span><span class="material-symbols-outlined icon-sm">person</span> 作成者: 山田 花子</span>
+          <span><span class="material-symbols-outlined icon-sm">push_pin</span> Ver 1.2</span>
         </div>
       </header>
       <div class="doc-body">
         <div class="external-link-box">
-          <div class="external-link-box-title"><span class="material-symbols-outlined">link</span>詳細ドキュメント（Google スプレッドシート）</div>
-          <div class="external-link-box-desc">Bloom Letter の公開サイトと管理画面で共通利用するデータ構造を定義する。</div>
+          <div class="external-link-box-title"><span class="material-symbols-outlined">link</span>詳細ドキュメント（Google スプレッドシート等）</div>
+          <div class="external-link-box-desc">BloomLetterの公開サイトと管理画面で共通利用するデータ構造を整理した設計書。</div>
           <div class="external-link-input">
             <input type="text" placeholder="https://docs.google.com/spreadsheets/d/xxxxx" id="external-link-08">
             <a href="#" class="link-btn" onclick="window.open(document.getElementById('external-link-08').value || 'https://docs.google.com', '_blank'); return false;"><span class="material-symbols-outlined">open_in_new</span>開く</a>
@@ -41,35 +41,37 @@
             <li><a href="#sec4">初期データ</a></li>
           </ol>
         </div>
+
         <section class="section" id="sec1">
           <h2 class="section-title"><span class="section-icon">1</span> ER図</h2>
           <div class="fill-block">
             <div class="fill-label">ER図 <span class="required">必須</span></div>
             <div class="fill-content">
               <div class="ascii-diagram"><pre>admin_users
-  └─ 管理画面ログイン用ユーザー
+  -> 管理画面ログイン用ユーザー
 
 scenes
-  └─ 1 : N ─── products
+  1 : N products
 
 contact_inquiries
-  └─ お問い合わせフォーム送信内容</pre></div>
+  -> お問い合わせフォーム送信内容</pre></div>
             </div>
           </div>
         </section>
+
         <section class="section" id="sec2">
           <h2 class="section-title"><span class="section-icon">2</span> テーブル定義</h2>
           <div class="fill-block">
-            <div class="fill-label">テーブル名：scenes <span class="required">必須</span></div>
-            <div class="fill-hint">テーブルの目的：商品を贈るシーン別に分類するマスタ</div>
+            <div class="fill-label">テーブル名: scenes <span class="required">必須</span></div>
+            <div class="fill-hint">公開サイトで利用するギフトシーンを管理するマスタテーブル。</div>
             <table class="doc-table">
               <thead><tr><th>カラム名</th><th>データ型</th><th>NULL</th><th>デフォルト</th><th>制約</th><th>説明</th></tr></thead>
               <tbody>
                 <tr><td>id</td><td>BIGINT</td><td>NO</td><td>AUTO_INCREMENT</td><td>PK</td><td>主キー</td></tr>
                 <tr><td>name</td><td>VARCHAR(80)</td><td>NO</td><td>-</td><td>NOT NULL</td><td>シーン表示名</td></tr>
                 <tr><td>slug</td><td>VARCHAR(80)</td><td>NO</td><td>-</td><td>UNIQUE, NOT NULL</td><td>公開URL用識別子</td></tr>
-                <tr><td>description</td><td>VARCHAR(255)</td><td>YES</td><td>NULL</td><td>-</td><td>シーン説明</td></tr>
-                <tr><td>hero_copy</td><td>VARCHAR(120)</td><td>YES</td><td>NULL</td><td>-</td><td>一覧用見出し文</td></tr>
+                <tr><td>description</td><td>VARCHAR(255)</td><td>YES</td><td>NULL</td><td>-</td><td>シーン説明文</td></tr>
+                <tr><td>hero_copy</td><td>VARCHAR(120)</td><td>YES</td><td>NULL</td><td>-</td><td>一覧見出し用コピー</td></tr>
                 <tr><td>sort_order</td><td>INT</td><td>NO</td><td>0</td><td>NOT NULL</td><td>表示順</td></tr>
                 <tr><td>is_active</td><td>BOOLEAN</td><td>NO</td><td>TRUE</td><td>NOT NULL</td><td>利用可否</td></tr>
                 <tr><td>created_at</td><td>DATETIME</td><td>NO</td><td>CURRENT_TIMESTAMP</td><td>NOT NULL</td><td>作成日時</td></tr>
@@ -77,9 +79,10 @@ contact_inquiries
               </tbody>
             </table>
           </div>
+
           <div class="fill-block">
-            <div class="fill-label">テーブル名：products <span class="required">必須</span></div>
-            <div class="fill-hint">テーブルの目的：公開サイトと管理画面で扱う商品情報の管理</div>
+            <div class="fill-label">テーブル名: products <span class="required">必須</span></div>
+            <div class="fill-hint">公開サイトと管理画面で共通利用する商品情報テーブル。</div>
             <table class="doc-table">
               <thead><tr><th>カラム名</th><th>データ型</th><th>NULL</th><th>デフォルト</th><th>制約</th><th>説明</th></tr></thead>
               <tbody>
@@ -89,7 +92,7 @@ contact_inquiries
                 <tr><td>price</td><td>INT</td><td>NO</td><td>0</td><td>NOT NULL</td><td>税込価格</td></tr>
                 <tr><td>description</td><td>TEXT</td><td>NO</td><td>-</td><td>NOT NULL</td><td>商品説明</td></tr>
                 <tr><td>image_path</td><td>VARCHAR(255)</td><td>NO</td><td>-</td><td>NOT NULL</td><td>画像パス</td></tr>
-                <tr><td>image_alt</td><td>VARCHAR(150)</td><td>YES</td><td>NULL</td><td>-</td><td>画像代替テキスト</td></tr>
+                <tr><td>image_alt</td><td>VARCHAR(150)</td><td>YES</td><td>NULL</td><td>-</td><td>代替テキスト</td></tr>
                 <tr><td>scene_id</td><td>BIGINT</td><td>NO</td><td>-</td><td>FK, NOT NULL</td><td>所属シーン</td></tr>
                 <tr><td>stock_status</td><td>VARCHAR(20)</td><td>NO</td><td>'IN_STOCK'</td><td>NOT NULL</td><td>在庫表示状態</td></tr>
                 <tr><td>is_published</td><td>BOOLEAN</td><td>NO</td><td>TRUE</td><td>NOT NULL</td><td>公開可否</td></tr>
@@ -100,9 +103,10 @@ contact_inquiries
               </tbody>
             </table>
           </div>
+
           <div class="fill-block">
-            <div class="fill-label">テーブル名：admin_users <span class="required">必須</span></div>
-            <div class="fill-hint">テーブルの目的：管理画面にログインするユーザー管理</div>
+            <div class="fill-label">テーブル名: admin_users <span class="required">必須</span></div>
+            <div class="fill-hint">管理画面へログインする運営スタッフのアカウント情報。</div>
             <table class="doc-table">
               <thead><tr><th>カラム名</th><th>データ型</th><th>NULL</th><th>デフォルト</th><th>制約</th><th>説明</th></tr></thead>
               <tbody>
@@ -118,9 +122,10 @@ contact_inquiries
               </tbody>
             </table>
           </div>
+
           <div class="fill-block">
-            <div class="fill-label">テーブル名：contact_inquiries <span class="required">必須</span></div>
-            <div class="fill-hint">テーブルの目的：お問い合わせフォーム送信内容の保存</div>
+            <div class="fill-label">テーブル名: contact_inquiries <span class="required">必須</span></div>
+            <div class="fill-hint">お問い合わせフォームから送信された内容を保存するテーブル。</div>
             <table class="doc-table">
               <thead><tr><th>カラム名</th><th>データ型</th><th>NULL</th><th>デフォルト</th><th>制約</th><th>説明</th></tr></thead>
               <tbody>
@@ -137,46 +142,50 @@ contact_inquiries
             </table>
           </div>
         </section>
+
         <section class="section" id="sec3">
           <h2 class="section-title"><span class="section-icon">3</span> インデックス設計</h2>
           <div class="fill-block">
             <div class="fill-label">インデックス一覧 <span class="required">必須</span></div>
             <table class="doc-table">
-              <thead><tr><th>テーブル名</th><th>インデックス名</th><th>対象カラム</th><th>種類</th><th>設定理由</th></tr></thead>
+              <thead><tr><th>テーブル名</th><th>インデックス名</th><th>対象カラム</th><th>種類</th><th>設計意図</th></tr></thead>
               <tbody>
                 <tr><td>scenes</td><td>uk_scenes_slug</td><td>slug</td><td>UNIQUE</td><td>公開URLの重複防止</td></tr>
                 <tr><td>scenes</td><td>idx_scenes_sort_order</td><td>sort_order</td><td>INDEX</td><td>表示順取得に使用</td></tr>
                 <tr><td>products</td><td>uk_products_slug</td><td>slug</td><td>UNIQUE</td><td>商品詳細URLの一意性担保</td></tr>
-                <tr><td>products</td><td>idx_products_scene_publish</td><td>scene_id, is_published, display_order</td><td>INDEX</td><td>公開一覧・シーン別一覧で多用</td></tr>
+                <tr><td>products</td><td>idx_products_scene_publish</td><td>scene_id, is_published, display_order</td><td>INDEX</td><td>公開一覧とシーン別一覧で多用</td></tr>
                 <tr><td>products</td><td>idx_products_name</td><td>name</td><td>INDEX</td><td>管理画面検索高速化</td></tr>
                 <tr><td>products</td><td>idx_products_featured</td><td>is_featured, is_published, display_order</td><td>INDEX</td><td>トップ表示商品取得</td></tr>
                 <tr><td>admin_users</td><td>uk_admin_users_email</td><td>email</td><td>UNIQUE</td><td>ログインID重複防止</td></tr>
-                <tr><td>contact_inquiries</td><td>idx_contact_inquiries_status_created</td><td>status, created_at</td><td>INDEX</td><td>未対応問い合わせ確認</td></tr>
+                <tr><td>contact_inquiries</td><td>idx_contact_inquiries_status_created</td><td>status, created_at</td><td>INDEX</td><td>未対応問い合わせの確認に利用</td></tr>
               </tbody>
             </table>
           </div>
         </section>
+
         <section class="section" id="sec4">
           <h2 class="section-title"><span class="section-icon">4</span> 初期データ</h2>
           <div class="fill-block">
             <div class="fill-label">マスタデータ・テストデータ <span class="required">必須</span></div>
             <div class="fill-content">
 <pre class="guide-code-block">INSERT INTO scenes (id, name, slug, description, hero_copy, sort_order, is_active, created_at, updated_at) VALUES
-(1, '誕生日', 'birthday', '誕生日に贈る華やかなフラワーギフト', '大切な一日に、気持ちが伝わる花を。', 1, TRUE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(2, '記念日', 'anniversary', '記念日に寄り添う上品なブーケ', '特別な思い出を、花でやさしく彩る。', 2, TRUE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(3, '感謝', 'thanks', 'ありがとうを伝える優しい花束', '言葉にしづらい想いを、花にのせて。', 3, TRUE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(1, 'Birthday', 'birthday', '誕生日に贈る華やかなフラワーギフト', '大切な一日に、気持ちが伝わる花を。', 1, TRUE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, 'Thanks', 'thanks', '感謝の気持ちをやさしく届ける花束', '言葉にしづらい感謝を、花にのせて。', 2, TRUE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(3, 'Celebration', 'celebration', '門出や祝福にふさわしい上品なアレンジ', '晴れの日を彩る、凛とした一束。', 3, TRUE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(4, 'Seasonal Gift', 'seasonal', '季節感を楽しめる限定感のあるブーケ', '季節の空気ごと贈るギフト。', 4, TRUE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 INSERT INTO admin_users (id, email, password_hash, name, role, enabled, created_at, updated_at) VALUES
-(1, 'admin@bloom-letter.jp', '$2a$10$7EqJtq98hPqEX7fNZaFWoOHiJq6f3K1sVxYOPxfN3E3xaQa58aeGe', '管理者', 'ADMIN', TRUE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(1, 'admin@bloom-letter.jp', '$2a$10$7EqJtq98hPqEX7fNZaFWoOHiJq6f3K1sVxYOPxfN3E3xaQa58aeGe', 'BloomLetter管理者', 'ADMIN', TRUE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 INSERT INTO products (id, name, slug, price, description, image_path, image_alt, scene_id, stock_status, is_published, is_featured, display_order, created_at, updated_at) VALUES
-(1, 'Soft Merci', 'soft-merci', 5800, '感謝の気持ちをやさしく届ける、やわらかな色合いのブーケ。', '/images/Top/scene/Soft Merci.png', 'Soft Merci 商品画像', 3, 'IN_STOCK', TRUE, TRUE, 1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(2, 'Birthday Bloom', 'birthday-bloom', 6200, '誕生日の贈り物に合わせた華やかなフラワーギフト。', '/images/Top/scene/Birthday Bloom.png', 'Birthday Bloom 商品画像', 1, 'IN_STOCK', TRUE, TRUE, 2, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(3, 'Wisteria Veil', 'wisteria-veil', 7200, '記念日にふさわしい落ち着いた上品さを持つアレンジ。', '/images/Top/scene/Wisteria Veil.png', 'Wisteria Veil 商品画像', 2, 'LOW_STOCK', TRUE, FALSE, 3, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(1, 'Soft Merci', 'soft-merci', 7400, 'やわらかな色合わせで、やさしい祝福を届けるバースデーの花束。', '/images/Top/scene/Soft Merci.png', 'Soft Merciの商品画像', 1, 'IN_STOCK', TRUE, TRUE, 1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(2, 'Baby''s Breath Air', 'babys-breath-air', 7600, 'カスミソウの白をふんわり束ねた、軽やかでやさしい感謝のブーケ。', '/images/Top/scene/Baby''s Breath Air.png', 'Baby''s Breath Airの商品画像', 2, 'IN_STOCK', TRUE, TRUE, 2, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(3, 'Celebration Lily Rose', 'celebration-lily-rose', 10600, '白いユリと赤いローズを束ねた、華やかで凛とした祝福の花束。', '/images/Top/scene/scene5.png', 'Celebration Lily Roseの商品画像', 3, 'IN_STOCK', TRUE, TRUE, 3, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(4, 'Wisteria Veil', 'wisteria-veil', 8600, '藤の花を思わせるやわらかな紫で、初夏の空気を映した季節ブーケ。', '/images/Top/scene/Wisteria Veil.png', 'Wisteria Veilの商品画像', 4, 'LOW_STOCK', TRUE, FALSE, 4, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 INSERT INTO contact_inquiries (id, name, email, phone, inquiry_type, message, status, created_at, updated_at) VALUES
-(1, '山田 花子', 'hanako@example.com', '09012345678', '配送について', '母の日までに届けられるか確認したいです。', 'UNREAD', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);</pre>
-              <p>管理者パスワードは初期投入時に `BCryptPasswordEncoder` で再生成したハッシュへ差し替えること。H2 利用時も同一スキーマで投入可能な SQL 形式を基本とする。</p>
+(1, '山田 花子', 'hanako@example.com', '09012345678', '商品について', '誕生日向けで優しい雰囲気の花束を探しています。おすすめを相談したいです。', 'UNREAD', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);</pre>
+              <p>管理者パスワードは初期投入時に <code>BCryptPasswordEncoder</code> で再生成したハッシュへ差し替えること。H2利用時も同一スキーマで投入できる SQL 形式を基本とする。</p>
             </div>
           </div>
         </section>

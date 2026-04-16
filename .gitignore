@@ -1,0 +1,9 @@
+﻿backend/target/
+.m2/
+.tools/
+backend/GenBcrypt.java
+backend/GenBcrypt.class
+backendGenBcrypt.java
+.idea/
+.vscode/
+*.log

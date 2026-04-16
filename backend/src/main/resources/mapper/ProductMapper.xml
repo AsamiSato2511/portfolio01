@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bloomletter.backend.mapper.ProductMapper">
+
+  <resultMap id="productResultMap" type="com.bloomletter.backend.entity.Product">
+    <id property="id" column="id"/>
+    <result property="name" column="name"/>
+    <result property="slug" column="slug"/>
+    <result property="price" column="price"/>
+    <result property="description" column="description"/>
+    <result property="imagePath" column="image_path"/>
+    <result property="imageAlt" column="image_alt"/>
+    <result property="sceneId" column="scene_id"/>
+    <result property="stockStatus" column="stock_status"/>
+    <result property="published" column="is_published"/>
+    <result property="featured" column="is_featured"/>
+    <result property="displayOrder" column="display_order"/>
+    <result property="sceneName" column="scene_name"/>
+    <result property="sceneSlug" column="scene_slug"/>
+    <result property="createdAt" column="created_at"/>
+    <result property="updatedAt" column="updated_at"/>
+  </resultMap>
+
+  <sql id="productColumns">
+    p.id, p.name, p.slug, p.price, p.description, p.image_path, p.image_alt, p.scene_id,
+    p.stock_status, p.is_published, p.is_featured, p.display_order, p.created_at, p.updated_at,
+    s.name AS scene_name, s.slug AS scene_slug
+  </sql>
+
+  <select id="findFeaturedPublishedProducts" resultMap="productResultMap">
+    SELECT <include refid="productColumns"/>
+    FROM products p
+    INNER JOIN scenes s ON s.id = p.scene_id
+    WHERE p.is_published = TRUE
+      AND p.is_featured = TRUE
+      AND s.is_active = TRUE
+    ORDER BY p.display_order ASC, p.id ASC
+    LIMIT #{limit}
+  </select>
+
+  <select id="findPublishedProducts" resultMap="productResultMap">
+    SELECT <include refid="productColumns"/>
+    FROM products p
+    INNER JOIN scenes s ON s.id = p.scene_id
+    WHERE p.is_published = TRUE
+      AND s.is_active = TRUE
+      <if test="sceneId != null">
+        AND p.scene_id = #{sceneId}
+      </if>
+    ORDER BY ${orderBy}
+    LIMIT #{limit} OFFSET #{offset}
+  </select>
+
+  <select id="countPublishedProducts" resultType="long">
+    SELECT COUNT(*)
+    FROM products p
+    INNER JOIN scenes s ON s.id = p.scene_id
+    WHERE p.is_published = TRUE
+      AND s.is_active = TRUE
+      <if test="sceneId != null">
+        AND p.scene_id = #{sceneId}
+      </if>
+  </select>
+
+  <select id="findPublishedProductById" resultMap="productResultMap">
+    SELECT <include refid="productColumns"/>
+    FROM products p
+    INNER JOIN scenes s ON s.id = p.scene_id
+    WHERE p.id = #{id}
+      AND p.is_published = TRUE
+      AND s.is_active = TRUE
+  </select>
+
+  <select id="findPublishedProductsBySceneSlug" resultMap="productResultMap">
+    SELECT <include refid="productColumns"/>
+    FROM products p
+    INNER JOIN scenes s ON s.id = p.scene_id
+    WHERE p.is_published = TRUE
+      AND s.is_active = TRUE
+      AND s.slug = #{sceneSlug}
+    ORDER BY ${orderBy}
+    LIMIT #{limit} OFFSET #{offset}
+  </select>
+
+  <select id="countPublishedProductsBySceneSlug" resultType="long">
+    SELECT COUNT(*)
+    FROM products p
+    INNER JOIN scenes s ON s.id = p.scene_id
+    WHERE p.is_published = TRUE
+      AND s.is_active = TRUE
+      AND s.slug = #{sceneSlug}
+  </select>
+
+  <select id="findAdminProducts" resultMap="productResultMap">
+    SELECT <include refid="productColumns"/>
+    FROM products p
+    INNER JOIN scenes s ON s.id = p.scene_id
+    WHERE 1 = 1
+      <if test="query != null and query != ''">
+        AND LOWER(p.name) LIKE CONCAT('%', LOWER(#{query}), '%')
+      </if>
+      <if test="sceneId != null">
+        AND p.scene_id = #{sceneId}
+      </if>
+      <if test="publishStatus != null">
+        AND p.is_published = #{publishStatus}
+      </if>
+    ORDER BY p.updated_at DESC, p.id DESC
+    LIMIT #{limit} OFFSET #{offset}
+  </select>
+
+  <select id="countAdminProducts" resultType="long">
+    SELECT COUNT(*)
+    FROM products p
+    WHERE 1 = 1
+      <if test="query != null and query != ''">
+        AND LOWER(p.name) LIKE CONCAT('%', LOWER(#{query}), '%')
+      </if>
+      <if test="sceneId != null">
+        AND p.scene_id = #{sceneId}
+      </if>
+      <if test="publishStatus != null">
+        AND p.is_published = #{publishStatus}
+      </if>
+  </select>
+
+  <select id="findAdminProductById" resultMap="productResultMap">
+    SELECT <include refid="productColumns"/>
+    FROM products p
+    INNER JOIN scenes s ON s.id = p.scene_id
+    WHERE p.id = #{id}
+  </select>
+
+  <select id="findBySlug" resultMap="productResultMap">
+    SELECT <include refid="productColumns"/>
+    FROM products p
+    INNER JOIN scenes s ON s.id = p.scene_id
+    WHERE p.slug = #{slug}
+  </select>
+
+  <select id="countAllProducts" resultType="long">
+    SELECT COUNT(*) FROM products
+  </select>
+
+  <select id="countPublishedForAdmin" resultType="long">
+    SELECT COUNT(*) FROM products WHERE is_published = TRUE
+  </select>
+
+  <insert id="insertProduct" parameterType="com.bloomletter.backend.entity.Product" useGeneratedKeys="true" keyProperty="id">
+    INSERT INTO products (
+      name, slug, price, description, image_path, image_alt, scene_id,
+      stock_status, is_published, is_featured, display_order, created_at, updated_at
+    ) VALUES (
+      #{name}, #{slug}, #{price}, #{description}, #{imagePath}, #{imageAlt}, #{sceneId},
+      #{stockStatus}, #{published}, #{featured}, #{displayOrder}, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
+    )
+  </insert>
+
+  <update id="updateProduct" parameterType="com.bloomletter.backend.entity.Product">
+    UPDATE products
+       SET name = #{name},
+           slug = #{slug},
+           price = #{price},
+           description = #{description},
+           image_path = #{imagePath},
+           image_alt = #{imageAlt},
+           scene_id = #{sceneId},
+           stock_status = #{stockStatus},
+           is_published = #{published},
+           is_featured = #{featured},
+           display_order = #{displayOrder},
+           updated_at = CURRENT_TIMESTAMP
+     WHERE id = #{id}
+  </update>
+
+  <delete id="deleteProduct">
+    DELETE FROM products WHERE id = #{id}
+  </delete>
+</mapper>
+

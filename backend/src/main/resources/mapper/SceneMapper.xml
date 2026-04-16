@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bloomletter.backend.mapper.SceneMapper">
+
+  <resultMap id="sceneResultMap" type="com.bloomletter.backend.entity.Scene">
+    <id property="id" column="id"/>
+    <result property="name" column="name"/>
+    <result property="slug" column="slug"/>
+    <result property="description" column="description"/>
+    <result property="heroCopy" column="hero_copy"/>
+    <result property="sortOrder" column="sort_order"/>
+    <result property="active" column="is_active"/>
+    <result property="productCount" column="product_count"/>
+    <result property="createdAt" column="created_at"/>
+    <result property="updatedAt" column="updated_at"/>
+  </resultMap>
+
+  <select id="findActiveScenes" resultMap="sceneResultMap">
+    SELECT s.*,
+           COALESCE(COUNT(p.id), 0) AS product_count
+    FROM scenes s
+    LEFT JOIN products p
+      ON p.scene_id = s.id
+     AND p.is_published = TRUE
+    WHERE s.is_active = TRUE
+    GROUP BY s.id, s.name, s.slug, s.description, s.hero_copy, s.sort_order, s.is_active, s.created_at, s.updated_at
+    ORDER BY s.sort_order ASC, s.id ASC
+  </select>
+
+  <select id="findAllScenesWithProductCounts" resultMap="sceneResultMap">
+    SELECT s.*,
+           COALESCE(COUNT(p.id), 0) AS product_count
+    FROM scenes s
+    LEFT JOIN products p ON p.scene_id = s.id
+    GROUP BY s.id, s.name, s.slug, s.description, s.hero_copy, s.sort_order, s.is_active, s.created_at, s.updated_at
+    ORDER BY s.sort_order ASC, s.id ASC
+  </select>
+
+  <select id="findActiveBySlug" resultMap="sceneResultMap">
+    SELECT s.*,
+           COALESCE(COUNT(p.id), 0) AS product_count
+    FROM scenes s
+    LEFT JOIN products p
+      ON p.scene_id = s.id
+     AND p.is_published = TRUE
+    WHERE s.slug = #{slug}
+      AND s.is_active = TRUE
+    GROUP BY s.id, s.name, s.slug, s.description, s.hero_copy, s.sort_order, s.is_active, s.created_at, s.updated_at
+  </select>
+
+  <select id="existsById" resultType="boolean">
+    SELECT CASE WHEN COUNT(*) > 0 THEN TRUE ELSE FALSE END
+    FROM scenes
+    WHERE id = #{id}
+  </select>
+</mapper>
+

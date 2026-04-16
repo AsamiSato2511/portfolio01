@@ -18,15 +18,15 @@
         <div class="doc-category">DOCUMENT 07</div>
         <h1 class="doc-title">仕様書（機能仕様書）</h1>
         <div class="doc-meta">
-          <span><span class="material-symbols-outlined icon-sm">calendar_today</span> 作成日：2026-04-09</span>
-          <span><span class="material-symbols-outlined icon-sm">person</span> 作成者：佐藤 亜砂美</span>
-          <span><span class="material-symbols-outlined icon-sm">push_pin</span> Ver 1.1</span>
+          <span><span class="material-symbols-outlined icon-sm">calendar_today</span> 作成日: 2026-04-16</span>
+          <span><span class="material-symbols-outlined icon-sm">person</span> 作成者: 山田 花子</span>
+          <span><span class="material-symbols-outlined icon-sm">push_pin</span> Ver 1.2</span>
         </div>
       </header>
       <div class="doc-body">
         <div class="external-link-box">
-          <div class="external-link-box-title"><span class="material-symbols-outlined">link</span>詳細ドキュメント（Google スプレッドシート）</div>
-          <div class="external-link-box-desc">制作ドキュメントをもとに、バックエンド実装で必要になる機能要件、画面仕様、HTTP設計、連携ポイントを定義する。</div>
+          <div class="external-link-box-title"><span class="material-symbols-outlined">link</span>詳細ドキュメント（Google スプレッドシート等）</div>
+          <div class="external-link-box-desc">外部で管理している仕様補足や確認用資料がある場合は、ここにURLを設定して参照できるようにする。</div>
           <div class="external-link-input">
             <input type="text" placeholder="https://docs.google.com/spreadsheets/d/xxxxx" id="external-link-07">
             <a href="#" class="link-btn" onclick="window.open(document.getElementById('external-link-07').value || 'https://docs.google.com', '_blank'); return false;"><span class="material-symbols-outlined">open_in_new</span>開く</a>
@@ -43,13 +43,14 @@
             <li><a href="#sec6">非機能要件</a></li>
           </ol>
         </div>
+
         <section class="section" id="sec1">
           <h2 class="section-title"><span class="section-icon">1</span> システム概要</h2>
           <div class="fill-block">
             <div class="fill-label">システムの目的 <span class="required">必須</span></div>
             <div class="fill-content">
-              <p>Bloom Letter は、花の知識が少ないユーザーでも「贈るシーン」から商品を選べるフラワーギフトサイトである。バックエンドでは公開サイトに表示する商品情報の取得と、管理画面からの商品登録・編集・削除・公開制御を担う。</p>
-              <p>本仕様では公開サイトと管理画面の双方で必要になるデータ取得、入力チェック、認証、永続化処理を定義し、フロントエンドとバックエンドの責務境界を明確にする。</p>
+              <p>BloomLetterの管理システムは、運営スタッフが商品情報や注文内容、問い合わせ状況を一元管理できるシステムです。更新や確認作業を効率化し、正確でスムーズな運営を支えることで、利用者へ安心感のある購買体験を提供します。</p>
+              <p>本仕様書では、公開サイトと管理画面で必要になる機能、画面遷移、入力チェック、APIの役割を整理し、BloomLetterの実装対象を明確にする。</p>
             </div>
           </div>
           <div class="fill-block">
@@ -65,7 +66,7 @@ Spring Boot + Thymeleaf
      +-------+--------+
      |                |
      v                v
-  MySQL/H2        Image Path
+   MySQL/H2       Image Path
 
 Admin Browser
   Login / Dashboard / Product Management</pre></div>
@@ -74,30 +75,31 @@ Admin Browser
           <div class="fill-block">
             <div class="fill-label">実装前提 <span class="required">必須</span></div>
             <div class="fill-content">
-              <p>公開サイトは Spring Boot + Thymeleaf によるサーバーサイドレンダリングを前提とする。商品は 1 件につき 1 シーン所属、画像は 1 商品 1 メイン画像パスで管理する。</p>
-              <p>カート、決済、購入完了処理は本フェーズの実装対象外とし、商品詳細の購入導線は外部遷移またはダミー導線として扱う。</p>
+              <p>公開サイトは Spring Boot + Thymeleaf によるサーバーサイドレンダリングを前提とする。商品は1件につき1シーンに所属し、商品画像はメイン画像パスを基準に表示する。</p>
+              <p>本フェーズでは商品閲覧、問い合わせ、管理画面での商品管理を対象とし、決済処理や配送管理、会員登録機能はスコープ外とする。</p>
             </div>
           </div>
         </section>
+
         <section class="section" id="sec2">
           <h2 class="section-title"><span class="section-icon">2</span> 機能要件一覧</h2>
           <div class="fill-block">
             <div class="fill-label">機能一覧表 <span class="required">必須</span></div>
             <table class="doc-table">
-              <thead><tr><th>No.</th><th>機能名</th><th>概要</th><th>対応画面</th><th>優先度</th></tr></thead>
+              <thead><tr><th>No.</th><th>機能名</th><th>概要</th><th>対象画面</th><th>優先度</th></tr></thead>
               <tbody>
                 <tr><td>F-001</td><td>公開トップ表示</td><td>注目商品とシーン導線を表示する</td><td>トップページ</td><td><span class="badge badge-must">Must</span></td></tr>
-                <tr><td>F-002</td><td>商品一覧表示</td><td>公開中商品を検索・絞り込み付きで一覧表示する</td><td>Shop</td><td><span class="badge badge-must">Must</span></td></tr>
-                <tr><td>F-003</td><td>商品詳細表示</td><td>指定商品の詳細情報を表示する</td><td>Product Detail</td><td><span class="badge badge-must">Must</span></td></tr>
-                <tr><td>F-004</td><td>お問い合わせ送信</td><td>問い合わせ内容を保存する</td><td>Contact</td><td><span class="badge badge-must">Must</span></td></tr>
-                <tr><td>F-005</td><td>管理者ログイン</td><td>管理画面に認証する</td><td>管理ログイン画面</td><td><span class="badge badge-must">Must</span></td></tr>
-                <tr><td>F-006</td><td>管理ダッシュボード</td><td>主要件数と導線を表示する</td><td>ダッシュボード</td><td><span class="badge badge-must">Must</span></td></tr>
-                <tr><td>F-007</td><td>商品一覧管理</td><td>商品一覧、検索、絞り込みを行う</td><td>商品一覧管理画面</td><td><span class="badge badge-must">Must</span></td></tr>
-                <tr><td>F-008</td><td>商品新規登録</td><td>商品を登録する</td><td>商品登録画面</td><td><span class="badge badge-must">Must</span></td></tr>
-                <tr><td>F-009</td><td>商品編集</td><td>商品情報を更新する</td><td>商品編集画面</td><td><span class="badge badge-must">Must</span></td></tr>
-                <tr><td>F-010</td><td>商品削除</td><td>商品を削除する</td><td>商品詳細管理画面</td><td><span class="badge badge-must">Must</span></td></tr>
-                <tr><td>F-011</td><td>シーン管理参照</td><td>シーン一覧と商品件数を確認する</td><td>カテゴリ一覧管理画面</td><td><span class="badge badge-should">Should</span></td></tr>
-                <tr><td>F-012</td><td>公開状態切替</td><td>商品の公開/非公開を切り替える</td><td>商品編集画面</td><td><span class="badge badge-should">Should</span></td></tr>
+                <tr><td>F-002</td><td>商品一覧表示</td><td>公開中の商品をシーン別・並び順付きで一覧表示する</td><td>Collection</td><td><span class="badge badge-must">Must</span></td></tr>
+                <tr><td>F-003</td><td>商品詳細表示</td><td>指定商品の価格、説明、画像、配送目安を表示する</td><td>Product Detail</td><td><span class="badge badge-must">Must</span></td></tr>
+                <tr><td>F-004</td><td>お問い合わせ送信</td><td>問い合わせ内容を入力・送信し、内容を保存する</td><td>Contact</td><td><span class="badge badge-must">Must</span></td></tr>
+                <tr><td>F-005</td><td>管理者ログイン</td><td>管理画面に認証してアクセスする</td><td>管理ログイン画面</td><td><span class="badge badge-must">Must</span></td></tr>
+                <tr><td>F-006</td><td>管理ダッシュボード</td><td>商品数や問い合わせ件数の要約を表示する</td><td>ダッシュボード</td><td><span class="badge badge-must">Must</span></td></tr>
+                <tr><td>F-007</td><td>商品一覧管理</td><td>登録済み商品を一覧・検索・絞り込みする</td><td>商品一覧管理画面</td><td><span class="badge badge-must">Must</span></td></tr>
+                <tr><td>F-008</td><td>商品新規登録</td><td>新しい商品を登録する</td><td>商品登録画面</td><td><span class="badge badge-must">Must</span></td></tr>
+                <tr><td>F-009</td><td>商品編集</td><td>商品名、価格、説明、公開状態を更新する</td><td>商品編集画面</td><td><span class="badge badge-must">Must</span></td></tr>
+                <tr><td>F-010</td><td>商品削除</td><td>不要になった商品を削除する</td><td>商品詳細管理画面</td><td><span class="badge badge-must">Must</span></td></tr>
+                <tr><td>F-011</td><td>シーン一覧参照</td><td>シーンごとの商品件数と公開導線を確認する</td><td>シーン一覧管理画面</td><td><span class="badge badge-should">Should</span></td></tr>
+                <tr><td>F-012</td><td>公開状態切替</td><td>商品ごとに公開・非公開を切り替える</td><td>商品編集画面</td><td><span class="badge badge-should">Should</span></td></tr>
               </tbody>
             </table>
           </div>
@@ -110,9 +112,9 @@ Admin Browser
                 <tr><td>管理者ログイン</td><td>password</td><td>String</td><td>○</td><td>8〜100文字</td></tr>
                 <tr><td>商品登録/編集</td><td>name</td><td>String</td><td>○</td><td>1〜120文字</td></tr>
                 <tr><td>商品登録/編集</td><td>slug</td><td>String</td><td>○</td><td>英小文字・数字・ハイフン、重複不可</td></tr>
-                <tr><td>商品登録/編集</td><td>price</td><td>Integer</td><td>○</td><td>0〜999999</td></tr>
-                <tr><td>商品登録/編集</td><td>sceneId</td><td>Long</td><td>○</td><td>存在する scene_id のみ</td></tr>
-                <tr><td>商品登録/編集</td><td>description</td><td>String</td><td>○</td><td>1〜2000文字</td></tr>
+                <tr><td>商品登録/編集</td><td>price</td><td>Integer</td><td>○</td><td>500〜999999</td></tr>
+                <tr><td>商品登録/編集</td><td>sceneId</td><td>Long</td><td>○</td><td>存在するシーンIDのみ</td></tr>
+                <tr><td>商品登録/編集</td><td>description</td><td>String</td><td>○</td><td>20〜2000文字</td></tr>
                 <tr><td>商品登録/編集</td><td>imagePath</td><td>String</td><td>○</td><td>255文字以内</td></tr>
                 <tr><td>お問い合わせ</td><td>name</td><td>String</td><td>○</td><td>1〜80文字</td></tr>
                 <tr><td>お問い合わせ</td><td>email</td><td>String</td><td>○</td><td>メール形式</td></tr>
@@ -122,33 +124,34 @@ Admin Browser
             </table>
           </div>
         </section>
+
         <section class="section" id="sec3">
           <h2 class="section-title"><span class="section-icon">3</span> 画面仕様</h2>
           <div class="fill-block">
             <div class="fill-label">公開画面仕様 <span class="required">必須</span></div>
             <table class="doc-table">
-              <thead><tr><th>画面名</th><th>URL</th><th>表示データ</th><th>主な操作</th><th>バックエンド責務</th></tr></thead>
+              <thead><tr><th>画面名</th><th>URL</th><th>表示内容</th><th>主な操作</th><th>バックエンド要件</th></tr></thead>
               <tbody>
-                <tr><td>トップページ</td><td>/</td><td>注目商品4件、シーン一覧</td><td>商品一覧遷移、シーン導線</td><td>公開中かつ注目設定商品の取得</td></tr>
-                <tr><td>商品一覧</td><td>/products</td><td>商品カード一覧、検索条件、ページ情報</td><td>検索、シーン絞り込み、詳細遷移</td><td>公開中商品の条件付き検索</td></tr>
-                <tr><td>シーン別一覧</td><td>/scenes/{sceneSlug}/products</td><td>シーン情報、該当商品一覧</td><td>商品詳細遷移</td><td>sceneSlug に紐づく一覧取得</td></tr>
-                <tr><td>商品詳細</td><td>/products/{productId}</td><td>商品名、価格、説明、画像、シーン情報</td><td>購入導線</td><td>公開中商品のみ参照可</td></tr>
-                <tr><td>お問い合わせ</td><td>/contact</td><td>入力フォーム、完了/エラー</td><td>入力、送信</td><td>入力エラー時は同画面再表示</td></tr>
+                <tr><td>トップページ</td><td>/</td><td>注目商品4件、シーン導線、ブランドコピー</td><td>商品一覧遷移、シーン選択</td><td>公開中かつ注目設定の商品を取得する</td></tr>
+                <tr><td>商品一覧</td><td>/products</td><td>商品カード一覧、シーンフィルタ、ソート、ページ情報</td><td>絞り込み、並び替え、詳細遷移</td><td>公開中商品の条件検索とページングを行う</td></tr>
+                <tr><td>シーン別一覧</td><td>/scenes/{sceneSlug}/products</td><td>シーン名、説明、該当商品一覧</td><td>商品詳細遷移</td><td>sceneSlugに紐づくシーンと商品一覧を取得する</td></tr>
+                <tr><td>商品詳細</td><td>/products/{productId}</td><td>商品名、価格、説明、画像、配送目安</td><td>カート導線、相談導線</td><td>公開中商品のみ参照できる</td></tr>
+                <tr><td>お問い合わせ</td><td>/contact</td><td>入力フォーム、確認メッセージ、エラー表示</td><td>入力、送信</td><td>入力エラー時は同画面に値を保持して再表示する</td></tr>
               </tbody>
             </table>
           </div>
           <div class="fill-block">
             <div class="fill-label">管理画面仕様 <span class="required">必須</span></div>
             <table class="doc-table">
-              <thead><tr><th>画面名</th><th>URL</th><th>表示データ</th><th>主な操作</th><th>認可</th></tr></thead>
+              <thead><tr><th>画面名</th><th>URL</th><th>表示内容</th><th>主な操作</th><th>権限</th></tr></thead>
               <tbody>
                 <tr><td>管理ログイン</td><td>/admin/login</td><td>ログインフォーム</td><td>ログイン実行</td><td>未認証可</td></tr>
-                <tr><td>ダッシュボード</td><td>/admin</td><td>商品件数、問い合わせ件数</td><td>各画面へ遷移</td><td>ADMIN</td></tr>
+                <tr><td>ダッシュボード</td><td>/admin</td><td>商品件数、問い合わせ件数、導線リンク</td><td>各管理画面へ遷移</td><td>ADMIN</td></tr>
                 <tr><td>商品一覧管理</td><td>/admin/products</td><td>商品一覧、公開状態、シーン名</td><td>検索、絞り込み、新規作成</td><td>ADMIN</td></tr>
-                <tr><td>商品詳細管理</td><td>/admin/products/{productId}</td><td>商品の全項目</td><td>編集、削除</td><td>ADMIN</td></tr>
+                <tr><td>商品詳細管理</td><td>/admin/products/{productId}</td><td>商品の全項目、公開状態</td><td>編集、削除</td><td>ADMIN</td></tr>
                 <tr><td>商品登録</td><td>/admin/products/new</td><td>フォーム、シーン選択肢</td><td>入力、保存</td><td>ADMIN</td></tr>
-                <tr><td>商品編集</td><td>/admin/products/{productId}/edit</td><td>初期値入りフォーム</td><td>更新、公開切替</td><td>ADMIN</td></tr>
-                <tr><td>カテゴリ一覧管理</td><td>/admin/scenes</td><td>シーン一覧、商品件数</td><td>詳細確認</td><td>ADMIN</td></tr>
+                <tr><td>商品編集</td><td>/admin/products/{productId}/edit</td><td>初期値付きフォーム</td><td>更新、公開切替</td><td>ADMIN</td></tr>
+                <tr><td>シーン一覧管理</td><td>/admin/scenes</td><td>シーン一覧、商品件数</td><td>参照</td><td>ADMIN</td></tr>
               </tbody>
             </table>
           </div>
@@ -156,23 +159,28 @@ Admin Browser
             <div class="fill-label">画面遷移図 <span class="required">必須</span></div>
             <div class="fill-content">
               <div class="ascii-diagram"><pre>公開サイト
-トップ(/)
- ├─ 商品一覧(/products)
- │   ├─ 商品詳細(/products/{id})
- │   └─ シーン別一覧(/scenes/{slug}/products)
- └─ Contact(/contact)
+Top (/)
+  -> Products (/products)
+  -> Scene Products (/scenes/{slug}/products)
+Products (/products)
+  -> Product Detail (/products/{id})
+Contact (/contact)
 
 管理画面
-ログイン(/admin/login)
- └─ ダッシュボード(/admin)
-     ├─ 商品一覧(/admin/products)
-     │   ├─ 商品詳細(/admin/products/{id})
-     │   ├─ 商品登録(/admin/products/new)
-     │   └─ 商品編集(/admin/products/{id}/edit)
-     └─ シーン一覧(/admin/scenes)</pre></div>
+Login (/admin/login)
+  -> Dashboard (/admin)
+Dashboard (/admin)
+  -> Products (/admin/products)
+  -> Scenes (/admin/scenes)
+Products (/admin/products)
+  -> New (/admin/products/new)
+  -> Detail (/admin/products/{id})
+Detail (/admin/products/{id})
+  -> Edit (/admin/products/{id}/edit)</pre></div>
             </div>
           </div>
         </section>
+
         <section class="section" id="sec4">
           <h2 class="section-title"><span class="section-icon">4</span> API設計</h2>
           <div class="fill-block">
@@ -181,11 +189,11 @@ Admin Browser
               <thead><tr><th>HTTP</th><th>URL</th><th>用途</th><th>主な入力</th><th>主な出力</th></tr></thead>
               <tbody>
                 <tr><td>GET</td><td>/</td><td>トップ表示</td><td>なし</td><td>featuredProducts, scenes</td></tr>
-                <tr><td>GET</td><td>/products</td><td>商品一覧表示</td><td>q, scene, page</td><td>products, paging</td></tr>
+                <tr><td>GET</td><td>/products</td><td>商品一覧表示</td><td>scene, sort, page</td><td>products, paging</td></tr>
                 <tr><td>GET</td><td>/products/{productId}</td><td>商品詳細表示</td><td>path: productId</td><td>product, scene</td></tr>
-                <tr><td>GET</td><td>/scenes/{sceneSlug}/products</td><td>シーン別一覧</td><td>path: sceneSlug, page</td><td>scene, products</td></tr>
+                <tr><td>GET</td><td>/scenes/{sceneSlug}/products</td><td>シーン別一覧表示</td><td>path: sceneSlug, page</td><td>scene, products</td></tr>
                 <tr><td>GET</td><td>/contact</td><td>問い合わせ画面表示</td><td>なし</td><td>contactForm</td></tr>
-                <tr><td>POST</td><td>/contact</td><td>問い合わせ送信</td><td>name, email, inquiryType, message</td><td>完了メッセージ or 入力エラー</td></tr>
+                <tr><td>POST</td><td>/contact</td><td>問い合わせ送信</td><td>name, email, inquiryType, message</td><td>完了メッセージまたは入力エラー</td></tr>
               </tbody>
             </table>
           </div>
@@ -195,15 +203,15 @@ Admin Browser
               <thead><tr><th>HTTP</th><th>URL</th><th>用途</th><th>主な入力</th><th>主な出力</th></tr></thead>
               <tbody>
                 <tr><td>GET</td><td>/admin/login</td><td>ログイン画面表示</td><td>なし</td><td>loginForm</td></tr>
-                <tr><td>POST</td><td>/admin/login</td><td>ログイン処理</td><td>email, password</td><td>認証成功時リダイレクト</td></tr>
+                <tr><td>POST</td><td>/admin/login</td><td>ログイン処理</td><td>email, password</td><td>認証成功時に管理トップへ遷移</td></tr>
                 <tr><td>POST</td><td>/admin/logout</td><td>ログアウト処理</td><td>なし</td><td>ログイン画面へ遷移</td></tr>
                 <tr><td>GET</td><td>/admin</td><td>ダッシュボード表示</td><td>なし</td><td>counts</td></tr>
                 <tr><td>GET</td><td>/admin/products</td><td>商品一覧管理</td><td>q, sceneId, publishStatus</td><td>products</td></tr>
                 <tr><td>GET</td><td>/admin/products/new</td><td>商品登録画面表示</td><td>なし</td><td>productForm, scenes</td></tr>
-                <tr><td>POST</td><td>/admin/products</td><td>商品登録</td><td>productForm</td><td>一覧へリダイレクト</td></tr>
+                <tr><td>POST</td><td>/admin/products</td><td>商品登録</td><td>productForm</td><td>登録後に一覧へリダイレクト</td></tr>
                 <tr><td>GET</td><td>/admin/products/{productId}</td><td>商品詳細管理</td><td>path: productId</td><td>product</td></tr>
                 <tr><td>GET</td><td>/admin/products/{productId}/edit</td><td>商品編集画面表示</td><td>path: productId</td><td>productForm, scenes</td></tr>
-                <tr><td>POST</td><td>/admin/products/{productId}</td><td>商品更新</td><td>productForm</td><td>詳細へリダイレクト</td></tr>
+                <tr><td>POST</td><td>/admin/products/{productId}</td><td>商品更新</td><td>productForm</td><td>更新後に詳細へリダイレクト</td></tr>
                 <tr><td>POST</td><td>/admin/products/{productId}/delete</td><td>商品削除</td><td>path: productId</td><td>一覧へリダイレクト</td></tr>
                 <tr><td>GET</td><td>/admin/scenes</td><td>シーン一覧表示</td><td>なし</td><td>scenes</td></tr>
               </tbody>
@@ -212,52 +220,54 @@ Admin Browser
           <div class="fill-block">
             <div class="fill-label">エラー応答方針 <span class="required">必須</span></div>
             <div class="fill-content">
-              <p>画面系リクエストでは入力エラー時に同画面を再表示し、BindingResult による項目単位のメッセージを出す。存在しない商品や非公開商品の参照時は 404 を返す。</p>
-              <p>認証失敗時は `/admin/login?error` へリダイレクトし、CSRF 不正やサーバー例外は共通エラーページへ遷移する。</p>
+              <p>画面系リクエストでは入力エラー時に同画面を再表示し、BindingResult による項目単位のメッセージを表示する。存在しない商品や非公開商品の参照時は404画面へ遷移する。</p>
+              <p>認証失敗時は <code>/admin/login?error</code> へリダイレクトし、CSRF不正やサーバー例外は共通エラーページで案内する。</p>
             </div>
           </div>
         </section>
+
         <section class="section" id="sec5">
           <h2 class="section-title"><span class="section-icon">5</span> 連携ポイント</h2>
           <div class="fill-block">
             <div class="fill-label">フロントエンドとバックエンドの受け渡し項目 <span class="required">必須</span></div>
             <table class="doc-table">
-              <thead><tr><th>画面</th><th>フロントエンドで必要な値</th><th>バックエンド提供方法</th><th>備考</th></tr></thead>
+              <thead><tr><th>画面</th><th>フロントで必要な値</th><th>バックエンドからの提供形式</th><th>備考</th></tr></thead>
               <tbody>
-                <tr><td>トップページ</td><td>注目商品名、価格、画像、URL</td><td>Model属性 `featuredProducts`</td><td>4件固定表示</td></tr>
-                <tr><td>商品一覧</td><td>商品カード配列、現在条件、ページ情報</td><td>Model属性 `products`, `paging`</td><td>検索条件は再表示時に保持</td></tr>
-                <tr><td>商品詳細</td><td>商品名、価格、説明、画像、シーン名</td><td>Model属性 `product`, `scene`</td><td>非公開商品は公開サイトで非表示</td></tr>
-                <tr><td>Contact</td><td>入力値、エラーメッセージ、完了状態</td><td>Formオブジェクト + BindingResult</td><td>送信失敗時は入力保持</td></tr>
-                <tr><td>商品登録/編集</td><td>初期値、選択肢、エラー</td><td>Model属性 `productForm`, `scenes`</td><td>登録と編集で同一フォーム利用</td></tr>
+                <tr><td>トップページ</td><td>注目商品名、価格、画像、URL</td><td>Model属性 <code>featuredProducts</code></td><td>4件固定表示</td></tr>
+                <tr><td>商品一覧</td><td>商品カード配列、現在条件、ページ情報</td><td>Model属性 <code>products</code>, <code>paging</code></td><td>絞り込み条件は再表示時に保持</td></tr>
+                <tr><td>商品詳細</td><td>商品名、価格、説明、画像、シーン名</td><td>Model属性 <code>product</code>, <code>scene</code></td><td>非公開商品は表示しない</td></tr>
+                <tr><td>Contact</td><td>入力値、エラーメッセージ、完了状態</td><td>Formオブジェクト + BindingResult</td><td>送信失敗時は入力値を保持</td></tr>
+                <tr><td>商品登録/編集</td><td>初期値、シーン選択肢、エラー</td><td>Model属性 <code>productForm</code>, <code>scenes</code></td><td>登録と編集で同一フォームを利用</td></tr>
               </tbody>
             </table>
           </div>
           <div class="fill-block">
             <div class="fill-label">連携ルール <span class="required">必須</span></div>
             <div class="fill-content">
-              <p>価格は整数で保持し、画面側で `¥5,800` 形式へ整形する。シーン識別は公開URLでは `sceneSlug`、管理画面では `sceneId` を使い分ける。</p>
-              <p>画像は `imagePath` を共通キーとして公開サイトと管理画面で参照する。公開可否は `isPublished`、トップ掲載可否は `isFeatured` で制御する。</p>
+              <p>価格は整数で保持し、画面側で <code>¥7,800</code> のように整形する。シーン識別子は公開URLでは <code>sceneSlug</code>、管理画面では <code>sceneId</code> を使用する。</p>
+              <p>画像は <code>imagePath</code> を共通キーとして公開サイトと管理画面で参照する。公開可否は <code>isPublished</code>、トップ表示可否は <code>isFeatured</code> で制御する。</p>
             </div>
           </div>
         </section>
+
         <section class="section" id="sec6">
           <h2 class="section-title"><span class="section-icon">6</span> 非機能要件</h2>
           <div class="fill-block">
             <div class="fill-label">セキュリティ要件 <span class="required">必須</span></div>
             <div class="fill-content">
-              <p>管理画面は Spring Security により認証必須とし、パスワードは BCrypt で保存する。POST 系フォームには CSRF 対策を適用する。</p>
+              <p>管理画面は Spring Security による認証必須とし、パスワードは BCrypt でハッシュ化して保存する。POST系フォームにはCSRF対策を適用する。</p>
             </div>
           </div>
           <div class="fill-block">
             <div class="fill-label">性能・運用要件 <span class="required">必須</span></div>
             <div class="fill-content">
-              <p>商品一覧は 1 ページ 12 件を基本とし、公開一覧の応答は 1 秒以内を目標とする。本番DBは MySQL、ローカルは H2 を想定する。</p>
+              <p>商品一覧は1ページ12件を基本とし、公開一覧の表示は1秒以内を目標とする。本番DBはMySQL、ローカル開発環境はH2を利用する。</p>
             </div>
           </div>
           <div class="fill-block">
             <div class="fill-label">対応環境 <span class="required">必須</span></div>
             <div class="fill-content">
-              <p>公開サイトは PC / タブレット / スマートフォン対応、管理画面は PC を主対象とする。対応ブラウザは Chrome、Edge、Safari の最新版を対象とする。</p>
+              <p>公開サイトはPC、タブレット、スマートフォンに対応し、管理画面はPC利用を主対象とする。対応ブラウザは Chrome、Edge、Safari の最新版を対象とする。</p>
             </div>
           </div>
         </section>

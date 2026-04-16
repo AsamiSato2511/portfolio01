@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bloomletter.backend.mapper.AdminUserMapper">
+
+  <resultMap id="adminUserResultMap" type="com.bloomletter.backend.entity.AdminUser">
+    <id property="id" column="id"/>
+    <result property="email" column="email"/>
+    <result property="passwordHash" column="password_hash"/>
+    <result property="name" column="name"/>
+    <result property="role" column="role"/>
+    <result property="enabled" column="enabled"/>
+    <result property="lastLoginAt" column="last_login_at"/>
+    <result property="createdAt" column="created_at"/>
+    <result property="updatedAt" column="updated_at"/>
+  </resultMap>
+
+  <select id="findByEmail" resultMap="adminUserResultMap">
+    SELECT * FROM admin_users WHERE email = #{email}
+  </select>
+
+  <update id="updateLastLoginAt">
+    UPDATE admin_users
+       SET last_login_at = CURRENT_TIMESTAMP,
+           updated_at = CURRENT_TIMESTAMP
+     WHERE id = #{id}
+  </update>
+</mapper>
+

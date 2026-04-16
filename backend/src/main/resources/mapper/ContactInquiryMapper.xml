@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bloomletter.backend.mapper.ContactInquiryMapper">
+
+  <insert id="insert" parameterType="com.bloomletter.backend.entity.ContactInquiry" useGeneratedKeys="true" keyProperty="id">
+    INSERT INTO contact_inquiries (
+      name, email, phone, inquiry_type, message, status, created_at, updated_at
+    ) VALUES (
+      #{name}, #{email}, #{phone}, #{inquiryType}, #{message}, #{status}, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
+    )
+  </insert>
+
+  <select id="countAll" resultType="long">
+    SELECT COUNT(*) FROM contact_inquiries
+  </select>
+
+  <select id="countByStatus" resultType="long">
+    SELECT COUNT(*) FROM contact_inquiries WHERE status = #{status}
+  </select>
+</mapper>
