@@ -535,7 +535,7 @@ function initializeProductDetailPage() {
   if (infoItems[2]) infoItems[2].textContent = product.shipping;
 
   if (galleryMain) {
-    galleryMain.style.backgroundImage = `url('${product.image}')`;
+    galleryMain.style.backgroundImage = `url("${product.image}")`;
     galleryMain.style.backgroundPosition = product.imagePosition || 'center 42%';
     galleryMain.setAttribute('aria-label', `${product.name}のメイン画像`);
   }
@@ -565,6 +565,28 @@ function initializeProductDetailPage() {
       link.href = href;
       bindClickableCard(card, href, productData.name);
     });
+  }
+}
+
+function fitDetailTitleToSingleLine() {
+  const detailTitle = document.querySelector('.detail-summary--product h1');
+  if (!detailTitle) return;
+
+  detailTitle.style.fontSize = '';
+  detailTitle.style.letterSpacing = '';
+
+  const computedStyle = window.getComputedStyle(detailTitle);
+  const baseFontSize = parseFloat(computedStyle.fontSize);
+  const minFontSize = 30;
+  let nextFontSize = baseFontSize;
+
+  while (detailTitle.scrollWidth > detailTitle.clientWidth && nextFontSize > minFontSize) {
+    nextFontSize -= 1;
+    detailTitle.style.fontSize = `${nextFontSize}px`;
+  }
+
+  if (detailTitle.scrollWidth > detailTitle.clientWidth) {
+    detailTitle.style.letterSpacing = '0.01em';
   }
 }
 
@@ -611,7 +633,7 @@ function initializeCartPage() {
   if (summaryPrice) summaryPrice.textContent = formatYenPrice(product.price);
 
   if (itemImage) {
-    itemImage.style.backgroundImage = `url('${product.image}')`;
+    itemImage.style.backgroundImage = `url("${product.image}")`;
     itemImage.style.backgroundPosition = product.imagePosition || 'center 42%';
   }
 
@@ -662,7 +684,7 @@ function initializeCheckoutPage() {
   if (summaryPrice) summaryPrice.textContent = formatYenPrice(product.price);
 
   if (itemImage) {
-    itemImage.style.backgroundImage = `url('${product.image}')`;
+    itemImage.style.backgroundImage = `url("${product.image}")`;
     itemImage.style.backgroundPosition = product.imagePosition || 'center 42%';
   }
 
@@ -783,6 +805,59 @@ function initializeProductFilter() {
   let currentSceneFilter = 'all';
   const perPage = 8;
   const originalOrder = Array.from(cards);
+  const params = new URLSearchParams(window.location.search);
+  const storageKey = 'bloom-letter-product-grid-state';
+
+  const readStoredState = () => {
+    try {
+      const raw = window.sessionStorage.getItem(storageKey);
+      return raw ? JSON.parse(raw) : null;
+    } catch (error) {
+      return null;
+    }
+  };
+
+  const writeStoredState = () => {
+    try {
+      window.sessionStorage.setItem(
+        storageKey,
+        JSON.stringify({
+          page: currentPage,
+          scene: currentSceneFilter,
+          sort: sortSelect?.value || 'recommended'
+        })
+      );
+    } catch (error) {
+      // Ignore storage failures and keep URL sync as fallback.
+    }
+  };
+
+  const syncProductsUrl = () => {
+    const nextParams = new URLSearchParams(window.location.search);
+
+    if (currentSceneFilter && currentSceneFilter !== 'all') {
+      nextParams.set('scene', currentSceneFilter);
+    } else {
+      nextParams.delete('scene');
+    }
+
+    if (currentPage > 1) {
+      nextParams.set('page', String(currentPage));
+    } else {
+      nextParams.delete('page');
+    }
+
+    if (sortSelect && sortSelect.value && sortSelect.value !== 'recommended') {
+      nextParams.set('sort', sortSelect.value);
+    } else {
+      nextParams.delete('sort');
+    }
+
+    const nextQuery = nextParams.toString();
+    const nextUrl = `${window.location.pathname}${nextQuery ? `?${nextQuery}` : ''}${productGridTitle ? '#product-grid-title' : ''}`;
+    window.history.replaceState({}, '', nextUrl);
+    writeStoredState();
+  };
 
   const getCardPrice = card => {
     const priceText = card.querySelector('.product-card__footer strong')?.textContent || '';
@@ -872,7 +947,8 @@ function initializeProductFilter() {
     });
   };
 
-  const applyFilters = filter => {
+  const applyFilters = (filter, options = {}) => {
+    const { preservePage = false } = options;
     currentSceneFilter = filter;
 
     cards.forEach(card => {
@@ -883,8 +959,9 @@ function initializeProductFilter() {
     });
 
     chips.forEach(chip => chip.classList.toggle('is-active', chip.dataset.filter === filter));
-    currentPage = 1;
+    if (!preservePage) currentPage = 1;
     updatePagination(getVisibleCards());
+    syncProductsUrl();
   };
 
   chips.forEach(chip => {
@@ -900,6 +977,7 @@ function initializeProductFilter() {
       event.preventDefault();
       currentPage = Number(link.dataset.pageLink);
       updatePagination(getVisibleCards());
+      syncProductsUrl();
       scrollToProductGrid();
     });
   });
@@ -912,6 +990,7 @@ function initializeProductFilter() {
       if (currentPage < totalPages) {
         currentPage += 1;
         updatePagination(visibleCards);
+        syncProductsUrl();
         scrollToProductGrid();
       }
     });
@@ -922,15 +1001,27 @@ function initializeProductFilter() {
       sortCards(sortSelect.value);
       currentPage = 1;
       updatePagination(getVisibleCards());
+      syncProductsUrl();
     });
   }
 
-  const params = new URLSearchParams(window.location.search);
-  const initial = params.get('scene') || 'all';
+  const storedState = readStoredState();
+  const initial = params.get('scene') || storedState?.scene || 'all';
+  const requestedPage = Number(params.get('page') || storedState?.page || '1');
+  const initialPage = Number.isFinite(requestedPage) && requestedPage >= 1 ? requestedPage : 1;
+  const initialSort = params.get('sort') || storedState?.sort;
+
+  if (sortSelect && initialSort) {
+    const hasOption = Array.from(sortSelect.options).some(option => option.value === initialSort);
+    if (hasOption) sortSelect.value = initialSort;
+  }
+
   if (sortSelect) {
-      sortCards(sortSelect.value);
-    }
-  applyFilters(initial);
+    sortCards(sortSelect.value);
+  }
+
+  currentPage = initialPage;
+  applyFilters(initial, { preservePage: true });
 
   let shouldAdjustOnEntry = window.location.hash === '#product-grid' || window.location.hash === '#product-grid-title';
   if (!shouldAdjustOnEntry) {
@@ -1035,6 +1126,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initializeSiteNavigation();
   initializeProductLinks();
   initializeProductDetailPage();
+  fitDetailTitleToSingleLine();
   initializeCartPage();
   initializeCheckoutPage();
   initializeProductFilter();
@@ -1042,3 +1134,5 @@ document.addEventListener('DOMContentLoaded', () => {
   initializeHeroSlides();
   initializeFaqAccordion();
 });
+
+window.addEventListener('resize', fitDetailTitleToSingleLine);

@@ -1096,6 +1096,15 @@ a:hover { color: var(--black); }
   text-shadow: 0 6px 18px rgba(255, 249, 245, 0.35);
 }
 
+.hero__lead .hero__line {
+  display: block;
+  white-space: nowrap;
+}
+
+.hero__lead--mobile {
+  display: none;
+}
+
 .hero__actions,
 .detail-summary__actions {
   display: flex;
@@ -2153,7 +2162,21 @@ a:hover { color: var(--black); }
     color: #5d4b45;
     font-size: 16px;
     line-height: 1.86;
+    max-width: 32ch;
     text-shadow: 0 1px 12px rgba(255, 252, 248, 0.5);
+  }
+
+  .hero__lead .hero__line {
+    display: block;
+    white-space: nowrap;
+  }
+
+  .hero__lead--desktop {
+    display: none;
+  }
+
+  .hero__lead--mobile {
+    display: block;
   }
 
   .contact-card--aside {
@@ -2344,6 +2367,12 @@ a:hover { color: var(--black); }
   justify-content: flex-start;
   min-height: 100%;
   padding: 30px;
+}
+
+.detail-summary--product h1 {
+  font-size: clamp(40px, 4.1vw, 50px);
+  line-height: 1.14;
+  white-space: nowrap;
 }
 
 .detail-summary__price-block {
