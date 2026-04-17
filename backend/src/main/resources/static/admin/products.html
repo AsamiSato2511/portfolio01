@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>&#21830;&#21697;&#31649;&#29702; | BloomLetter Admin</title>
+  <meta name="description" content="BloomLetter &#12398;&#21830;&#21697;&#31649;&#29702;&#30011;&#38754;&#12391;&#12377;&#12290;">
+  <link rel="stylesheet" href="/admin/admin.css">
+</head>
+<body>
+  <header class="admin-topbar">
+    <div class="admin-shell admin-topbar__inner">
+      <a class="admin-brand" href="/admin/products.html">
+        <span class="admin-brand__eyebrow">BloomLetter Admin</span>
+        <strong class="admin-brand__title">&#36939;&#21942;&#12480;&#12483;&#12471;&#12517;&#12508;&#12540;&#12489;</strong>
+      </a>
+      <nav class="admin-nav" aria-label="&#31649;&#29702;&#12513;&#12491;&#12517;&#12540;">
+        <a class="admin-nav__link is-current" href="/admin/products.html">&#21830;&#21697;&#31649;&#29702;</a>
+        <a class="admin-nav__link" href="/admin/inquiries.html">&#12362;&#21839;&#12356;&#21512;&#12431;&#12379;&#31649;&#29702;</a>
+      </nav>
+      <div class="admin-topbar__meta">
+        <span class="admin-user" data-admin-user>BloomLetter Admin</span>
+        <button class="admin-topbar__action" type="button" data-admin-logout">&#12525;&#12464;&#12450;&#12454;&#12488;</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="admin-page admin-shell" data-admin-products-page>
+    <section class="admin-hero">
+      <div class="admin-hero__copy">
+        <h1>&#21830;&#21697;&#31649;&#29702;</h1>
+        <p>&#29694;&#22312;&#12398;&#12521;&#12452;&#12531;&#12490;&#12483;&#12503;&#12434;&#30906;&#35469;&#12375;&#12289;&#20844;&#38283;&#29366;&#24907;&#12398;&#35211;&#30452;&#12375;&#12420;&#21830;&#21697;&#30331;&#37682;&#12539;&#32232;&#38598;&#12434;&#12402;&#12392;&#12388;&#12398;&#30011;&#38754;&#12391;&#36914;&#12417;&#12425;&#12428;&#12427;&#12424;&#12358;&#12395;&#12375;&#12390;&#12356;&#12414;&#12377;&#12290;</p>
+      </div>
+      <div class="admin-metrics">
+        <article class="admin-metric">
+          <span class="admin-metric__label">&#30331;&#37682;&#21830;&#21697;&#25968;</span>
+          <strong data-admin-metric="products">-</strong>
+        </article>
+        <article class="admin-metric">
+          <span class="admin-metric__label">&#20844;&#38283;&#20013;&#21830;&#21697;</span>
+          <strong data-admin-metric="published">-</strong>
+        </article>
+        <article class="admin-metric">
+          <span class="admin-metric__label">&#12362;&#21839;&#12356;&#21512;&#12431;&#12379;&#20214;&#25968;</span>
+          <strong data-admin-metric="inquiries">-</strong>
+        </article>
+      </div>
+    </section>
+
+    <div class="admin-notice" data-admin-products-notice>&#35501;&#12415;&#36796;&#12415;&#20013;&#12391;&#12377;&#12290;</div>
+
+    <section class="admin-grid admin-grid--products">
+      <article class="admin-card admin-card--section">
+        <div class="admin-card__header">
+          <div>
+            <h2>&#21830;&#21697;&#19968;&#35239;</h2>
+            <p>&#12461;&#12540;&#12527;&#12540;&#12489;&#12539;&#12471;&#12540;&#12531;&#12539;&#20844;&#38283;&#29366;&#24907;&#12391;&#32094;&#12426;&#36796;&#12415;&#12394;&#12364;&#12425;&#12289;&#24517;&#35201;&#12394;&#21830;&#21697;&#12434;&#12377;&#12400;&#12420;&#12367;&#32232;&#38598;&#12391;&#12365;&#12414;&#12377;&#12290;</p>
+          </div>
+        </div>
+
+        <form class="admin-toolbar" data-admin-products-filter>
+          <div class="admin-search">
+            <label for="product-search">&#12461;&#12540;&#12527;&#12540;&#12489;</label>
+            <input class="admin-input" id="product-search" name="q" type="search" placeholder="&#21830;&#21697;&#21517;&#12391;&#26908;&#32034;">
+          </div>
+          <div class="admin-field">
+            <label for="product-scene-filter">&#12471;&#12540;&#12531;</label>
+            <select class="admin-select" id="product-scene-filter" name="sceneId" data-admin-scene-filter>
+              <option value="">すべてのシーン</option>
+              <option value="1">Birthday</option>
+              <option value="2">Thanks</option>
+              <option value="3">Celebration</option>
+              <option value="4">Seasonal Gift</option>
+            </select>
+          </div>
+          <div class="admin-field">
+            <label for="product-publish-filter">&#20844;&#38283;&#29366;&#24907;</label>
+            <select class="admin-select" id="product-publish-filter" name="publishStatus">
+              <option value="">&#12377;&#12409;&#12390;</option>
+              <option value="true">&#20844;&#38283;&#20013;</option>
+              <option value="false">&#19979;&#26360;&#12365;</option>
+            </select>
+          </div>
+          <div class="admin-actions">
+            <button class="admin-button" type="submit">&#32094;&#12426;&#36796;&#12416;</button>
+            <button class="admin-button--ghost" type="button" data-admin-product-reset">&#12522;&#12475;&#12483;&#12488;</button>
+          </div>
+        </form>
+
+        <div class="admin-table-wrap">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>&#21830;&#21697;</th>
+                <th>&#12471;&#12540;&#12531;</th>
+                <th>&#20385;&#26684;</th>
+                <th>&#29366;&#24907;</th>
+                <th>&#22312;&#24235;</th>
+                <th>&#25805;&#20316;</th>
+              </tr>
+            </thead>
+            <tbody data-admin-products-body>
+              <tr><td colspan="6" class="admin-empty">&#35501;&#12415;&#36796;&#12415;&#20013;&#12391;&#12377;&#12290;</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </article>
+
+      <aside class="admin-card admin-card--section">
+        <div class="admin-card__header">
+          <div>
+            <h3 data-admin-form-title>&#21830;&#21697;&#12434;&#30331;&#37682;</h3>
+            <p>&#26032;&#35215;&#30331;&#37682;&#12392;&#26082;&#23384;&#21830;&#21697;&#12398;&#32232;&#38598;&#12398;&#20001;&#26041;&#12395;&#20351;&#12360;&#12427;&#20849;&#36890;&#12501;&#12457;&#12540;&#12512;&#12391;&#12377;&#12290;</p>
+          </div>
+        </div>
+
+        <form class="admin-form" data-admin-product-form>
+          <input type="hidden" name="productId">
+
+          <div class="admin-form__grid">
+            <div class="admin-field">
+              <label for="product-name">&#21830;&#21697;&#21517;</label>
+              <input class="admin-input" id="product-name" name="name" type="text" required>
+            </div>
+            <div class="admin-field">
+              <label for="product-slug">Slug</label>
+              <input class="admin-input" id="product-slug" name="slug" type="text" required>
+            </div>
+            <div class="admin-field">
+              <label for="product-price">&#20385;&#26684;</label>
+              <input class="admin-input" id="product-price" name="price" type="number" min="500" required>
+            </div>
+            <div class="admin-field">
+              <label for="product-scene">&#12471;&#12540;&#12531;</label>
+              <select class="admin-select" id="product-scene" name="sceneId" data-admin-scene-select required>
+                <option value="1" selected>Birthday</option>
+                <option value="2">Thanks</option>
+                <option value="3">Celebration</option>
+                <option value="4">Seasonal Gift</option>
+              </select>
+            </div>
+            <div class="admin-field admin-form__full">
+              <label for="product-description">&#21830;&#21697;&#35500;&#26126;</label>
+              <textarea class="admin-textarea" id="product-description" name="description" required></textarea>
+            </div>
+            <div class="admin-field">
+              <label for="product-image-path">&#30011;&#20687;&#12497;&#12473;</label>
+              <input class="admin-input" id="product-image-path" name="imagePath" type="text" required>
+            </div>
+            <div class="admin-field">
+              <label for="product-image-alt">&#30011;&#20687; alt</label>
+              <input class="admin-input" id="product-image-alt" name="imageAlt" type="text">
+            </div>
+            <div class="admin-field">
+              <label for="product-stock-status">&#22312;&#24235;&#29366;&#24907;</label>
+              <select class="admin-select" id="product-stock-status" name="stockStatus">
+                <option value="IN_STOCK">IN_STOCK</option>
+                <option value="LOW_STOCK">LOW_STOCK</option>
+                <option value="OUT_OF_STOCK">OUT_OF_STOCK</option>
+              </select>
+            </div>
+            <div class="admin-field">
+              <label for="product-display-order">&#34920;&#31034;&#38918;</label>
+              <input class="admin-input" id="product-display-order" name="displayOrder" type="number" min="0" value="0">
+            </div>
+            <div class="admin-field">
+              <label for="product-published">&#20844;&#38283;&#29366;&#24907;</label>
+              <select class="admin-select" id="product-published" name="published">
+                <option value="true">&#20844;&#38283;&#12377;&#12427;</option>
+                <option value="false">&#19979;&#26360;&#12365;&#12395;&#12377;&#12427;</option>
+              </select>
+            </div>
+            <div class="admin-field">
+              <label for="product-featured">&#29305;&#38598;&#34920;&#31034;</label>
+              <select class="admin-select" id="product-featured" name="featured">
+                <option value="false">&#36890;&#24120;&#34920;&#31034;</option>
+                <option value="true">&#29305;&#38598;&#12395;&#36617;&#12379;&#12427;</option>
+              </select>
+            </div>
+          </div>
+
+          <p class="admin-help">&#12371;&#12398;&#12501;&#12457;&#12540;&#12512;&#12399;&#26082;&#23384;&#12398; admin product API &#12395;&#26360;&#12365;&#36796;&#12416;&#27083;&#25104;&#12391;&#12289;&#23558;&#26469;&#30340;&#12395;&#20844;&#38283;&#12469;&#12452;&#12488;&#20596;&#12418; API &#21270;&#12375;&#12390;&#12356;&#12367;&#21069;&#25552;&#12391;&#12377;&#12290;</p>
+
+          <div class="admin-actions">
+            <button class="admin-button" type="submit" data-admin-form-submit-label">&#30331;&#37682;&#12377;&#12427;</button>
+            <button class="admin-button--ghost" type="button" data-admin-product-reset>&#12501;&#12457;&#12540;&#12512;&#12434;&#21021;&#26399;&#21270;</button>
+          </div>
+        </form>
+      </aside>
+    </section>
+  </main>
+
+  <script src="/admin/admin.js"></script>
+</body>
+</html>

@@ -420,9 +420,141 @@ const PRODUCT_CATALOG = [
 
 const PRODUCT_BY_ID = new Map(PRODUCT_CATALOG.map(product => [product.id, product]));
 const PRODUCT_BY_NAME = new Map(PRODUCT_CATALOG.map(product => [product.name, product]));
+const PUBLIC_API_BASE_URL =
+  window.location.hostname === 'localhost' && window.location.port === '8080'
+    ? ''
+    : 'http://localhost:8080';
+
+let cachedPublicProductsPromise = null;
 
 function formatYenPrice(value) {
   return `¥${Number(value).toLocaleString('ja-JP')}`;
+}
+
+function escapeHtml(value) {
+  return String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+function normalizePublicAssetPath(path) {
+  if (!path) return 'images/Top/scene/scene1.png';
+  if (path.startsWith('/')) return `.${path}`;
+  return path;
+}
+
+function getSceneLabel(sceneSlug, sceneName) {
+  if (sceneName) return sceneName;
+  if (sceneSlug === 'birthday') return 'Birthday';
+  if (sceneSlug === 'thanks') return 'Thanks';
+  if (sceneSlug === 'celebration') return 'Celebration';
+  return 'Seasonal Gift';
+}
+
+function getCatalogProductByIdentifier(productId) {
+  return PRODUCT_BY_ID.get(productId) || PRODUCT_BY_NAME.get(productId) || null;
+}
+
+function normalizePublicProduct(product) {
+  if (!product) return null;
+
+  return {
+    id: String(product.id),
+    numericId: product.id,
+    name: product.name,
+    slug: product.slug,
+    scene: product.sceneSlug,
+    sceneLabel: getSceneLabel(product.sceneSlug, product.sceneName),
+    price: product.price,
+    description: product.description || `${getSceneLabel(product.sceneSlug, product.sceneName)} に寄り添うフラワーギフトです。`,
+    occasions: `${getSceneLabel(product.sceneSlug, product.sceneName)} / フラワーギフト / 想いを届ける贈り物`,
+    flowers: '季節の花材をバランスよく束ねたブーケ',
+    shipping: '注文から3営業日以内に発送',
+    image: normalizePublicAssetPath(product.imagePath),
+    imageAlt: product.imageAlt || `${product.name} の商品画像`,
+    imagePosition: 'center 42%',
+    relatedImageSize: '122%',
+    relatedImagePosition: 'center 42%'
+  };
+}
+
+function getProductDetailHref(product) {
+  const identifier = product?.numericId ?? product?.id;
+  return `product-detail.html?product=${encodeURIComponent(identifier)}`;
+}
+
+async function fetchPublicProducts() {
+  if (!cachedPublicProductsPromise) {
+    cachedPublicProductsPromise = fetch(`${PUBLIC_API_BASE_URL}/api/public/products?size=50&sort=recommended`, {
+      headers: { Accept: 'application/json' }
+    })
+      .then(async response => {
+        if (!response.ok) {
+          throw new Error('商品一覧の取得に失敗しました。');
+        }
+
+        const data = await response.json();
+        return Array.isArray(data?.items) ? data.items.map(normalizePublicProduct).filter(Boolean) : [];
+      })
+      .catch(error => {
+        cachedPublicProductsPromise = null;
+        throw error;
+      });
+  }
+
+  return cachedPublicProductsPromise;
+}
+
+async function fetchHomeData() {
+  const response = await fetch(`${PUBLIC_API_BASE_URL}/api/public/home`, {
+    headers: { Accept: 'application/json' }
+  });
+
+  if (!response.ok) {
+    throw new Error('ホーム表示用データの取得に失敗しました。');
+  }
+
+  return response.json();
+}
+
+async function fetchPublicProductDetail(productId) {
+  const response = await fetch(`${PUBLIC_API_BASE_URL}/api/public/products/${encodeURIComponent(productId)}`, {
+    headers: { Accept: 'application/json' }
+  });
+
+  if (!response.ok) {
+    throw new Error('商品の詳細取得に失敗しました。');
+  }
+
+  const data = await response.json();
+  return normalizePublicProduct(data);
+}
+
+function getSceneImagePath(sceneSlug) {
+  if (sceneSlug === 'birthday') return 'images/Top/scene/scene1.png';
+  if (sceneSlug === 'thanks') return 'images/Top/scene/scene3.png';
+  if (sceneSlug === 'celebration') return 'images/Top/scene/scene4.png';
+  return 'images/Top/scene/scene6.png';
+}
+
+function getSceneImageAlt(sceneName) {
+  return `${sceneName}向けフラワーギフトのイメージ`;
+}
+
+function renderSceneCard(scene) {
+  return `
+    <a class="scene-card" href="products.html?scene=${encodeURIComponent(scene.slug)}">
+      <span class="scene-card__image">
+        <img class="scene-card__photo" src="${escapeHtml(getSceneImagePath(scene.slug))}" alt="${escapeHtml(getSceneImageAlt(scene.name))}">
+      </span>
+      <span class="scene-card__body">
+        <strong>${escapeHtml(scene.name)}</strong>
+      </span>
+    </a>
+  `;
 }
 
 function getDetailEyebrow(scene) {
@@ -432,8 +564,9 @@ function getDetailEyebrow(scene) {
   return 'Seasonal Gift';
 }
 
-function getRecommendedProducts(currentProduct, limit = 4) {
-  const others = PRODUCT_CATALOG.filter(product => product.id !== currentProduct.id);
+function getRecommendedProducts(currentProduct, limit = 4, productCatalog = PRODUCT_CATALOG) {
+  const currentId = String(currentProduct.numericId ?? currentProduct.id);
+  const others = productCatalog.filter(product => String(product.numericId ?? product.id) !== currentId);
   const byPriceDistance = (a, b) => {
     const distance = Math.abs(a.price - currentProduct.price) - Math.abs(b.price - currentProduct.price);
     return distance !== 0 ? distance : a.name.localeCompare(b.name, 'en');
@@ -447,11 +580,11 @@ function getRecommendedProducts(currentProduct, limit = 4) {
 function renderRelatedProductCard(product) {
   return `
     <article class="related-product-card">
-      <div class="related-product-card__image" style="background-image: url(&quot;${product.image}&quot;); --related-size: ${product.relatedImageSize || '122%'}; --related-position: ${product.relatedImagePosition || product.imagePosition || 'center 42%'};" aria-hidden="true"></div>
+      <div class="related-product-card__image" style="background-image: url(&quot;${escapeHtml(product.image)}&quot;); --related-size: ${product.relatedImageSize || '122%'}; --related-position: ${product.relatedImagePosition || product.imagePosition || 'center 42%'};" aria-hidden="true"></div>
       <div class="related-product-card__body">
-        <h3>${product.name}</h3>
+        <h3>${escapeHtml(product.name)}</h3>
         <strong>${formatYenPrice(product.price)}</strong>
-        <a href="product-detail.html?product=${product.id}">詳細を見る</a>
+        <a href="${getProductDetailHref(product)}">詳細を見る</a>
       </div>
     </article>
   `;
@@ -492,19 +625,31 @@ function initializeProductLinks() {
     const product = PRODUCT_BY_NAME.get(title);
     if (!product) return;
 
-    const href = `product-detail.html?product=${product.id}`;
+    const href = getProductDetailHref(product);
     link.href = href;
     bindClickableCard(card, href, product.name);
   });
 }
 
-function initializeProductDetailPage() {
+async function initializeProductDetailPage() {
   const detailSummary = document.querySelector('.detail-summary--product');
   if (!detailSummary) return;
 
   const params = new URLSearchParams(window.location.search);
   const productId = params.get('product') || 'spring-bouquet';
-  const product = PRODUCT_BY_ID.get(productId) || PRODUCT_BY_ID.get('spring-bouquet');
+  let product = getCatalogProductByIdentifier(productId);
+
+  if (!product && /^\d+$/.test(productId)) {
+    try {
+      product = await fetchPublicProductDetail(productId);
+    } catch (error) {
+      product = null;
+    }
+  }
+
+  if (!product) {
+    product = PRODUCT_BY_ID.get('spring-bouquet');
+  }
   if (!product) return;
 
   const breadcrumbCurrent = document.querySelector('.breadcrumb li[aria-current="page"]');
@@ -551,17 +696,26 @@ function initializeProductDetailPage() {
   }
 
   if (relatedGrid) {
-    relatedGrid.innerHTML = getRecommendedProducts(product, 4)
-      .map(renderRelatedProductCard)
-      .join('');
+    let relatedProducts = getRecommendedProducts(product, 4);
+
+    if (product.numericId) {
+      try {
+        const publicProducts = await fetchPublicProducts();
+        relatedProducts = getRecommendedProducts(product, 4, publicProducts);
+      } catch (error) {
+        relatedProducts = getRecommendedProducts(product, 4);
+      }
+    }
+
+    relatedGrid.innerHTML = relatedProducts.map(renderRelatedProductCard).join('');
 
     relatedGrid.querySelectorAll('.related-product-card').forEach(card => {
       const title = card.querySelector('h3')?.textContent?.trim();
-      const productData = title ? PRODUCT_BY_NAME.get(title) : null;
+      const productData = relatedProducts.find(item => item.name === title) || (title ? PRODUCT_BY_NAME.get(title) : null);
       const link = card.querySelector('a[href*="product-detail"]');
       if (!productData || !link) return;
 
-      const href = `product-detail.html?product=${productData.id}`;
+      const href = getProductDetailHref(productData);
       link.href = href;
       bindClickableCard(card, href, productData.name);
     });
@@ -590,14 +744,26 @@ function fitDetailTitleToSingleLine() {
   }
 }
 
-function initializeCartPage() {
+async function initializeCartPage() {
   const cartPage = document.querySelector('[data-cart-page]');
   if (!cartPage) return;
 
   const params = new URLSearchParams(window.location.search);
   const productId = params.get('product') || 'spring-bouquet';
   const messageCard = params.get('messageCard') || '希望しない';
-  const product = PRODUCT_BY_ID.get(productId) || PRODUCT_BY_ID.get('spring-bouquet');
+  let product = getCatalogProductByIdentifier(productId);
+
+  if (!product && /^\d+$/.test(productId)) {
+    try {
+      product = await fetchPublicProductDetail(productId);
+    } catch (error) {
+      product = null;
+    }
+  }
+
+  if (!product) {
+    product = PRODUCT_BY_ID.get('spring-bouquet');
+  }
   if (!product) return;
 
   const heroTitle = cartPage.querySelector('.cart-hero h1');
@@ -646,14 +812,26 @@ function initializeCartPage() {
   }
 }
 
-function initializeCheckoutPage() {
+async function initializeCheckoutPage() {
   const checkoutPage = document.querySelector('[data-checkout-page]');
   if (!checkoutPage) return;
 
   const params = new URLSearchParams(window.location.search);
   const productId = params.get('product') || 'spring-bouquet';
   const messageCard = params.get('messageCard') || '希望しない';
-  const product = PRODUCT_BY_ID.get(productId) || PRODUCT_BY_ID.get('spring-bouquet');
+  let product = getCatalogProductByIdentifier(productId);
+
+  if (!product && /^\d+$/.test(productId)) {
+    try {
+      product = await fetchPublicProductDetail(productId);
+    } catch (error) {
+      product = null;
+    }
+  }
+
+  if (!product) {
+    product = PRODUCT_BY_ID.get('spring-bouquet');
+  }
   if (!product) return;
 
   const heroTitle = checkoutPage.querySelector('.cart-hero h1');
@@ -694,6 +872,42 @@ function initializeCheckoutPage() {
 
   if (consultAction) {
     consultAction.href = `contact.html?product=${encodeURIComponent(product.id)}`;
+  }
+}
+
+async function initializeHomePage() {
+  const featuredGrid = document.querySelector('#home-featured-grid');
+  const sceneGrid = document.querySelector('#home-scene-grid');
+  if (!featuredGrid && !sceneGrid) return;
+
+  try {
+    const homeData = await fetchHomeData();
+
+    if (sceneGrid && Array.isArray(homeData?.scenes) && homeData.scenes.length) {
+      sceneGrid.innerHTML = homeData.scenes
+        .slice(0, 4)
+        .map(renderSceneCard)
+        .join('');
+    }
+
+    if (featuredGrid && Array.isArray(homeData?.featuredProducts) && homeData.featuredProducts.length) {
+      const featuredProducts = homeData.featuredProducts
+        .map(normalizePublicProduct)
+        .filter(Boolean)
+        .slice(0, 4);
+
+      featuredGrid.innerHTML = featuredProducts.map(renderProductCard).join('');
+
+      featuredGrid.querySelectorAll('.product-card').forEach(card => {
+        const link = card.querySelector('a[href*="product-detail"]');
+        const title = card.querySelector('h3')?.textContent?.trim();
+        if (link && title) {
+          bindClickableCard(card, link.getAttribute('href'), title);
+        }
+      });
+    }
+  } catch (error) {
+    window.console?.warn?.(error);
   }
 }
 
@@ -790,15 +1004,43 @@ function initializeSiteNavigation() {
   });
 }
 
-function initializeProductFilter() {
+function renderProductCard(product) {
+  return `
+    <article class="product-card" data-scene="${escapeHtml(product.scene)}">
+      <span class="product-card__badge">${escapeHtml(product.sceneLabel)}</span>
+      <div class="product-card__image" style="background-image: url(&quot;${escapeHtml(product.image)}&quot;); background-position: ${product.imagePosition || 'center 42%'};" aria-label="${escapeHtml(product.imageAlt || `${product.name} の商品画像`)}"></div>
+      <div class="product-card__content">
+        <h3>${escapeHtml(product.name)}</h3>
+        <p>${escapeHtml(product.description)}</p>
+        <div class="product-card__footer">
+          <strong>${formatYenPrice(product.price)}</strong>
+          <a href="${getProductDetailHref(product)}">詳細を見る</a>
+        </div>
+      </div>
+    </article>
+  `;
+}
+
+async function initializeProductFilter() {
   const chips = document.querySelectorAll('[data-filter]');
   const priceCheckboxes = document.querySelectorAll('[data-price-range]');
   const productGrid = document.querySelector('#product-grid');
   const productGridTitle = document.querySelector('#product-grid-title');
-  const cards = document.querySelectorAll('.product-card[data-scene]');
   const pageLinks = document.querySelectorAll('[data-page-link]');
   const nextLink = document.querySelector('[data-page-next]');
   const sortSelect = document.querySelector('#sort-products');
+  if (!productGrid) return;
+
+  try {
+    const publicProducts = await fetchPublicProducts();
+    if (publicProducts.length) {
+      productGrid.innerHTML = publicProducts.map(renderProductCard).join('');
+    }
+  } catch (error) {
+    window.console?.warn?.(error);
+  }
+
+  let cards = Array.from(document.querySelectorAll('.product-card[data-scene]'));
   if (!cards.length) return;
 
   let currentPage = 1;
@@ -964,6 +1206,18 @@ function initializeProductFilter() {
     syncProductsUrl();
   };
 
+  cards.forEach(card => {
+    const title = card.querySelector('h3')?.textContent?.trim();
+    const product = title ? PRODUCT_BY_NAME.get(title) : null;
+    const link = card.querySelector('a[href*="product-detail"]');
+    const href = link?.getAttribute('href');
+    if (href && title) {
+      bindClickableCard(card, href, title);
+    } else if (product) {
+      bindClickableCard(card, getProductDetailHref(product), product.name);
+    }
+  });
+
   chips.forEach(chip => {
     chip.addEventListener('click', () => applyFilters(chip.dataset.filter));
   });
@@ -1124,6 +1378,7 @@ function initializeFaqAccordion() {
 
 document.addEventListener('DOMContentLoaded', () => {
   initializeSiteNavigation();
+  initializeHomePage();
   initializeProductLinks();
   initializeProductDetailPage();
   fitDetailTitleToSingleLine();

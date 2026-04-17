@@ -2,6 +2,7 @@ package com.bloomletter.backend.controller.admin;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -73,5 +74,30 @@ class AdminApiControllerTest {
             .content(body))
         .andExpect(status().isBadRequest())
         .andExpect(jsonPath("$.status").value(400));
+  }
+
+  @Test
+  void adminInquiriesWithBasicAuthReturnsOk() throws Exception {
+    mockMvc.perform(get("/api/admin/inquiries")
+            .with(httpBasic("admin@bloom-letter.jp", "password")))
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.items").isArray());
+  }
+
+  @Test
+  void updateInquiryStatusReturnsOk() throws Exception {
+    String body = """
+        {
+          "status": "RESOLVED"
+        }
+        """;
+
+    mockMvc.perform(patch("/api/admin/inquiries/1/status")
+            .with(httpBasic("admin@bloom-letter.jp", "password"))
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(body))
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.id").value(1))
+        .andExpect(jsonPath("$.status").value("RESOLVED"));
   }
 }

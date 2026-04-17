@@ -4,6 +4,18 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bloomletter.backend.mapper.ContactInquiryMapper">
 
+  <resultMap id="contactInquiryResultMap" type="com.bloomletter.backend.entity.ContactInquiry">
+    <id property="id" column="id"/>
+    <result property="name" column="name"/>
+    <result property="email" column="email"/>
+    <result property="phone" column="phone"/>
+    <result property="inquiryType" column="inquiry_type"/>
+    <result property="message" column="message"/>
+    <result property="status" column="status"/>
+    <result property="createdAt" column="created_at"/>
+    <result property="updatedAt" column="updated_at"/>
+  </resultMap>
+
   <insert id="insert" parameterType="com.bloomletter.backend.entity.ContactInquiry" useGeneratedKeys="true" keyProperty="id">
     INSERT INTO contact_inquiries (
       name, email, phone, inquiry_type, message, status, created_at, updated_at
@@ -19,4 +31,51 @@
   <select id="countByStatus" resultType="long">
     SELECT COUNT(*) FROM contact_inquiries WHERE status = #{status}
   </select>
+
+  <select id="findAdminInquiries" resultMap="contactInquiryResultMap">
+    SELECT id, name, email, phone, inquiry_type, message, status, created_at, updated_at
+    FROM contact_inquiries
+    WHERE 1 = 1
+      <if test="query != null and query != ''">
+        AND (
+          LOWER(name) LIKE CONCAT('%', LOWER(#{query}), '%')
+          OR LOWER(email) LIKE CONCAT('%', LOWER(#{query}), '%')
+          OR LOWER(message) LIKE CONCAT('%', LOWER(#{query}), '%')
+        )
+      </if>
+      <if test="status != null and status != ''">
+        AND status = #{status}
+      </if>
+    ORDER BY created_at DESC, id DESC
+    LIMIT #{limit} OFFSET #{offset}
+  </select>
+
+  <select id="countAdminInquiries" resultType="long">
+    SELECT COUNT(*)
+    FROM contact_inquiries
+    WHERE 1 = 1
+      <if test="query != null and query != ''">
+        AND (
+          LOWER(name) LIKE CONCAT('%', LOWER(#{query}), '%')
+          OR LOWER(email) LIKE CONCAT('%', LOWER(#{query}), '%')
+          OR LOWER(message) LIKE CONCAT('%', LOWER(#{query}), '%')
+        )
+      </if>
+      <if test="status != null and status != ''">
+        AND status = #{status}
+      </if>
+  </select>
+
+  <select id="findById" resultMap="contactInquiryResultMap">
+    SELECT id, name, email, phone, inquiry_type, message, status, created_at, updated_at
+    FROM contact_inquiries
+    WHERE id = #{id}
+  </select>
+
+  <update id="updateStatus">
+    UPDATE contact_inquiries
+       SET status = #{status},
+           updated_at = CURRENT_TIMESTAMP
+     WHERE id = #{id}
+  </update>
 </mapper>

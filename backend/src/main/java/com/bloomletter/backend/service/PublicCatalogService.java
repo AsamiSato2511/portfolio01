@@ -83,6 +83,7 @@ public class PublicCatalogService {
         product.getName(),
         product.getSlug(),
         product.getPrice(),
+        product.getDescription(),
         product.getImagePath(),
         product.getImageAlt(),
         product.getSceneName(),
@@ -132,4 +133,3 @@ public class PublicCatalogService {
     return "p.display_order ASC, p.id ASC";
   }
 }
-

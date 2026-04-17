@@ -5,10 +5,10 @@ public record ProductSummaryResponse(
     String name,
     String slug,
     Integer price,
+    String description,
     String imagePath,
     String imageAlt,
     String sceneName,
     String sceneSlug
 ) {
 }
-
