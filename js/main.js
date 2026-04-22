@@ -420,6 +420,7 @@ const PRODUCT_CATALOG = [
 
 const PRODUCT_BY_ID = new Map(PRODUCT_CATALOG.map(product => [product.id, product]));
 const PRODUCT_BY_NAME = new Map(PRODUCT_CATALOG.map(product => [product.name, product]));
+const HOME_FEATURED_FALLBACK_IDS = ['soft-merci', 'blue-hydrangea-air', 'mimosa-light', 'premium-mix'];
 const PUBLIC_API_BASE_URL =
   window.location.hostname === 'localhost' && window.location.port === '8080'
     ? ''
@@ -458,8 +459,22 @@ function getCatalogProductByIdentifier(productId) {
   return PRODUCT_BY_ID.get(productId) || PRODUCT_BY_NAME.get(productId) || null;
 }
 
+function findCatalogProductMatch(product) {
+  if (!product) return null;
+
+  return (
+    PRODUCT_BY_ID.get(String(product.slug || '')) ||
+    PRODUCT_BY_ID.get(String(product.id || '')) ||
+    PRODUCT_BY_NAME.get(product.name) ||
+    null
+  );
+}
+
 function normalizePublicProduct(product) {
   if (!product) return null;
+
+  const catalogProduct = findCatalogProductMatch(product);
+  const sceneLabel = getSceneLabel(product.sceneSlug, product.sceneName);
 
   return {
     id: String(product.id),
@@ -467,17 +482,17 @@ function normalizePublicProduct(product) {
     name: product.name,
     slug: product.slug,
     scene: product.sceneSlug,
-    sceneLabel: getSceneLabel(product.sceneSlug, product.sceneName),
+    sceneLabel,
     price: product.price,
-    description: product.description || `${getSceneLabel(product.sceneSlug, product.sceneName)} に寄り添うフラワーギフトです。`,
-    occasions: `${getSceneLabel(product.sceneSlug, product.sceneName)} / フラワーギフト / 想いを届ける贈り物`,
-    flowers: '季節の花材をバランスよく束ねたブーケ',
-    shipping: '注文から3営業日以内に発送',
-    image: normalizePublicAssetPath(product.imagePath),
+    description: product.description || catalogProduct?.description || `${sceneLabel} に寄り添うフラワーギフトです。`,
+    occasions: catalogProduct?.occasions || `${sceneLabel} / フラワーギフト / 想いを届ける贈り物`,
+    flowers: catalogProduct?.flowers || '季節の花材をバランスよく束ねたブーケ',
+    shipping: catalogProduct?.shipping || '注文から3営業日以内に発送',
+    image: catalogProduct?.image || normalizePublicAssetPath(product.imagePath),
     imageAlt: product.imageAlt || `${product.name} の商品画像`,
-    imagePosition: 'center 42%',
-    relatedImageSize: '122%',
-    relatedImagePosition: 'center 42%'
+    imagePosition: catalogProduct?.imagePosition || 'center 42%',
+    relatedImageSize: catalogProduct?.relatedImageSize || '122%',
+    relatedImagePosition: catalogProduct?.relatedImagePosition || catalogProduct?.imagePosition || 'center 42%'
   };
 }
 
@@ -497,7 +512,8 @@ async function fetchPublicProducts() {
         }
 
         const data = await response.json();
-        return Array.isArray(data?.items) ? data.items.map(normalizePublicProduct).filter(Boolean) : [];
+        const apiProducts = Array.isArray(data?.items) ? data.items.map(normalizePublicProduct).filter(Boolean) : [];
+        return mergeCatalogProducts(apiProducts);
       })
       .catch(error => {
         cachedPublicProductsPromise = null;
@@ -506,6 +522,40 @@ async function fetchPublicProducts() {
   }
 
   return cachedPublicProductsPromise;
+}
+
+function mergeCatalogProducts(apiProducts) {
+  const apiBySlug = new Map();
+  const mergedCatalog = [];
+
+  apiProducts.forEach(product => {
+    if (product?.slug) {
+      apiBySlug.set(product.slug, product);
+    }
+  });
+
+  PRODUCT_CATALOG.forEach(product => {
+    const matched = apiBySlug.get(product.id);
+    if (matched) {
+      mergedCatalog.push({
+        ...product,
+        ...matched,
+        id: matched.id,
+        numericId: matched.numericId,
+        slug: matched.slug || product.id,
+        image: product.image,
+        imagePosition: product.imagePosition || matched.imagePosition,
+        relatedImageSize: product.relatedImageSize || matched.relatedImageSize,
+        relatedImagePosition: product.relatedImagePosition || matched.relatedImagePosition || product.imagePosition
+      });
+      apiBySlug.delete(product.id);
+    } else {
+      mergedCatalog.push(product);
+    }
+  });
+
+  const apiOnlyProducts = Array.from(apiBySlug.values());
+  return [...apiOnlyProducts, ...mergedCatalog];
 }
 
 async function fetchHomeData() {
@@ -893,10 +943,22 @@ async function initializeHomePage() {
     if (featuredGrid && Array.isArray(homeData?.featuredProducts) && homeData.featuredProducts.length) {
       const featuredProducts = homeData.featuredProducts
         .map(normalizePublicProduct)
-        .filter(Boolean)
-        .slice(0, 4);
+        .filter(Boolean);
 
-      featuredGrid.innerHTML = featuredProducts.map(renderProductCard).join('');
+      if (featuredProducts.length < 4) {
+        const fallbackProducts = HOME_FEATURED_FALLBACK_IDS
+          .map(id => PRODUCT_BY_ID.get(id))
+          .filter(Boolean)
+          .filter(product => !featuredProducts.some(item => item.slug === product.id || item.name === product.name));
+
+        fallbackProducts.forEach(product => {
+          if (featuredProducts.length < 4) {
+            featuredProducts.push(product);
+          }
+        });
+      }
+
+      featuredGrid.innerHTML = featuredProducts.slice(0, 4).map(renderProductCard).join('');
 
       featuredGrid.querySelectorAll('.product-card').forEach(card => {
         const link = card.querySelector('a[href*="product-detail"]');
