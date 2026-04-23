@@ -167,6 +167,7 @@ textarea {
 
 .admin-grid--products {
   grid-template-columns: minmax(0, 1.3fr) minmax(340px, 0.7fr);
+  align-items: start;
 }
 
 .admin-grid--inquiries {

@@ -554,8 +554,7 @@ function mergeCatalogProducts(apiProducts) {
     }
   });
 
-  const apiOnlyProducts = Array.from(apiBySlug.values());
-  return [...apiOnlyProducts, ...mergedCatalog];
+  return mergedCatalog;
 }
 
 async function fetchHomeData() {
