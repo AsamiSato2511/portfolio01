@@ -27,6 +27,50 @@ class PublicApiControllerTest {
   }
 
   @Test
+  void postGiftRecommendationReasonsReturnsOk() throws Exception {
+    String body = """
+        {
+          "selection": {
+            "recipient": "friend",
+            "scene": "birthday",
+            "mood": "soft",
+            "budgetRange": "mid"
+          },
+          "products": [
+            {
+              "productId": "soft-merci",
+              "name": "Soft Merci",
+              "scene": "birthday",
+              "mood": "soft",
+              "colorTone": "pink",
+              "budgetRange": "mid",
+              "description": "やわらかな色合わせで、やさしい祝福を届けるバースデーの花束。",
+              "price": 7400
+            },
+            {
+              "productId": "spring-bouquet",
+              "name": "Spring Bouquet",
+              "scene": "birthday",
+              "mood": "bright",
+              "colorTone": "pink",
+              "budgetRange": "mid",
+              "description": "明るく軽やかな色合いで、誕生日をやさしく彩る華やかな花束。",
+              "price": 7800
+            }
+          ]
+        }
+        """;
+
+    mockMvc.perform(post("/api/ai/gift-recommendations/reasons")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(body))
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.items").isArray())
+        .andExpect(jsonPath("$.items[0].productId").value("soft-merci"))
+        .andExpect(jsonPath("$.items[0].reason").isNotEmpty());
+  }
+
+  @Test
   void postContactInquiryReturnsCreated() throws Exception {
     String body = """
         {
@@ -64,4 +108,3 @@ class PublicApiControllerTest {
         .andExpect(jsonPath("$.validationErrors.email").exists());
   }
 }
-

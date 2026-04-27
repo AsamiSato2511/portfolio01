@@ -29,3 +29,9 @@ logging:
   level:
     com.bloomletter.backend: INFO
 
+bloomletter:
+  ai:
+    enabled: false
+    base-url: ${BLOOMLETTER_AI_BASE_URL:https://api.openai.com/v1/chat/completions}
+    model: ${BLOOMLETTER_AI_MODEL:gpt-4o-mini}
+    api-key: ${OPENAI_API_KEY:}

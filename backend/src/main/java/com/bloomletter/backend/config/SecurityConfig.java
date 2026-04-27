@@ -49,6 +49,7 @@ public class SecurityConfig {
                 "/images/**",
                 "/favicon.ico",
                 "/api/public/**",
+                "/api/ai/**",
                 "/api/admin/auth/login",
                 "/h2-console/**",
                 "/v3/api-docs/**",

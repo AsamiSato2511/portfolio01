@@ -64,6 +64,19 @@
           </div>
         </aside>
         <div class="product-listing">
+          <section class="favorites-summary" data-favorites-summary aria-label="お気に入り案内">
+            <button class="favorites-summary__button" type="button" data-favorites-toggle>
+              お気に入り 0件
+            </button>
+            <p class="favorites-summary__text" data-favorites-message>
+              気になる花束をお気に入りに追加できます。
+            </p>
+          </section>
+          <section class="feature-collection" data-feature-collection hidden aria-labelledby="feature-collection-title">
+            <p class="feature-collection__eyebrow">Seasonal Feature</p>
+            <h2 id="feature-collection-title" data-feature-title>季節のおすすめ</h2>
+            <p class="feature-collection__text" data-feature-description></p>
+          </section>
           <section class="scene-shortcuts" aria-labelledby="scene-shortcuts-title">
             <div class="section-heading section-heading--compact"><p class="eyebrow">Scene</p><h2 id="scene-shortcuts-title">人気のシーン別カテゴリ</h2></div>
             <div class="scene-grid scene-grid--compact">
@@ -109,6 +122,43 @@
       </section>
     </div>
   </main>
+
+  <div class="gift-chat" data-gift-chat>
+    <button class="gift-chat__toggle" type="button" data-gift-chat-toggle aria-expanded="false" aria-controls="gift-chat-panel">
+      <span class="material-symbols-outlined" aria-hidden="true">forum</span>
+      <span>ギフト相談</span>
+    </button>
+    <section class="gift-chat__panel" id="gift-chat-panel" data-gift-chat-panel hidden aria-label="Bloom Letter ギフト相談">
+      <header class="gift-chat__header">
+        <div>
+          <p class="gift-chat__label">Bloom Letter</p>
+          <h2>ギフト相談</h2>
+        </div>
+        <button class="gift-chat__close" type="button" data-gift-chat-close aria-label="ギフト相談を閉じる">
+          <span class="material-symbols-outlined" aria-hidden="true">close</span>
+        </button>
+      </header>
+      <div class="gift-chat__body">
+        <p class="gift-chat__lead">選択式でいくつかお伺いしながら、贈りものに合いそうな花束をご提案します。</p>
+        <div class="gift-chat__summary" data-gift-chat-summary hidden></div>
+        <section class="gift-chat__question" data-gift-chat-question>
+          <p class="gift-chat__step" data-gift-chat-step>STEP 1 / 4</p>
+          <h3 data-gift-chat-question-title>贈る相手を教えてください</h3>
+          <p class="gift-chat__hint" data-gift-chat-question-hint>いちばん近い相手をひとつ選んでください。</p>
+          <div class="gift-chat__options" data-gift-chat-options></div>
+        </section>
+        <section class="gift-chat__results" data-gift-chat-results hidden aria-live="polite">
+          <div class="section-heading section-heading--compact">
+            <p class="eyebrow">Recommendation</p>
+            <h3>あなたに合いそうな花束</h3>
+          </div>
+          <p class="gift-chat__status" data-gift-chat-status>選んだ条件に合わせて、贈りものに合う花束を選びました。</p>
+          <div class="gift-chat__result-grid" data-gift-chat-result-grid></div>
+          <button class="btn btn-secondary gift-chat__restart" type="button" data-gift-chat-restart>もう一度相談する</button>
+        </section>
+      </div>
+    </section>
+  </div>
 
     <footer class="site-footer"><div class="site-shell site-footer__grid"><div><a class="site-logo site-logo--footer" href="index.html"><span class="site-logo__mark" aria-hidden="true"><img class="site-logo__mark-image" src="images/Top/icon-transparent.png" alt=""></span><span>Bloom Letter</span></a><p class="site-footer__text">花で想いを届ける<br>フラワーギフトサイト</p></div><div><h2 class="site-footer__title">Service</h2><ul class="site-footer__list"><li><a href="products.html">商品一覧</a></li><li><a href="about.html">About</a></li><li><a href="guide.html">Guide</a></li></ul></div><div><h2 class="site-footer__title">Support</h2><ul class="site-footer__list"><li><a href="guide.html#faq">FAQ</a></li><li><a href="contact.html">お問い合わせ</a></li></ul></div><div><h2 class="site-footer__title">Contact</h2><p class="site-footer__text"><a href="contact.html">迷ったときはこちらから<br>ご相談ください。</a></p></div></div></footer>
   <script src="js/main.js"></script>

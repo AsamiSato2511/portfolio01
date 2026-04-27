@@ -60,9 +60,6 @@
                 <dl class="cart-item__meta-card cart-item__meta-card--price">
                   <div><dt>価格</dt><dd class="cart-item__price">¥7,800</dd></div>
                 </dl>
-                <dl class="cart-item__meta-card cart-item__meta-card--message">
-                  <div><dt>メッセージカード</dt><dd class="cart-item__message">希望しない</dd></div>
-                </dl>
                 <dl class="cart-item__meta-card cart-item__meta-card--shipping">
                   <div><dt>配送目安</dt><dd class="cart-item__shipping">注文から3営業日以内に発送</dd></div>
                 </dl>
@@ -76,6 +73,10 @@
             <span>商品小計</span>
             <strong class="cart-summary__price">¥7,800</strong>
           </div>
+          <div class="cart-summary__row cart-summary__row--compact">
+            <span>メッセージカード</span>
+            <strong class="cart-item__message">希望しない</strong>
+          </div>
           <p class="cart-summary__note">お届け日や贈る相手の雰囲気に迷った場合は、<br>お気軽にご相談ください。</p>
           <div class="cart-summary__actions">
               <button class="btn btn-primary cart-summary__checkout" type="button">決済に進む</button>
@@ -83,6 +84,63 @@
             <a class="text-link cart-summary__back" href="products.html#product-grid-title">Collectionに戻る</a>
           </div>
         </aside>
+      </section>
+
+      <section class="message-card-section" data-message-card-builder aria-labelledby="message-card-builder-title">
+        <div class="message-card-section__heading">
+          <div>
+            <h2 id="message-card-builder-title">メッセージカードを整える</h2>
+            <p>お花に添えるメッセージを入力できます。</p>
+          </div>
+        </div>
+
+        <div class="message-card-section__layout">
+          <div class="message-card-section__form">
+            <div class="message-card-builder__choices" role="radiogroup" aria-labelledby="message-card-builder-title">
+              <label class="message-card-builder__choice">
+                <input class="form-radio" type="radio" name="message-card-type" value="none" checked data-message-card-type>
+                <span>希望しない</span>
+              </label>
+              <label class="message-card-builder__choice">
+                <input class="form-radio" type="radio" name="message-card-type" value="custom" data-message-card-type>
+                <span>メッセージカードを付ける</span>
+              </label>
+            </div>
+
+            <div class="message-card-builder__editor" data-message-card-editor hidden>
+              <label class="form-label" for="message-card-text">カードに添えるメッセージ</label>
+              <textarea
+                id="message-card-text"
+                class="form-textarea message-card-builder__textarea"
+                maxlength="300"
+                rows="5"
+                placeholder="お誕生日おめでとうございます&#10;素敵な一年になりますように。"
+                data-message-card-text
+              ></textarea>
+              <div class="message-card-builder__examples">
+                <button class="chip message-card-builder__example" type="button" data-message-card-example="お誕生日おめでとうございます&#10;素敵な一年になりますように。">誕生日</button>
+                <button class="chip message-card-builder__example" type="button" data-message-card-example="いつもありがとうございます。&#10;感謝の気持ちを込めて贈ります。">感謝</button>
+                <button class="chip message-card-builder__example" type="button" data-message-card-example="新しい門出を心からお祝いします。&#10;これからの日々も花のように彩られますように。">お祝い</button>
+              </div>
+              <div class="message-card-builder__meta">
+                <p class="message-card-builder__hint">120文字以内で入力できます。</p>
+                <p class="message-card-builder__counter" data-message-card-counter>0 / 120</p>
+              </div>
+              <div class="message-card-builder__actions">
+                <button class="btn message-card-builder__confirm" type="button" data-message-card-confirm>メッセージを確定する</button>
+                <p class="message-card-builder__status" data-message-card-status>内容を確認して、メッセージを確定してください</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="message-card-preview" data-message-card-preview data-preview-always-visible aria-live="polite">
+            <p class="message-card-preview__label">プレビュー</p>
+            <div class="message-card-preview__paper">
+              <p class="message-card-preview__placeholder" data-message-card-placeholder>カードを付けると、ここにメッセージが表示されます。</p>
+              <p class="message-card-preview__text" data-message-card-preview-text hidden></p>
+            </div>
+          </div>
+        </div>
       </section>
     </div>
   </main>
