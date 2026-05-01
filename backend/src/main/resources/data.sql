@@ -27,11 +27,12 @@ INSERT INTO products (id, name, slug, price, description, image_path, image_alt,
 (17, 'Quiet Ivory', 'quiet-ivory', 8900, 'アイボリーの花を束ねた、静かな季節感を楽しめるやわらかなブーケ。', '/images/Top/scene/scene2.png', 'Quiet Ivoryの商品画像', 4, 'IN_STOCK', TRUE, FALSE, 17, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (18, 'Silver Lisianthus', 'silver-lisianthus', 7300, '白いトルコキキョウを束ねた、清潔感のあるやさしい感謝の花束。', '/images/Top/scene/2-2.png', 'Silver Lisianthusの商品画像', 2, 'IN_STOCK', TRUE, FALSE, 18, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (19, 'Spring Bouquet', 'spring-bouquet', 7800, '明るく軽やかな色合いで、誕生日をやさしく彩る華やかな花束。', '/images/Top/Featured/1.png', 'Spring Bouquetの商品画像', 1, 'IN_STOCK', TRUE, FALSE, 19, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(20, 'Spring Tulip Meadow', 'spring-tulip-meadow', 8200, 'チューリップと小花を合わせた、春らしい軽やかさのある季節ブーケ。', '/images/Top/scene/scene6.png', 'Spring Tulip Meadowの商品画像', 4, 'IN_STOCK', TRUE, FALSE, 20, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(21, 'Sunflower Ray', 'sunflower-ray', 8700, 'ひまわりの明るい黄色が広がる、夏の光を束ねた季節の花束。', '/images/Top/scene/Sunflower Ray.png', 'Sunflower Rayの商品画像', 4, 'IN_STOCK', TRUE, FALSE, 21, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(22, 'Thanks Harmony', 'thanks-harmony', 7700, 'オレンジとベージュを重ねた、ぬくもりのある感謝のブーケ。', '/images/Top/scene/scene3.png', 'Thanks Harmonyの商品画像', 2, 'IN_STOCK', TRUE, FALSE, 22, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(23, 'Wisteria Veil', 'wisteria-veil', 8600, '藤の花を思わせるやわらかな紫で、初夏の空気を映した季節ブーケ。', '/images/Top/scene/Wisteria Veil.png', 'Wisteria Veilの商品画像', 4, 'LOW_STOCK', TRUE, FALSE, 23, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(24, 'Wine Anemone', 'wine-anemone', 9200, '深いワインレッドのアネモネが映える、冬の空気に似合う季節ブーケ。', '/images/Top/scene/2-6.png', 'Wine Anemoneの商品画像', 4, 'IN_STOCK', TRUE, FALSE, 24, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(25, 'Spring Letter', 'spring-letter', 8600, '淡いピンクの花々と小花をやわらかく束ねた、春の訪れを感じる上品な花束。', '/images/products/spring-letter-pink.png', 'Spring Letterの商品画像', 4, 'IN_STOCK', TRUE, FALSE, 20, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(20, 'Spring Tulip Meadow', 'spring-tulip-meadow', 8200, 'チューリップと小花を合わせた、春らしい軽やかさのある季節ブーケ。', '/images/Top/scene/scene6.png', 'Spring Tulip Meadowの商品画像', 4, 'IN_STOCK', TRUE, FALSE, 21, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(21, 'Sunflower Ray', 'sunflower-ray', 8700, 'ひまわりの明るい黄色が広がる、夏の光を束ねた季節の花束。', '/images/Top/scene/Sunflower Ray.png', 'Sunflower Rayの商品画像', 4, 'IN_STOCK', TRUE, FALSE, 22, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(22, 'Thanks Harmony', 'thanks-harmony', 7700, 'オレンジとベージュを重ねた、ぬくもりのある感謝のブーケ。', '/images/Top/scene/scene3.png', 'Thanks Harmonyの商品画像', 2, 'IN_STOCK', TRUE, FALSE, 23, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(23, 'Wisteria Veil', 'wisteria-veil', 8600, '藤の花を思わせるやわらかな紫で、初夏の空気を映した季節ブーケ。', '/images/Top/scene/Wisteria Veil.png', 'Wisteria Veilの商品画像', 4, 'LOW_STOCK', TRUE, FALSE, 24, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(24, 'Wine Anemone', 'wine-anemone', 9200, '深いワインレッドのアネモネが映える、冬の空気に似合う季節ブーケ。', '/images/Top/scene/2-6.png', 'Wine Anemoneの商品画像', 4, 'IN_STOCK', TRUE, FALSE, 25, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 INSERT INTO contact_inquiries (id, name, email, phone, inquiry_type, message, status, created_at, updated_at) VALUES
 (1, '山田 花子', 'hanako@example.com', '09012345678', '商品について', '誕生日向けで優しい雰囲気の花束を探しています。おすすめを相談したいです。', 'UNREAD', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

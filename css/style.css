@@ -1179,12 +1179,12 @@ a:hover { color: var(--black); }
 }
 
 .home-section--feature {
-  padding: 24px 0 28px;
+  padding: 28px 0 34px;
   background: var(--site-bg);
 }
 
 .home-section--feature + .home-section {
-  padding-top: 44px;
+  padding-top: 48px;
 }
 
 .home-section--story {
@@ -1360,7 +1360,7 @@ a:hover { color: var(--black); }
   display: flex;
   gap: 16px;
   margin: 0 -16px;
-  padding: 0 16px 14px;
+  padding: 0 16px 18px;
   overflow-x: auto;
   overscroll-behavior-inline: contain;
   scroll-behavior: smooth;
@@ -1374,7 +1374,7 @@ a:hover { color: var(--black); }
 }
 
 .seasonal-feature-banner {
-  flex: 0 0 min(540px, 86vw);
+  flex: 0 0 min(720px, 92vw);
   display: block;
   overflow: hidden;
   aspect-ratio: 1672 / 941;
@@ -1541,6 +1541,11 @@ a:hover { color: var(--black); }
 .product-card__image--soft-merci {
   background-image: url("../images/Top/scene/Soft Merci.png");
   background-position: center 30%;
+}
+
+.product-card__image--spring-letter {
+  background-image: url('../images/products/spring-letter-pink.png');
+  background-position: center 50%;
 }
 
 .product-card__image--celebration-alt {
@@ -2780,6 +2785,7 @@ a:hover { color: var(--black); }
   background-position: center 28% !important;
 }
 #product-grid .product-card__image--soft-merci { background-position: center 33% !important; }
+#product-grid .product-card__image--spring-letter { background-position: center 50% !important; }
 #product-grid .product-card__image--babybreath { background-position: center 27% !important; }
 #product-grid .product-card__image--lilybell { background-position: center 26% !important; }
 #product-grid .product-card__image--sunflower { background-position: center 24% !important; }
@@ -3803,7 +3809,7 @@ a:hover { color: var(--black); }
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
   .seasonal-feature-banner {
-    flex-basis: min(540px, 48vw);
+    flex-basis: min(760px, 78vw);
   }
   .hero__grid,
   .story-grid,
@@ -4045,20 +4051,21 @@ a:hover { color: var(--black); }
   .hero__media,
   .hero__content { min-height: 680px; }
   .home-section--feature {
-    padding: 30px 0 24px;
+    padding: 36px 0 34px;
   }
   .home-section--feature + .home-section {
-    padding-top: 52px;
+    padding-top: 56px;
   }
   .scene-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
   .seasonal-feature-grid {
     gap: 18px;
     margin: 0 -24px;
     padding-inline: 24px;
+    padding-bottom: 20px;
     scroll-padding-inline: 24px;
   }
   .seasonal-feature-banner {
-    flex-basis: min(520px, 39%);
+    flex-basis: clamp(640px, 66%, 780px);
   }
   .seasonal-feature-control {
     display: inline-flex;

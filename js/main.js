@@ -400,11 +400,11 @@ const RAW_PRODUCT_CATALOG = [
     occasions: '季節のギフト / 春の贈り物 / やわらかな彩り',
     flowers: 'チューリップ、ピンクカーネーション、小花',
     shipping: '注文から3営業日以内に発送',
-    image: 'images/products/spring-letter.png',
+    image: 'images/products/spring-letter-pink.png',
     imageAlt: 'Spring Letter の商品画像',
     imagePosition: 'center 50%',
     relatedImageSize: '116%',
-    relatedImagePosition: 'center 48%',
+    relatedImagePosition: 'center 50%',
     season: ['spring'],
     relatedBanner: '春の贈りもの'
   },
