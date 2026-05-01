@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,300..700,0..1,-50..200&family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=20260409b">
+  <link rel="stylesheet" href="css/style.css?v=20260428c">
   <link rel="icon" href="images/Top/icon-transparent.png" type="image/png">
 </head>
 <body class="site-body">
@@ -62,18 +62,29 @@
       </div>
     </section>
 
-    <section class="home-section home-section--feature">
+    <section class="home-section home-section--feature" aria-label="季節のおすすめ特集">
       <div class="site-shell">
-        <div class="seasonal-feature-list" aria-label="季節のおすすめ特集">
-          <a class="seasonal-feature-banner" href="products.html?scene=seasonal&feature=spring-gift#product-grid-title" aria-label="春の贈りもの特集の商品を見る">
-            <img src="images/banners/spring-gift-banner.png" alt="春の贈りもの特集バナー" loading="lazy">
-          </a>
-          <a class="seasonal-feature-banner" href="products.html?scene=seasonal&feature=early-summer#product-grid-title" aria-label="初夏の花贈り特集の商品を見る">
-            <img src="images/banners/early-summer-banner.png" alt="初夏の花贈り特集バナー" loading="lazy">
-          </a>
-          <a class="seasonal-feature-banner" href="products.html?scene=thanks&feature=thanks-gift#product-grid-title" aria-label="感謝を伝える花束特集の商品を見る">
-            <img src="images/banners/thanks-gift-banner.png" alt="感謝を伝える花束特集バナー" loading="lazy">
-          </a>
+        <div class="seasonal-feature-carousel" data-feature-carousel>
+          <button class="seasonal-feature-control seasonal-feature-control--prev" type="button" data-feature-carousel-prev aria-label="前の特集バナーを見る">
+            <span class="material-symbols-outlined" aria-hidden="true">chevron_left</span>
+          </button>
+          <div class="seasonal-feature-grid" data-feature-carousel-track>
+            <a class="seasonal-feature-banner" href="products.html?scene=Seasonal%20Gift&feature=spring-gift#product-grid-title" aria-label="春の贈りもの特集の商品を見る">
+              <img src="images/banners/spring-gift-banner.png" alt="春の贈りもの特集バナー" loading="lazy">
+            </a>
+            <a class="seasonal-feature-banner" href="products.html?scene=Seasonal%20Gift&feature=early-summer#product-grid-title" aria-label="初夏の花贈り特集の商品を見る">
+              <img src="images/banners/early-summer-banner.png" alt="初夏の花贈り特集バナー" loading="lazy">
+            </a>
+            <a class="seasonal-feature-banner" href="products.html?scene=Thanks&feature=thanks-gift#product-grid-title" aria-label="感謝を伝える花束特集の商品を見る">
+              <img src="images/banners/thanks-gift-banner.png" alt="感謝を伝える花束特集バナー" loading="lazy">
+            </a>
+            <a class="seasonal-feature-banner seasonal-feature-banner--guide" href="#gift-chat-panel" data-open-gift-chat aria-controls="gift-chat-panel" aria-label="花選びに迷ったときのギフト相談を開く">
+              <img src="images/banners/gift-guide-banner.png" alt="花選びに迷ったらギフト相談へ案内する特集バナー" loading="lazy">
+            </a>
+          </div>
+          <button class="seasonal-feature-control seasonal-feature-control--next" type="button" data-feature-carousel-next aria-label="次の特集バナーを見る">
+            <span class="material-symbols-outlined" aria-hidden="true">chevron_right</span>
+          </button>
         </div>
       </div>
     </section>
@@ -256,6 +267,6 @@
     </div>
   </footer>
 
-  <script src="js/main.js"></script>
+  <script src="js/main.js?v=20260428c"></script>
 </body>
 </html>

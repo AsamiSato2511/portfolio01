@@ -987,7 +987,7 @@ a:hover { color: var(--black); }
 
 .hero {
   position: relative;
-  padding: 0 0 64px;
+  padding: 0;
   background: var(--site-bg);
 }
 
@@ -1179,7 +1179,12 @@ a:hover { color: var(--black); }
 }
 
 .home-section--feature {
-  padding-top: 12px;
+  padding: 24px 0 28px;
+  background: var(--site-bg);
+}
+
+.home-section--feature + .home-section {
+  padding-top: 44px;
 }
 
 .home-section--story {
@@ -1347,45 +1352,109 @@ a:hover { color: var(--black); }
   gap: 24px;
 }
 
-.home-section--feature .section-heading {
-  margin-bottom: 22px;
-  text-align: left;
+.seasonal-feature-carousel {
+  position: relative;
 }
 
-.home-section--feature .section-heading__text {
-  max-width: 38rem;
+.seasonal-feature-grid {
+  display: flex;
+  gap: 16px;
+  margin: 0 -16px;
+  padding: 0 16px 14px;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  scroll-behavior: smooth;
+  scroll-padding-inline: 16px;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
 }
 
-.seasonal-feature-list {
-  display: grid;
-  gap: 18px;
+.seasonal-feature-grid::-webkit-scrollbar {
+  display: none;
 }
 
 .seasonal-feature-banner {
+  flex: 0 0 min(540px, 86vw);
   display: block;
   overflow: hidden;
-  border-radius: 24px;
+  aspect-ratio: 1672 / 941;
+  border-radius: 20px;
   background: rgba(255, 252, 249, 0.86);
-  border: 1px solid rgba(194, 175, 159, 0.14);
-  box-shadow: 0 12px 24px rgba(125, 104, 86, 0.07);
-  transition: transform 0.24s ease, filter 0.24s ease, box-shadow 0.24s ease;
+  border: 1px solid rgba(194, 175, 159, 0.2);
+  box-shadow: 0 14px 30px rgba(125, 104, 86, 0.1);
+  scroll-snap-align: start;
+  transition: transform 0.24s ease, box-shadow 0.24s ease;
 }
 
 .seasonal-feature-banner:hover,
 .seasonal-feature-banner:focus-visible {
   transform: translateY(-2px);
-  filter: brightness(1.02);
-  box-shadow: 0 18px 34px rgba(125, 104, 86, 0.11);
+  box-shadow: 0 20px 42px rgba(125, 104, 86, 0.14);
   outline: none;
+}
+
+.seasonal-feature-banner:focus-visible {
+  box-shadow: var(--site-shadow-hover), var(--site-focus-ring);
 }
 
 .seasonal-feature-banner img {
   display: block;
   width: 100%;
-  aspect-ratio: 16 / 10;
+  height: 100%;
   object-fit: cover;
   object-position: center;
-  background: linear-gradient(180deg, rgba(248, 242, 235, 0.92), rgba(239, 230, 221, 0.88));
+  transition: transform 0.36s ease, filter 0.24s ease;
+}
+
+.seasonal-feature-banner:hover img,
+.seasonal-feature-banner:focus-visible img {
+  transform: scale(1.025);
+  filter: brightness(1.04) saturate(1.03);
+}
+
+.seasonal-feature-control {
+  position: absolute;
+  top: 50%;
+  z-index: 2;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border: 1px solid rgba(140, 106, 86, 0.18);
+  border-radius: 50%;
+  color: var(--site-accent);
+  background: rgba(255, 253, 249, 0.86);
+  box-shadow: 0 8px 20px rgba(125, 104, 86, 0.1);
+  cursor: pointer;
+  transform: translateY(-50%);
+  transition: transform 0.2s ease, background 0.2s ease, opacity 0.2s ease;
+}
+
+.seasonal-feature-control:hover,
+.seasonal-feature-control:focus-visible {
+  background: #FFFDF9;
+  outline: none;
+  transform: translateY(-50%) scale(1.04);
+}
+
+.seasonal-feature-control[disabled] {
+  opacity: 0;
+  cursor: default;
+  pointer-events: none;
+}
+
+.seasonal-feature-control--prev {
+  left: 8px;
+}
+
+.seasonal-feature-control--next {
+  right: 8px;
+}
+
+.seasonal-feature-control .material-symbols-outlined {
+  font-size: 24px;
+  line-height: 1;
 }
 
 .scene-card {
@@ -3733,6 +3802,9 @@ a:hover { color: var(--black); }
   .detail-sections {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+  .seasonal-feature-banner {
+    flex-basis: min(540px, 48vw);
+  }
   .hero__grid,
   .story-grid,
   .detail-layout,
@@ -3852,10 +3924,6 @@ a:hover { color: var(--black); }
     width: 100%;
   }
 
-  .seasonal-feature-banner img {
-    aspect-ratio: 4 / 3;
-  }
-
   .scene-shortcuts {
     order: 1;
   }
@@ -3972,15 +4040,29 @@ a:hover { color: var(--black); }
     gap: 8px;
   }
   .site-nav__link { padding: 10px 14px; }
-  .hero { padding: 0 0 88px; }
+  .hero { padding: 0; }
   .home-section { padding: 88px 0; }
   .hero__media,
   .hero__content { min-height: 680px; }
   .home-section--feature {
-    padding-top: 20px;
+    padding: 30px 0 24px;
+  }
+  .home-section--feature + .home-section {
+    padding-top: 52px;
   }
   .scene-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-  .seasonal-feature-list { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .seasonal-feature-grid {
+    gap: 18px;
+    margin: 0 -24px;
+    padding-inline: 24px;
+    scroll-padding-inline: 24px;
+  }
+  .seasonal-feature-banner {
+    flex-basis: min(520px, 39%);
+  }
+  .seasonal-feature-control {
+    display: inline-flex;
+  }
   .product-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
   .feature-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .site-footer__grid { grid-template-columns: 1.5fr 1fr 1fr 1.2fr; }

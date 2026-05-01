@@ -2071,6 +2071,14 @@ function initializeGiftFinder(productCatalog) {
     resetChat();
   });
 
+  document.querySelectorAll('[data-open-gift-chat]').forEach(trigger => {
+    trigger.addEventListener('click', event => {
+      event.preventDefault();
+      event.stopPropagation();
+      openPanel();
+    });
+  });
+
   document.addEventListener('keydown', event => {
     if (event.key === 'Escape' && !panel.hidden) {
       closePanel();
@@ -2132,6 +2140,24 @@ async function initializeProductFilter() {
   const originalOrder = Array.from(cards);
   const params = new URLSearchParams(window.location.search);
   const storageKey = 'bloom-letter-product-grid-state';
+  const validSceneFilters = new Set(
+    ['all', ...Array.from(chips).map(chip => chip.dataset.filter).filter(Boolean)]
+  );
+  const sceneFilterAliases = new Map([
+    ['seasonal gift', 'seasonal'],
+    ['seasonal-gift', 'seasonal'],
+    ['seasonal_gift', 'seasonal'],
+    ['thanks gift', 'thanks'],
+    ['thank you', 'thanks']
+  ]);
+
+  const normalizeSceneFilter = value => {
+    const raw = String(value || '').trim();
+    if (!raw) return 'all';
+    const normalized = raw.toLowerCase();
+    const alias = sceneFilterAliases.get(normalized) || normalized;
+    return validSceneFilters.has(alias) ? alias : 'all';
+  };
 
   const readStoredState = () => {
     try {
@@ -2302,7 +2328,8 @@ async function initializeProductFilter() {
 
   const applyFilters = (filter, options = {}) => {
     const { preservePage = false, keepFeature = true } = options;
-    currentSceneFilter = filter;
+    const normalizedFilter = normalizeSceneFilter(filter);
+    currentSceneFilter = normalizedFilter;
     if (!keepFeature) {
       currentFeatureKey = '';
       updateFeatureCollectionBanner('');
@@ -2313,12 +2340,12 @@ async function initializeProductFilter() {
 
     cards.forEach(card => {
       const normalizedScene = card.dataset.scene === 'anniversary' ? 'celebration' : card.dataset.scene;
-      const matchesScene = filter === 'all' || normalizedScene === filter;
+      const matchesScene = normalizedFilter === 'all' || normalizedScene === normalizedFilter;
       const matches = matchesScene && matchesPriceRange(card) && matchesFavorites(card);
       card.classList.toggle('is-filtered-out', !matches);
     });
 
-    chips.forEach(chip => chip.classList.toggle('is-active', chip.dataset.filter === filter));
+    chips.forEach(chip => chip.classList.toggle('is-active', chip.dataset.filter === normalizedFilter));
     if (!preservePage) currentPage = 1;
     updatePagination(getVisibleCards());
     syncProductsUrl();
@@ -2402,7 +2429,7 @@ async function initializeProductFilter() {
   const feature = FEATURE_COLLECTION_MAP[featureKey];
   currentFeatureKey = feature ? featureKey : '';
   updateFeatureCollectionBanner(currentFeatureKey);
-  const initial = feature?.scene || params.get('scene') || storedState?.scene || 'all';
+  const initial = normalizeSceneFilter(feature?.scene || params.get('scene') || storedState?.scene || 'all');
   const requestedPage = Number(params.get('page') || storedState?.page || '1');
   const initialPage = Number.isFinite(requestedPage) && requestedPage >= 1 ? requestedPage : 1;
   const initialSort = params.get('sort') || storedState?.sort;
@@ -2529,6 +2556,43 @@ function initializeFaqAccordion() {
   });
 }
 
+function initializeFeatureCarousel() {
+  document.querySelectorAll('[data-feature-carousel]').forEach(carousel => {
+    const track = carousel.querySelector('[data-feature-carousel-track]');
+    const prev = carousel.querySelector('[data-feature-carousel-prev]');
+    const next = carousel.querySelector('[data-feature-carousel-next]');
+    if (!track || !prev || !next) return;
+
+    const getStep = () => {
+      const firstBanner = track.querySelector('.seasonal-feature-banner');
+      if (!firstBanner) return track.clientWidth * 0.84;
+      const gap = Number.parseFloat(window.getComputedStyle(track).columnGap || '0') || 0;
+      return firstBanner.getBoundingClientRect().width + gap;
+    };
+
+    const updateControls = () => {
+      const maxScroll = Math.max(0, track.scrollWidth - track.clientWidth - 2);
+      prev.disabled = track.scrollLeft <= 2;
+      next.disabled = track.scrollLeft >= maxScroll;
+    };
+
+    prev.addEventListener('click', () => {
+      track.scrollBy({ left: -getStep(), behavior: 'smooth' });
+    });
+
+    next.addEventListener('click', () => {
+      track.scrollBy({ left: getStep(), behavior: 'smooth' });
+    });
+
+    track.addEventListener('scroll', () => {
+      window.requestAnimationFrame(updateControls);
+    }, { passive: true });
+
+    window.addEventListener('resize', updateControls);
+    updateControls();
+  });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   initializeSiteNavigation();
   initializeHomePage();
@@ -2544,6 +2608,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initializeContactForm();
   initializeHeroSlides();
   initializeFaqAccordion();
+  initializeFeatureCarousel();
 });
 
 window.addEventListener('resize', fitDetailTitleToSingleLine);
