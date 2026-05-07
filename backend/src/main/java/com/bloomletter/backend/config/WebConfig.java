@@ -32,7 +32,7 @@ public class WebConfig implements WebMvcConfigurer {
     }
 
     registry
-        .addResourceHandler("/", "/*.html", "/favicon.ico")
+        .addResourceHandler("/*.html", "/favicon.ico")
         .addResourceLocations(projectRoot.toUri().toString());
 
     registry
