@@ -44,8 +44,8 @@
 
     if (response.status === 401) {
       clearSession();
-      if (!window.location.pathname.endsWith('/login.html')) {
-        window.location.href = '/admin/login.html';
+      if (!window.location.pathname.endsWith('/login') && !window.location.pathname.endsWith('/login.html')) {
+        window.location.href = '/admin/login';
       }
       throw new Error('\u8a8d\u8a3c\u304c\u5fc5\u8981\u3067\u3059\u3002\u518d\u5ea6\u30ed\u30b0\u30a4\u30f3\u3057\u3066\u304f\u3060\u3055\u3044\u3002');
     }
@@ -68,7 +68,7 @@
 
   function requireSession() {
     if (!getToken()) {
-      window.location.href = '/admin/login.html';
+      window.location.href = '/admin/login';
       return false;
     }
     return true;
@@ -235,7 +235,7 @@
     document.querySelectorAll('[data-admin-logout]').forEach((button) => {
       button.addEventListener('click', () => {
         clearSession();
-        window.location.href = '/admin/login.html';
+        window.location.href = '/admin/login';
       });
     });
   }
@@ -246,7 +246,7 @@
 
     const notice = document.querySelector('[data-admin-login-notice]');
     if (getToken()) {
-      window.location.href = '/admin/products.html';
+      window.location.href = '/admin/products';
       return;
     }
 
@@ -263,7 +263,7 @@
           body: JSON.stringify({ email, password })
         });
         setSession(createBasicToken(email, password), result.name);
-        window.location.href = '/admin/products.html';
+        window.location.href = '/admin/products';
       } catch (error) {
         applyFieldErrors(form, error.validationErrors);
         setNotice(notice, error.message, true);
