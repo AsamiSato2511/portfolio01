@@ -1179,12 +1179,12 @@ a:hover { color: var(--black); }
 }
 
 .home-section--feature {
-  padding: 28px 0 34px;
+  padding: 24px 0 28px;
   background: var(--site-bg);
 }
 
 .home-section--feature + .home-section {
-  padding-top: 48px;
+  padding-top: 44px;
 }
 
 .home-section--story {
@@ -1360,7 +1360,7 @@ a:hover { color: var(--black); }
   display: flex;
   gap: 16px;
   margin: 0 -16px;
-  padding: 0 16px 18px;
+  padding: 0 16px 14px;
   overflow-x: auto;
   overscroll-behavior-inline: contain;
   scroll-behavior: smooth;
@@ -1374,7 +1374,7 @@ a:hover { color: var(--black); }
 }
 
 .seasonal-feature-banner {
-  flex: 0 0 min(720px, 92vw);
+  flex: 0 0 min(540px, 86vw);
   display: block;
   overflow: hidden;
   aspect-ratio: 1672 / 941;
@@ -1395,6 +1395,12 @@ a:hover { color: var(--black); }
 
 .seasonal-feature-banner:focus-visible {
   box-shadow: var(--site-shadow-hover), var(--site-focus-ring);
+}
+
+.seasonal-feature-banner picture {
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 
 .seasonal-feature-banner img {
@@ -3809,7 +3815,7 @@ a:hover { color: var(--black); }
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
   .seasonal-feature-banner {
-    flex-basis: min(760px, 78vw);
+    flex-basis: min(540px, 48vw);
   }
   .hero__grid,
   .story-grid,
@@ -4051,21 +4057,20 @@ a:hover { color: var(--black); }
   .hero__media,
   .hero__content { min-height: 680px; }
   .home-section--feature {
-    padding: 36px 0 34px;
+    padding: 30px 0 24px;
   }
   .home-section--feature + .home-section {
-    padding-top: 56px;
+    padding-top: 52px;
   }
   .scene-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
   .seasonal-feature-grid {
     gap: 18px;
     margin: 0 -24px;
     padding-inline: 24px;
-    padding-bottom: 20px;
     scroll-padding-inline: 24px;
   }
   .seasonal-feature-banner {
-    flex-basis: clamp(640px, 66%, 780px);
+    flex-basis: min(520px, 39%);
   }
   .seasonal-feature-control {
     display: inline-flex;
